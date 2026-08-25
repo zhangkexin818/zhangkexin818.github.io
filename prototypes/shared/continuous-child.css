@@ -1,0 +1,25 @@
+html.zk-continuous-child {
+  scroll-behavior: auto !important;
+  scrollbar-width: none !important;
+}
+
+html.zk-continuous-child::-webkit-scrollbar,
+html.zk-continuous-child body::-webkit-scrollbar {
+  display: none !important;
+}
+
+html.zk-continuous-child body {
+  overflow-x: hidden !important;
+  overscroll-behavior: none !important;
+}
+
+html.zk-continuous-child .site-header,
+html.zk-continuous-child .sound-toggle,
+html.zk-continuous-child .zk-route-bridge,
+html.zk-continuous-child .route-transition {
+  display: none !important;
+}
+
+html.zk-continuous-child .skip-link {
+  display: none !important;
+}

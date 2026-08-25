@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="AI 内容再创作工作台：从课程主题提取内容基因，再逐步生成课件、视频与多个内容版本。"
+    />
+    <title>AI 内容再创作工作台</title>
+    <link rel="icon" href="data:," />
+    <script>
+      (() => {
+        const applyTheme = (mode) => document.documentElement.classList.toggle("zk-starlight", mode === "starlight");
+        try { applyTheme(window.parent.document.documentElement.dataset.lightMode); } catch (_) { applyTheme("night"); }
+        window.addEventListener("message", (event) => {
+          if (event.data?.type === "zk:light-mode") applyTheme(event.data.mode);
+        });
+      })();
+    </script>
+    <link rel="stylesheet" href="styles.css?v=starlight-surfaces-v2" />
+    <script src="../../shared/cursor-system.js" defer></script>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#app-main">跳到工作台正文</a>
+
+    <div id="app" class="workbench-app"></div>
+
+    <dialog class="workbench-dialog" id="sample-dialog" aria-labelledby="sample-title">
+      <form method="dialog">
+        <button class="dialog-close" type="submit" aria-label="关闭示例">×</button>
+        <p class="dialog-label">示例任务</p>
+        <h2 id="sample-title">《咏柳》AI 视频课</h2>
+        <p>面向小学三年级，用东方绘本风格解释诗歌中的意象、节奏和修辞，并生成课件与视频。</p>
+        <dl>
+          <div><dt>受众</dt><dd>小学三年级</dd></div>
+          <div><dt>课时</dt><dd>1 课时</dd></div>
+          <div><dt>输出</dt><dd>课件 + 视频</dd></div>
+        </dl>
+        <button class="primary-button" data-dialog-action="use-sample" type="button">使用这个示例</button>
+      </form>
+    </dialog>
+
+    <dialog class="workbench-dialog" id="help-dialog" aria-labelledby="help-title">
+      <form method="dialog">
+        <button class="dialog-close" type="submit" aria-label="关闭帮助">×</button>
+        <p class="dialog-label">使用帮助</p>
+        <h2 id="help-title">先确认，再生成</h2>
+        <ol>
+          <li>输入课程主题，或添加一份参考材料。</li>
+          <li>检查 AI 提取的内容基因，按需要修改。</li>
+          <li>逐步生成课件、视频与不同内容版本。</li>
+        </ol>
+        <p class="dialog-note">所有步骤都可以返回修改，不会因为进入下一步而锁死。</p>
+      </form>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <noscript><p class="noscript">请启用 JavaScript 以使用交互式内容工作台。</p></noscript>
+  </body>
+</html>

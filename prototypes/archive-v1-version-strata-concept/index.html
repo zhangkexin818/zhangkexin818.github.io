@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="张可欣个人网站的作品档案与网页形成记录。" />
+    <title>ARCHIVE · 创作轨迹</title>
+    <link rel="icon" href="data:," />
+    <script>try{if(sessionStorage.getItem("zk-route-transition"))document.documentElement.classList.add("zk-route-pending")}catch(_){}</script>
+    <script>if(window.parent!==window)document.documentElement.classList.add("zk-continuous-child")</script>
+    <link rel="stylesheet" href="../shared/site-bridge.css" />
+    <link rel="stylesheet" href="../shared/continuous-child.css" />
+    <link rel="stylesheet" href="styles.css?v=violet-final-v2" />
+    <link rel="stylesheet" href="concept-merge.css?v=film-clarity-v4" />
+  </head>
+  <body>
+    <canvas id="particle-field" aria-hidden="true"></canvas>
+    <div class="cursor-core" aria-hidden="true"></div>
+    <div class="cursor-orbit" aria-hidden="true"></div>
+
+    <header class="site-header" aria-label="主导航">
+      <a class="brand" href="../homepage-v9-particle-spectrum-concept/index.html" aria-label="返回首页">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>ZHANG KEXIN</span>
+      </a>
+      <nav class="nav-line" aria-label="页面导航">
+        <a href="../work-v2-reference-orbit-concept/index.html">WORK</a>
+        <span aria-hidden="true">/</span>
+        <a href="../ip-v5-particle-boundary-fall-concept/index.html">IP</a>
+        <span aria-hidden="true">/</span>
+        <a class="is-active" href="#top" aria-current="page">ARCHIVE</a>
+        <span aria-hidden="true">/</span>
+        <a href="../about-v1-identity-spectrum-concept/index.html">ABOUT</a>
+      </nav>
+      <div class="chapter-readout" aria-live="polite">
+        <span id="chapter-name">STRATA</span>
+        <span id="chapter-count">01 — 04</span>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="archive-hero chapter" data-chapter="STRATA" data-count="01 — 04" data-zk-surface="dark">
+        <div class="hero-copy">
+          <p class="eyebrow">ACT 01 · A LIVING DESIGN RECORD</p>
+          <h1><span>ARCHIVE</span><em>创作轨迹</em></h1>
+          <p class="hero-intro">不是最后一张图的陈列，而是每次取舍怎样把网站推到现在。</p>
+        </div>
+
+        <div class="strata-stage" id="strata-stage" aria-label="网页版本地层">
+          <div class="strata-glow" aria-hidden="true"></div>
+          <button class="stratum-card" type="button" data-index="0" aria-label="查看首页框架拆解版本">
+            <img src="assets/drafts/01-homepage-collection.png" alt="首页框架拆解版本页面" />
+            <span><b>V.01</b> 首页框架拆解</span>
+          </button>
+          <button class="stratum-card" type="button" data-index="1" aria-label="查看身份卡入口版本">
+            <img src="assets/drafts/02-identity-card.png" alt="身份卡入口版本页面" />
+            <span><b>V.02</b> 身份卡入口</span>
+          </button>
+          <button class="stratum-card" type="button" data-index="2" aria-label="查看宇宙叙事试验版本">
+            <img src="assets/drafts/03-cosmic-narrative.png" alt="宇宙叙事试验版视觉草案" />
+            <span><b>V.03</b> 宇宙叙事试验</span>
+          </button>
+          <button class="stratum-card" type="button" data-index="3" aria-label="查看粒子光谱版本">
+            <img src="assets/drafts/04-particle-spectrum.png" alt="粒子光谱首页版本" />
+            <span><b>V.04</b> 粒子光谱</span>
+          </button>
+          <button class="stratum-card" type="button" data-index="4" aria-label="查看经历轨道版本">
+            <img src="assets/drafts/05-experience-orbit.png" alt="经历轨道页面版本" />
+            <span><b>V.05</b> 经历轨道</span>
+          </button>
+          <button class="stratum-card" type="button" data-index="5" aria-label="查看IP连续世界版本">
+            <img src="assets/drafts/06-ip-continuous-world.png" alt="IP连续世界页面版本" />
+            <span><b>V.06</b> IP 连续世界</span>
+          </button>
+          <button class="stratum-card" type="button" data-index="6" aria-label="查看IP叙事重排版本">
+            <img src="assets/drafts/07-ip-continuum.png" alt="IP叙事重排页面版本" />
+            <span><b>V.07</b> IP 叙事重排</span>
+          </button>
+          <button class="stratum-card is-active" type="button" data-index="7" aria-label="查看当前粒子边界版本">
+            <img src="assets/drafts/08-ip-particle-boundary.png" alt="当前粒子边界IP页面" />
+            <span><b>V.08</b> 粒子边界</span>
+          </button>
+        </div>
+
+        <aside class="version-readout" aria-live="polite">
+          <span id="version-number">08 / 08</span>
+          <p id="version-date">2026.08.20</p>
+          <h2 id="version-title">粒子边界 IP</h2>
+          <p id="version-note">线稿与三维对应、角色坠落、粒子缝合，形成当前版。</p>
+          <button id="inspect-current" type="button">放大查看 <span>↗</span></button>
+        </aside>
+
+        <div class="strata-controls" aria-label="版本切换">
+          <button id="prev-version" type="button" aria-label="上一个版本">←</button>
+          <div class="version-rail" aria-hidden="true"><i id="version-progress"></i></div>
+          <button id="next-version" type="button" aria-label="下一个版本">→</button>
+        </div>
+
+        <a class="scroll-cue" href="#library"><span>SCROLL TO UNFOLD</span><i aria-hidden="true"></i></a>
+      </section>
+
+      <div class="flow-seam seam-dark-paper" aria-hidden="true">
+        <span class="seam-sheet seam-sheet-a"></span>
+        <span class="seam-sheet seam-sheet-b"></span>
+        <span class="seam-sheet seam-sheet-c"></span>
+      </div>
+
+      <section class="archive-library chapter" id="library" data-chapter="INDEX" data-count="02 — 04" data-zk-surface="light">
+        <header class="section-heading">
+          <div>
+            <p class="eyebrow">ACT 02 · MATERIAL INDEX</p>
+            <h2>作品与过程<br />在同一条胶片上</h2>
+          </div>
+          <p>作品不是被塞进窗口里，而是作为画面、比例与节奏本身参与页面。滚轮会先翻动胶片；抵达首尾后，再继续浏览页面。</p>
+        </header>
+
+        <div class="archive-switch" role="tablist" aria-label="档案类型">
+          <button class="is-active" type="button" role="tab" aria-selected="true" data-filter="works">作品</button>
+          <button type="button" role="tab" aria-selected="false" data-filter="drafts">网页草案</button>
+          <button type="button" role="tab" aria-selected="false" data-filter="decisions">取舍记录</button>
+        </div>
+
+        <div class="film-viewport" id="film-viewport" data-zk-local-wheel tabindex="0" aria-label="横向作品胶片，使用滚轮、方向键或前后按钮浏览">
+          <div class="film-track" id="film-track">
+            <button class="film-item film-item-wide" type="button" data-kind="works" data-title="The Price of Ending War" data-meta="Gauth 历史课 · The Pacific War" data-url="https://www.gauth.com/course/the-price-of-ending-war">
+              <img src="assets/works/01-price-of-ending-war.png" alt="个人视觉叙事作品一" />
+              <span class="film-action">打开官方课程 <i aria-hidden="true">↗</i></span>
+            </button>
+            <button class="film-item film-item-wide" type="button" data-kind="works" data-title="Lied Into the Trenches" data-meta="Gauth 历史课 · World War I" data-url="https://www.gauth.com/course/lied-into-the-trenches">
+              <img src="assets/works/02-lied-into-trenches.png" alt="个人视觉叙事作品二" />
+              <span class="film-action">打开官方课程 <i aria-hidden="true">↗</i></span>
+            </button>
+            <button class="film-item film-item-wide" type="button" data-kind="works" data-title="From Samurai to Smokestacks" data-meta="Gauth 历史课 · Meiji Restoration" data-url="https://www.gauth.com/course/from-samurai-to-smokestacks">
+              <img src="assets/works/03-samurai-smoke.png" alt="个人视觉叙事作品三" />
+              <span class="film-action">打开官方课程 <i aria-hidden="true">↗</i></span>
+            </button>
+            <button class="film-item film-item-wide" type="button" data-kind="works" data-title="Crossing the Ocean Wall" data-meta="Gauth 历史课 · Age of Exploration" data-url="https://www.gauth.com/course/crossing-the-ocean-wall">
+              <img src="assets/works/04-ocean-wall.png" alt="个人视觉叙事作品四" />
+              <span class="film-action">打开官方课程 <i aria-hidden="true">↗</i></span>
+            </button>
+            <button class="film-item film-item-wide" type="button" data-kind="works" data-title="Gauth 课程体系" data-meta="8 门历史课程 · 官方课程目录" data-url="https://www.gauth.com/course">
+              <img src="assets/works/05-gauth-course-index.png" alt="Gauth课程作品内容" />
+              <span class="film-action">查看课程目录 <i aria-hidden="true">↗</i></span>
+            </button>
+            <button class="film-item film-item-wide" type="button" data-kind="works" data-title="佛小仙 · 角色影像" data-meta="个人原创 IP">
+              <img src="assets/works/06-foxiaoxian-film.png" alt="佛小仙角色影像作品" />
+            </button>
+            <button class="film-item film-item-wide" type="button" data-kind="works" data-title="AYAO · 黑龙主视觉" data-meta="个人 IP · 主视觉">
+              <img src="assets/works/07-ayao-dragon-main.jpg" alt="阿瑶与黑龙的主视觉作品" />
+            </button>
+            <button class="film-item film-item-wide" type="button" data-kind="works" data-title="《岁神：守护》" data-meta="角色镜头 · 画轴场景">
+              <img src="assets/works/08-story-portal.webp" alt="岁神守护角色穿越画轴场景" />
+            </button>
+
+            <button class="film-item film-item-wide" type="button" data-kind="drafts" data-title="首页框架拆解" data-meta="V.01 · 2026.08.10">
+              <img src="assets/drafts/01-homepage-collection.png" alt="首页框架拆解版本缩略图" />
+            </button>
+            <button class="film-item" type="button" data-kind="drafts" data-title="身份卡入口" data-meta="V.02 · 2026.08.11">
+              <img src="assets/drafts/02-identity-card.png" alt="身份卡入口版本缩略图" />
+            </button>
+            <button class="film-item film-item-wide" type="button" data-kind="drafts" data-title="粒子光谱" data-meta="V.04 · 2026.08.13">
+              <img src="assets/drafts/04-particle-spectrum.png" alt="粒子光谱版本缩略图" />
+            </button>
+            <button class="film-item film-item-wide" type="button" data-kind="drafts" data-title="经历轨道" data-meta="V.05 · 2026.08.17">
+              <img src="assets/drafts/05-experience-orbit.png" alt="经历轨道版本缩略图" />
+            </button>
+            <button class="film-item film-item-wide" type="button" data-kind="drafts" data-title="IP 连续世界" data-meta="V.06 · 2026.08.17">
+              <img src="assets/drafts/06-ip-continuous-world.png" alt="IP连续世界版本缩略图" />
+            </button>
+            <button class="film-item film-item-wide" type="button" data-kind="drafts" data-title="粒子边界" data-meta="V.08 · 2026.08.20">
+              <img src="assets/drafts/08-ip-particle-boundary.png" alt="当前粒子边界版本缩略图" />
+            </button>
+
+            <article class="film-item decision-frame" data-kind="decisions">
+              <span>KEEP · 01</span><h3>可读的粒子标题</h3><p>粒子承担气质，实体字承担阅读。</p>
+            </article>
+            <article class="film-item decision-frame" data-kind="decisions">
+              <span>KEEP · 02</span><h3>英文四项导航</h3><p>WORK / IP / ARCHIVE / ABOUT 保持克制。</p>
+            </article>
+            <article class="film-item decision-frame is-drop" data-kind="decisions">
+              <span>DROP · 01</span><h3>PPT 式分屏</h3><p>取消一屏一页的硬切与卡片堆叠。</p>
+            </article>
+            <article class="film-item decision-frame is-drop" data-kind="decisions">
+              <span>DROP · 02</span><h3>整页截图嵌入</h3><p>作品进入版式，不再作为网页窗口。</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="film-readout" aria-live="polite">
+          <div class="film-nav" aria-label="胶片翻页">
+            <button id="film-prev" type="button" aria-label="上一张作品">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7" /></svg>
+            </button>
+            <button id="film-next" type="button" aria-label="下一张作品">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg>
+            </button>
+          </div>
+          <span id="film-index">01 / 08</span>
+          <h3 id="film-title">视觉实验 01</h3>
+          <p id="film-meta">个人作品 · 视觉叙事</p>
+          <div class="film-dots" id="film-dots" aria-label="胶片进度"></div>
+          <div class="drag-hint"><i aria-hidden="true"></i> DRAG / WHEEL / KEYS</div>
+        </div>
+      </section>
+
+      <div class="flow-seam seam-paper-graphite" aria-hidden="true">
+        <div class="seam-film-ribbon">
+          <figure><img src="assets/works/03-samurai-smoke.png" alt="" /></figure>
+          <figure class="seam-video-frame">
+            <video muted loop playsinline preload="metadata" poster="assets/works/08-story-portal.webp">
+              <source src="../ip-v5-particle-boundary-fall-concept/assets/media/suishen-foxian-final.mp4#t=0.1" type="video/mp4" />
+            </video>
+          </figure>
+          <figure><img src="assets/works/07-ayao-dragon-main.jpg" alt="" /></figure>
+          <figure><img src="assets/drafts/08-ip-particle-boundary.png" alt="" /></figure>
+        </div>
+        <div class="seam-light-sweep"></div>
+      </div>
+
+      <section class="decision-section chapter" id="decisions" data-chapter="DECISIONS" data-count="03 — 04" data-zk-surface="dark">
+        <header class="section-heading decision-heading">
+          <div>
+            <p class="eyebrow">ACT 03 · DECISION LEDGER</p>
+            <h2>定版不是灵光一现<br />是持续删去不合适的东西</h2>
+          </div>
+          <div class="decision-stat"><strong data-count-up="8">0</strong><span>个阶段被保留在本站档案</span></div>
+        </header>
+
+        <div class="decision-ledger">
+          <button type="button" data-state="keep"><span>01</span><b>保留</b><h3>暗调与局部高亮</h3><p>用层次代替一麻黑。</p><i>↗</i></button>
+          <button type="button" data-state="keep"><span>02</span><b>保留</b><h3>身份卡角色三态</h3><p>悬停观察、点击换装、黑龙角响应。</p><i>↗</i></button>
+          <button type="button" data-state="keep"><span>03</span><b>保留</b><h3>连续的叙事动线</h3><p>页面之间共享材质、颜色与运动方向。</p><i>↗</i></button>
+          <button type="button" data-state="drop"><span>04</span><b>舍弃</b><h3>大面积具象背景</h3><p>它压过内容，也削弱了粒子实验感。</p><i>×</i></button>
+          <button type="button" data-state="drop"><span>05</span><b>舍弃</b><h3>不规则 Logo 与多余说明</h3><p>统一形状，只让关键信息显眼。</p><i>×</i></button>
+          <button type="button" data-state="drop"><span>06</span><b>舍弃</b><h3>截图墙与窗口嵌套</h3><p>画面成为网页构图的一部分。</p><i>×</i></button>
+        </div>
+      </section>
+
+      <section class="next-chapter chapter" id="next-about" data-chapter="ABOUT" data-count="04 — 04" data-zk-surface="dark">
+        <div class="next-aura" aria-hidden="true"></div>
+        <p class="eyebrow">NEXT · ABOUT</p>
+        <h2>档案之后，<br />回到创作者本人。</h2>
+        <p>从版本档案继续前往创作者本人，查看经历、方法与持续运行的内容系统。</p>
+        <a class="next-about-link" href="../about-v1-identity-spectrum-concept/index.html">进入 ABOUT <span>→</span></a>
+        <footer>
+          <span>ARCHIVE LOG · 08</span>
+          <span>STARTED 2026.08.10</span>
+        </footer>
+      </section>
+    </main>
+
+    <dialog class="inspect-dialog" id="inspect-dialog">
+      <button class="dialog-close" type="button" aria-label="关闭放大视图">×</button>
+      <div class="dialog-copy">
+        <span id="dialog-version">V.08 · 2026.08.20</span>
+        <h2 id="dialog-title">粒子边界 IP</h2>
+        <p id="dialog-note">线稿与三维对应、角色坠落、粒子缝合，形成当前版。</p>
+      </div>
+      <figure><img id="dialog-image" src="assets/drafts/08-ip-particle-boundary.png" alt="放大的网页版本画面" /></figure>
+    </dialog>
+
+    <script src="../shared/cursor-system.js?v=iframe-pointer-v2"></script>
+    <script src="../shared/continuous-child.js?v=single-edition-v1"></script>
+    <script src="../shared/site-bridge.js"></script>
+    <script src="app.js?v=rail-input-v3"></script>
+  </body>
+</html>

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="张可欣的个人创作轨道：作品、原创 IP、形成记录与 AI 创作方法。"
+    />
+    <meta name="theme-color" content="#070809" />
+    <link rel="icon" href="data:," />
+    <title>PERSONAL ORBIT｜张可欣个人网站</title>
+    <script src="./audio-bootstrap.js?v=first-gesture-v2"></script>
+    <link rel="stylesheet" href="./continuous.css?v=single-edition-v1" />
+  </head>
+  <body class="is-composing">
+    <a class="skip-link" href="#home">跳到网站正文</a>
+
+    <header class="orbit-header" aria-label="网站章节导航">
+      <button class="orbit-brand" type="button" data-go="home" aria-label="返回首页">
+        <span class="orbit-mark" aria-hidden="true"></span>
+        <span>PERSONAL ORBIT</span>
+      </button>
+
+      <nav class="orbit-nav" aria-label="五个内容板块">
+        <button class="is-active" type="button" data-go="home" aria-current="page">HOME</button>
+        <button type="button" data-go="work">WORK</button>
+        <button type="button" data-go="ip">IP</button>
+        <button type="button" data-go="archive">ARCHIVE</button>
+        <button type="button" data-go="about">ABOUT</button>
+      </nav>
+
+      <div class="orbit-readout" aria-live="polite">
+        <span data-active-name>HOME</span>
+        <span data-active-count>01 — 05</span>
+      </div>
+    </header>
+
+    <div class="scroll-progress" aria-hidden="true"><i></i></div>
+    <button class="orbit-sound" type="button" data-global-sound aria-pressed="false" aria-label="开启网站环境音乐">
+      <span class="sound-glyph" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <span data-global-sound-label>SOUND OFF</span>
+    </button>
+    <canvas class="seam-particles" data-seam-particles aria-hidden="true"></canvas>
+
+    <main class="continuous-story" data-continuous-story>
+      <section class="chapter-shell chapter-home" id="home" data-chapter="home" data-index="0">
+        <div class="chapter-stage">
+          <iframe
+            src="./prototypes/homepage-v9-particle-spectrum-concept/index.html?audio=first-gesture-v4&amp;bridge=sound-resume-v1"
+            title="HOME — PERSONAL ORBIT"
+            scrolling="no"
+            loading="eager"
+          ></iframe>
+        </div>
+        <div class="chapter-seam" aria-hidden="true"></div>
+      </section>
+
+      <section class="chapter-shell chapter-work" id="work" data-chapter="work" data-index="1">
+        <div class="chapter-stage">
+          <iframe
+            src="./prototypes/work-v2-reference-orbit-concept/index.html?bridge=sound-resume-v1"
+            title="WORK — 经历与实践"
+            scrolling="no"
+            loading="eager"
+          ></iframe>
+        </div>
+        <div class="chapter-seam" aria-hidden="true"></div>
+      </section>
+
+      <section class="chapter-shell chapter-ip" id="ip" data-chapter="ip" data-index="2">
+        <div class="chapter-stage">
+          <iframe
+            src="./prototypes/ip-v5-particle-boundary-fall-concept/index.html?bridge=sound-resume-v1"
+            title="IP — 佛小仙与阿瑶"
+            scrolling="no"
+            loading="eager"
+          ></iframe>
+        </div>
+        <div class="chapter-seam" aria-hidden="true"></div>
+      </section>
+
+      <section class="chapter-shell chapter-archive" id="archive" data-chapter="archive" data-index="3">
+        <div class="chapter-stage">
+          <iframe
+            src="./prototypes/archive-v1-version-strata-concept/index.html?input=rail-v6&amp;bridge=sound-resume-v1"
+            title="ARCHIVE — 网站形成记录"
+            scrolling="no"
+            loading="eager"
+          ></iframe>
+        </div>
+        <div class="chapter-seam" aria-hidden="true"></div>
+      </section>
+
+      <section class="chapter-shell chapter-about" id="about" data-chapter="about" data-index="4">
+        <div class="chapter-stage">
+          <iframe
+            src="./prototypes/about-v1-identity-spectrum-concept/index.html?bridge=sound-resume-v1"
+            title="ABOUT — 张可欣与 AI 创作链条"
+            scrolling="no"
+            loading="eager"
+          ></iframe>
+        </div>
+      </section>
+    </main>
+
+    <noscript>
+      <p class="noscript-note">请启用 JavaScript 体验连续章节与粒子交互。</p>
+    </noscript>
+    <script src="./prototypes/shared/cursor-system.js?v=iframe-pointer-v2" defer></script>
+  <script src="./continuous.js?v=single-edition-v1" defer></script>
+  </body>
+</html>

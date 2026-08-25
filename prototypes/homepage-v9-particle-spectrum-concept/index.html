@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="张可欣的个人作品入口：从 AIGC 内容策略、生成方法到可上线的 AI 产品体验。"
+    />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" href="data:," />
+    <title>PERSONAL ORBIT｜张可欣个人网站</title>
+    <script>try{if(sessionStorage.getItem("zk-route-transition"))document.documentElement.classList.add("zk-route-pending")}catch(_){}</script>
+    <script>if(window.parent!==window)document.documentElement.classList.add("zk-continuous-child")</script>
+    <link rel="stylesheet" href="../shared/brand-tokens.css" />
+    <link rel="stylesheet" href="../shared/site-bridge.css" />
+    <link rel="stylesheet" href="../shared/continuous-child.css" />
+<link rel="stylesheet" href="./styles.css?v=enter-skips-game-v1" />
+  </head>
+  <body class="is-loading" data-zk-surface="light">
+    <div class="intro-experience" data-intro-experience aria-live="polite">
+      <section class="intro-calibration" data-intro-calibration aria-label="网站加载与轨道校准">
+        <p class="calibration-label">ORBIT CALIBRATION</p>
+        <div class="calibration-orbit" data-intro-orbit aria-hidden="true">
+          <i></i><i></i><i></i>
+          <b class="orbit-satellite orbit-satellite-a"></b>
+          <b class="orbit-satellite orbit-satellite-b"></b>
+          <span class="orbit-crosshair"></span>
+        </div>
+        <button class="calibration-core" type="button" data-intro-core aria-label="完成校准并进入粒子世界">
+          <span aria-hidden="true"></span>
+        </button>
+        <p class="calibration-status" data-intro-status>正在校准个人轨道</p>
+        <div class="calibration-progress" aria-hidden="true"><i data-intro-calibration-progress></i></div>
+        <div class="calibration-readout" aria-hidden="true">
+          <span>31.2304° N</span>
+          <span>121.4737° E</span>
+          <span>2026 / PERSONAL FIELD</span>
+        </div>
+        <button class="intro-skip" type="button" data-intro-skip>跳过进入</button>
+      </section>
+
+      <section class="intro-portal" data-intro-portal aria-label="WORLD IN PROGRESS 粒子入口" aria-hidden="true">
+        <canvas class="intro-particles" data-intro-particles aria-hidden="true"></canvas>
+        <div class="portal-vignette" aria-hidden="true"></div>
+        <div class="portal-aperture" data-intro-aperture aria-hidden="true"></div>
+        <div class="portal-topline" aria-hidden="true">
+          <span>PERSONAL ORBIT</span>
+          <span data-intro-mode>FIELD / WORD</span>
+        </div>
+        <div class="signal-hud" aria-live="polite">
+          <span>SIGNAL</span>
+          <strong data-intro-signal-count>00 / 03</strong>
+          <small data-intro-signal-status>移动指针捕获创作信号</small>
+        </div>
+        <div class="signal-field" aria-label="收集三个创作信号以开启网站">
+          <button class="signal-node signal-node-a" type="button" data-intro-signal="0" aria-label="捕获信号 1"><i></i><span>01</span></button>
+          <button class="signal-node signal-node-b" type="button" data-intro-signal="1" aria-label="捕获信号 2"><i></i><span>02</span></button>
+          <button class="signal-node signal-node-c" type="button" data-intro-signal="2" aria-label="捕获信号 3"><i></i><span>03</span></button>
+        </div>
+        <button class="portal-skip" type="button" data-intro-portal-skip>跳过游戏</button>
+        <h2 class="sr-only">WORLD IN PROGRESS</h2>
+        <p class="portal-hint"><span>移动吸引</span><span>点击脉冲</span><span>收集三枚信号</span></p>
+        <div class="portal-hold-indicator" data-intro-hold-indicator aria-hidden="true">
+          <i></i><span>HOLD TO ORBIT</span>
+        </div>
+        <div class="portal-ticket">
+          <figure>
+            <img src="./assets/portrait-voxel-avatar.png" alt="张可欣的像素分身" width="1254" height="1254" />
+          </figure>
+          <div>
+            <strong>张可欣</strong>
+            <span>AIGC 内容策略 / AI 产品设计</span>
+          </div>
+          <button type="button" data-intro-enter disabled>
+            <span data-intro-enter-label>收集 3 枚信号</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M14 7l5 5-5 5" /></svg>
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <a class="skip-link" href="#home-intro">跳到首页正文</a>
+    <div class="page-progress" aria-hidden="true"><i data-page-progress></i></div>
+
+    <main aria-labelledby="page-title" data-app-root aria-busy="true">
+      <section class="opening" id="top" aria-label="个人网站入口">
+        <canvas class="pointer-field" data-pointer-field aria-hidden="true"></canvas>
+
+        <header class="site-header" aria-label="主导航">
+          <button class="wordmark" type="button" data-section="home">PERSONAL ORBIT</button>
+          <nav class="site-nav" aria-label="网站栏目">
+            <button type="button" data-section="work">WORK</button>
+            <button type="button" data-section="ip">IP</button>
+            <button type="button" data-section="archive">ARCHIVE</button>
+            <button type="button" data-section="about">ABOUT</button>
+          </nav>
+        </header>
+
+        <div class="hero-layout" id="home-intro">
+          <div class="hero-copy">
+            <h1 id="page-title">
+              <span>把 AI 创作，</span>
+              <span>变成可协作、可上线的</span>
+              <span class="warp-line" data-warp-line>
+                <span>内</span><span>容</span><span>系</span><span>统</span><b>。</b>
+              </span>
+            </h1>
+            <p class="hero-summary">
+              从内容生产到产品体验，我把审美判断、生成方法与真实协作串成一条可验证的路径。
+            </p>
+
+            <div class="route-console" data-route-console>
+              <p>你想先从哪里开始？</p>
+              <div class="route-tabs" role="tablist" aria-label="选择浏览方向" data-route-tabs>
+                <i class="route-indicator" data-route-indicator aria-hidden="true"></i>
+                <button class="is-active" type="button" role="tab" aria-selected="true" data-route-choice="work">代表项目</button>
+                <button type="button" role="tab" aria-selected="false" data-route-choice="ip">原创 IP</button>
+                <button type="button" role="tab" aria-selected="false" data-route-choice="archive">版本档案</button>
+                <button type="button" role="tab" aria-selected="false" data-route-choice="about">关于我</button>
+              </div>
+              <p class="route-preview" data-route-preview>从内容生产到真实产品体验</p>
+            </div>
+
+            <div class="hero-actions">
+              <button class="primary-action" type="button" data-route-open>
+                <span data-route-action>查看代表项目</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18 18 6M9 6h9v9" /></svg>
+              </button>
+              <a class="secondary-action" href="../work-v2-reference-orbit-concept/workflow-public/index.html">
+                <span>进入 AI 工作台</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M14 7l5 5-5 5" /></svg>
+              </a>
+            </div>
+          </div>
+
+          <aside class="identity-field" aria-label="能力路径与个人身份">
+            <svg class="route-map" viewBox="0 0 640 580" aria-hidden="true">
+              <path class="route-path" data-route-path d="M54 72 C190 70 214 132 210 190 C206 248 286 236 316 302 C344 360 306 420 378 458 C426 484 460 482 506 470" />
+              <path class="route-path route-path-soft" d="M210 190 C294 170 354 182 388 222 C414 252 432 282 470 300" />
+            </svg>
+            <span class="capability capability-a" data-capability="内容策略">内容策略</span>
+            <span class="capability capability-b" data-capability="生成方法">生成方法</span>
+            <span class="capability capability-c" data-capability="协作流程">协作流程</span>
+            <span class="capability capability-d" data-capability="产品体验">产品体验</span>
+
+            <button class="avatar-lens" type="button" data-avatar-control aria-label="切换像素分身状态">
+              <span class="lens-rings" aria-hidden="true"></span>
+              <img class="avatar-layer avatar-idle" src="./assets/portrait-voxel-avatar.png" alt="张可欣的像素分身" width="1254" height="1254" />
+              <img class="avatar-layer avatar-hover" src="./assets/avatar-hover-dragon-observer.png" alt="" width="1254" height="1254" aria-hidden="true" />
+              <img class="avatar-layer avatar-click" src="./assets/avatar-click-dragon-maker.png" alt="" width="1254" height="1254" aria-hidden="true" />
+            </button>
+            <div class="identity-label">
+              <i aria-hidden="true"></i>
+              <span>张可欣 / AIGC 内容策略 / AI 产品设计</span>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="system-story" id="selected-system" aria-labelledby="system-title" data-system-story>
+        <div class="system-sticky" data-system-sticky>
+          <div class="system-frame" data-system-frame>
+            <img
+              class="system-media"
+              src="./assets/selected-system-gauth-v1.png"
+              alt="从课程结构、分镜、课件到视频版本对比的 AI 内容生产流程"
+              width="1672"
+              height="942"
+            />
+            <div class="system-shade" aria-hidden="true"></div>
+            <div class="system-meta">
+              <p>SELECTED SYSTEM / 代表案例</p>
+              <h2 id="system-title">Gauth AI 内容生产体系</h2>
+              <span>从课程研发到视频生产的全链路内容系统</span>
+              <a href="../work-v2-reference-orbit-concept/index.html">滚动展开案例 <b>→</b></a>
+            </div>
+            <p class="system-scroll">滚动展开案例 <span>↓</span></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="site-life" id="site-life" aria-labelledby="site-life-title">
+        <div class="life-intro">
+          <p>WORLD IN PROGRESS</p>
+          <h2 id="site-life-title">这个网站仍在形成。</h2>
+          <span>作品、方法与每一次取舍都会被继续记录。</span>
+        </div>
+        <div class="life-metrics" aria-label="网站形成记录">
+          <p><strong data-runtime>000</strong><span>天</span><small>本站持续运行</small></p>
+          <p><strong>08</strong><span>版</span><small>网页阶段被保留</small></p>
+        </div>
+        <footer class="site-footer">
+          <span>PERSONAL ORBIT · 2026</span>
+          <a href="#top">返回首页顶部</a>
+        </footer>
+      </section>
+    </main>
+
+    <p class="sr-only" aria-live="polite" data-live-region></p>
+    <noscript><p class="noscript-note">请启用 JavaScript 体验首页交互。</p></noscript>
+    <script src="../shared/cursor-system.js" defer></script>
+    <script src="../shared/continuous-child.js?v=single-edition-v1" defer></script>
+    <script src="../shared/site-bridge.js" defer></script>
+  <script src="./intro.js?v=enter-skips-game-v1" defer></script>
+    <script src="./app.js" defer></script>
+  </body>
+</html>

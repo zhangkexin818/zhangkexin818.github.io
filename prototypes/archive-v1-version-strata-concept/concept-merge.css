@@ -1,0 +1,96 @@
+/* Accepted concept, isolated as the final content-visual layer. */
+@media (min-width: 961px) {
+  .film-track {
+    padding-inline: calc(50vw - clamp(230px, 20vw, 320px));
+  }
+}
+
+/* Final-page palette lock: remove the legacy teal/green state and close the
+   Archive chapter in the same plum-violet atmosphere as the portfolio. */
+.decision-frame.is-drop {
+  background: radial-gradient(circle at 80% 30%, rgba(139, 44, 194, .11), transparent 34%), #211a25;
+}
+
+.decision-ledger button[data-state="drop"]::before {
+  background: linear-gradient(90deg, rgba(139, 44, 194, .12), transparent 70%);
+}
+
+.decision-ledger button[data-state="drop"] b {
+  color: #c7a8dc;
+}
+
+.next-chapter {
+  min-height: calc(100svh + 2px);
+  margin-bottom: -2px;
+  background:
+    radial-gradient(circle at 50% 58%, rgba(100, 21, 154, .2), transparent 40%),
+    radial-gradient(circle at 76% 28%, rgba(139, 44, 194, .08), transparent 34%),
+    linear-gradient(180deg, #08070b 0%, #100914 64%, #08070b 100%);
+}
+
+.next-aura {
+  border-color: rgba(139, 44, 194, .18);
+  box-shadow: 0 0 110px rgba(100, 21, 154, .16);
+}
+
+/* Film clarity pass: keep the transition light behind the film, remove the
+   white focus mat, and preserve the decision cards' dark reading surface. */
+.seam-paper-graphite::after {
+  z-index: 1;
+  opacity: .3;
+  filter: blur(26px);
+}
+
+.seam-film-ribbon {
+  z-index: 3;
+}
+
+.film-item.is-focused {
+  padding: 0;
+  border-color: transparent;
+  background-color: #17131d;
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, .38),
+    0 0 0 1px rgba(139, 44, 194, .34),
+    0 0 54px rgba(100, 21, 154, .14);
+}
+
+.film-item.is-focused img,
+.film-item.is-focused video {
+  display: block;
+  border-radius: inherit;
+  transform: scale(1.004);
+}
+
+.decision-frame.is-focused {
+  padding: clamp(28px, 3vw, 38px);
+  color: #f3f1f7;
+  background:
+    radial-gradient(circle at 20% 18%, rgba(139, 44, 194, .14), transparent 34%),
+    #17131d;
+}
+
+.decision-frame.is-drop.is-focused {
+  background:
+    radial-gradient(circle at 80% 30%, rgba(139, 44, 194, .12), transparent 34%),
+    #211a25;
+}
+
+.decision-frame.is-focused::after {
+  z-index: 0;
+  opacity: .38;
+  background: linear-gradient(180deg, transparent 54%, rgba(8, 7, 11, .58));
+}
+
+.decision-frame.is-focused::before,
+.decision-frame.is-focused > * {
+  z-index: 2;
+}
+
+.decision-frame.is-focused h3 {
+  color: #f3f1f7;
+}
+
+.decision-frame.is-focused p {
+  color: rgba(243, 241, 247, .64);
+}

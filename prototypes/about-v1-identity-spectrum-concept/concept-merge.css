@@ -1,0 +1,80 @@
+/* Accepted concept, isolated as the final content-visual layer. */
+@media (min-width: 961px) {
+  .method + .chapter-bridge.bridge-archive {
+    height: clamp(440px, 32vw, 520px);
+  }
+
+  .bridge-media-source figure:nth-child(1) {
+    bottom: 6%;
+    left: 13%;
+    width: clamp(220px, 23vw, 368px);
+  }
+
+  .bridge-media-source figure:nth-child(2) {
+    top: 34%;
+    right: auto;
+    left: 43%;
+    width: clamp(205px, 20vw, 320px);
+  }
+
+  .bridge-media-source figure:nth-child(3) {
+    top: 12%;
+    right: 5%;
+    width: clamp(190px, 18.5vw, 296px);
+  }
+
+  .bridge-media-source figure:nth-child(4) {
+    --bridge-depth: 18px;
+    --bridge-tilt: 3deg;
+    right: 24%;
+    bottom: 0;
+    width: clamp(170px, 16vw, 256px);
+    aspect-ratio: 16 / 9;
+  }
+
+  .bridge-media-source figure:nth-child(5) {
+    --bridge-depth: -16px;
+    --bridge-tilt: -2deg;
+    right: -2%;
+    bottom: 12%;
+    width: clamp(165px, 15vw, 240px);
+    aspect-ratio: 16 / 9;
+  }
+
+  #archive-sources {
+    padding-top: clamp(4.5rem, 5vw, 5rem);
+  }
+
+  .archive-copy h2 {
+    margin: .8rem 0 1rem;
+    font-size: clamp(2.4rem, 3.2vw, 3.4rem);
+    line-height: 1.12;
+  }
+
+  .source-links {
+    margin-top: clamp(2.5rem, 3vw, 3rem);
+  }
+
+  .source-link {
+    min-height: 116px;
+  }
+}
+
+@media (max-width: 760px) {
+  .bridge-media-source figure:nth-child(4) {
+    display: none;
+  }
+
+  .bridge-media-source figure:nth-child(5) {
+    --bridge-depth: -12px;
+    --bridge-tilt: 3deg;
+    right: -22%;
+    bottom: 5%;
+    width: 52vw;
+    aspect-ratio: 16 / 9;
+  }
+
+  #archive-sources {
+    padding-top: 5.5rem;
+  }
+}

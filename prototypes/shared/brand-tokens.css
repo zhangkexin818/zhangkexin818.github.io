@@ -1,0 +1,21 @@
+:root {
+  --brand-paper: #ffffff;
+  --brand-carbon: #090a0b;
+  --brand-ink: #141618;
+  --brand-mineral: #777a7d;
+  --brand-hairline: #d9dbda;
+  /* Portfolio pages 01–03: cold black, deep plum, electric violet, silver white. */
+  --brand-violet: #64159a;
+  --brand-violet-bright: #8b2cc2;
+  --brand-violet-deep: #300048;
+  --brand-violet-rgb: 100 21 154;
+  --brand-violet-bright-rgb: 139 44 194;
+  --brand-media: #08070b;
+  --brand-media-ink: #f3f1f7;
+  /* Legacy aliases keep older embedded pages on the same visual system. */
+  --brand-copper: var(--brand-violet);
+  --brand-copper-rgb: var(--brand-violet-rgb);
+  --brand-carbon-rgb: 9 10 11;
+  --brand-ease-out: cubic-bezier(0.22, 0.72, 0.16, 1);
+  --brand-ease-spring: cubic-bezier(0.2, 0.88, 0.24, 1.12);
+}

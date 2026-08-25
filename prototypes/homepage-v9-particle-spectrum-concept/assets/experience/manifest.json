@@ -1,0 +1,57 @@
+[
+  {
+    "id": "doubao-aixue",
+    "name": "豆包爱学",
+    "asset": "./doubao-aixue.png",
+    "visualTier": "center",
+    "url": "https://apps.apple.com/cn/app/id6469102455",
+    "linkType": "官方 App Store",
+    "role": "AI 创意设计实习生｜Gauth 产品设计部",
+    "period": "2026.4—2026.8",
+    "scope": "AI 视频课内容生产体系国内分支；直接负责豆包爱学相关内容"
+  },
+  {
+    "id": "gauth",
+    "name": "Gauth",
+    "asset": "./gauth.png",
+    "visualTier": "center",
+    "url": "https://www.gauth.com/course",
+    "linkType": "官方课程主页",
+    "role": "AI 创意设计实习生｜Gauth 产品设计部",
+    "period": "2026.4—2026.8",
+    "scope": "AI 视频课内容生产体系海外分支；直接负责 8 门 Gauth 历史课"
+  },
+  {
+    "id": "heli-culture",
+    "name": "赫里文化",
+    "asset": "./heli-culture.png",
+    "visualTier": "outer",
+    "url": "https://www.east2046.com/",
+    "linkType": "参与项目官网",
+    "role": "策展助理实习生｜国际品牌部",
+    "period": "2025.10—2026.7",
+    "scope": "AIGC 新媒体传播；参与 EAST2046、米兰设计周等国际项目策展与社群运营"
+  },
+  {
+    "id": "tinglan-art-museum",
+    "name": "庭澜美术馆",
+    "asset": "./tinglan-art-museum.jpg",
+    "visualTier": "outer",
+    "url": "https://mp.weixin.qq.com/s/QtsA3fRDpgu7jgaRwXPZdA",
+    "linkType": "微信公众号文章｜纸上·至上 2024",
+    "role": "内容运营",
+    "period": "2025.10—2026.7",
+    "scope": "AIGC 视觉内容运营；完成 100+ 位艺术家作品的风格分类与初筛评审"
+  },
+  {
+    "id": "taowhale",
+    "name": "鲸海拾贝",
+    "asset": "./taowhale.png",
+    "visualTier": "outer",
+    "url": "https://www.taowhale.com/",
+    "linkType": "官方网站",
+    "role": "课程助教｜AI 商业创新部",
+    "period": "2025.12—2026.3",
+    "scope": "为 600+ 学员提供 AI 设计指导；统筹 AI 漫剧全流程并搭建标准化 SOP"
+  }
+]
