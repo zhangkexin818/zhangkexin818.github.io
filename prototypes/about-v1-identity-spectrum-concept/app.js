@@ -535,6 +535,96 @@
     sync();
   }
 
+  function setupAigcLab() {
+    const section = q(".aigc-exploration");
+    if (!section) return;
+
+    const posters = qa(".aigc-film img[loading='lazy']", section);
+    const warmPoster = (image) => {
+      image.loading = "eager";
+      image.fetchPriority = "low";
+      image.decode?.().catch(() => {});
+    };
+
+    if ("IntersectionObserver" in window) {
+      const posterObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          warmPoster(entry.target);
+          observer.unobserve(entry.target);
+        });
+      }, { rootMargin: "2200px 0px" });
+      posters.forEach((image) => posterObserver.observe(image));
+    } else {
+      posters.forEach(warmPoster);
+    }
+
+    if (!reducedMotion) {
+      document.documentElement.classList.add("aigc-motion-ready");
+      const reveal = () => {
+        const bounds = section.getBoundingClientRect();
+        if (bounds.top < window.innerHeight * 1.12 && bounds.bottom > 0) {
+          section.classList.add("is-present");
+        }
+      };
+      window.addEventListener("scroll", reveal, { passive: true });
+      window.addEventListener("zk:continuous-scroll", reveal);
+      window.addEventListener("resize", reveal, { passive: true });
+      reveal();
+    } else {
+      section.classList.add("is-present");
+    }
+
+    const dialog = q("[data-aigc-lightbox]");
+    const video = q("[data-aigc-lightbox-video]", dialog);
+    const caption = q("[data-aigc-lightbox-caption]", dialog);
+    const closeButton = q("[data-aigc-close]", dialog);
+    const triggers = qa("[data-aigc-video]", section);
+    if (!dialog || !video || !caption || !closeButton || !triggers.length) return;
+
+    let activeTrigger = null;
+    const reset = () => {
+      video.pause();
+      video.removeAttribute("src");
+      video.removeAttribute("poster");
+      video.load();
+      document.body.classList.remove("is-aigc-lightbox-open");
+      if (activeTrigger) activeTrigger.focus({ preventScroll: true });
+      activeTrigger = null;
+    };
+
+    const close = () => {
+      if (dialog.open && typeof dialog.close === "function") dialog.close();
+      else {
+        dialog.removeAttribute("open");
+        reset();
+      }
+    };
+
+    triggers.forEach((trigger) => {
+      trigger.addEventListener("click", () => {
+        activeTrigger = trigger;
+        video.src = trigger.dataset.aigcVideo;
+        video.poster = trigger.dataset.aigcPoster || "";
+        caption.textContent = trigger.dataset.aigcCaption || "AIGC 风格化探索";
+        document.body.classList.add("is-aigc-lightbox-open");
+        if (typeof dialog.showModal === "function") dialog.showModal();
+        else dialog.setAttribute("open", "");
+        video.play().catch(() => {});
+      });
+    });
+
+    closeButton.addEventListener("click", close);
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) close();
+    });
+    dialog.addEventListener("close", reset);
+    dialog.addEventListener("cancel", (event) => {
+      event.preventDefault();
+      close();
+    });
+  }
+
   function setupPageTransitions() {
     if (window.ZKRoute?.navigate) return;
     const localLinks = qa("a[href]").filter((link) => {
@@ -669,6 +759,7 @@
   setupMethod();
   setupChapterMotion();
   setupBridgeMotion();
+  setupAigcLab();
   setupPageTransitions();
   setupRuntime();
   setupSound();

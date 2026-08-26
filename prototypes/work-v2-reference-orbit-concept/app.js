@@ -743,7 +743,7 @@
   });
 
   const warmEvidencePosters = () => {
-    document.querySelectorAll(".aigc-film img[loading='lazy'], .course-tile-sample img[loading='lazy']").forEach((image) => {
+      document.querySelectorAll(".course-tile-sample img[loading='lazy']").forEach((image) => {
       image.loading = "eager";
       image.fetchPriority = "low";
       image.decode?.().catch(() => {});
