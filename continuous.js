@@ -38,6 +38,7 @@
   let audioPulseTimer = 0;
   let audioPulseStep = 0;
   let audioPulseToken = 0;
+  let audioStarting = false;
 
   shells.forEach((shell, index) => {
     const frame = shell.querySelector("iframe");
@@ -249,7 +250,10 @@
     audioContext = audioContext || new AudioEngine();
     if (audioContext.state === "suspended") await audioContext.resume();
     if (audioVoices.length) return;
+    if (audioStarting) return;
+    audioStarting = true;
 
+    try {
     audioMaster = audioContext.createGain();
     const lowpass = audioContext.createBiquadFilter();
     const compressor = audioContext.createDynamicsCompressor();
@@ -311,6 +315,9 @@
     if (soundLabel) soundLabel.textContent = "SOUND ON";
     if (remember) {
       try { localStorage.setItem("zk-ambient-sound", "on"); } catch (_) { /* storage unavailable */ }
+    }
+    } finally {
+      audioStarting = false;
     }
   }
 
@@ -374,7 +381,8 @@
       const maxLocal = Math.max(0, shell.offsetHeight - viewport);
       const local = clamp(y - top, 0, maxLocal);
       const record = [...frameMap.values()].find((item) => item.shell === shell);
-      if (record) {
+      const isNearViewport = y + viewport * 1.5 >= top && y - viewport * 0.5 <= top + shell.offsetHeight;
+      if (record && isNearViewport) {
         record.frame.contentWindow?.postMessage({
           type: "zk:set-scroll",
           y: local,

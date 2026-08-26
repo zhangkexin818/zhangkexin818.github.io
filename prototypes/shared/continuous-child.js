@@ -13,6 +13,7 @@
   const pageName = pageMap.find(([needle]) => location.pathname.includes(needle))?.[1] || "unknown";
   let measureTimer = 0;
   let lastHeight = 0;
+  let lastLoading = null;
   let lastSurface = "";
   let touchY = null;
   let touchOwnedLocally = false;
@@ -50,10 +51,11 @@
         document.body?.scrollHeight || 0,
         window.innerHeight
       );
-      if (Math.abs(lastHeight - height) > 1 || !lastHeight) {
-        lastHeight = height;
-      }
-      window.parent.postMessage({ type: "zk:height", height, loading: isLoading() }, "*");
+      const loading = isLoading();
+      if (lastHeight && Math.abs(lastHeight - height) <= 2 && lastLoading === loading) return;
+      lastHeight = height;
+      lastLoading = loading;
+      window.parent.postMessage({ type: "zk:height", height, loading }, "*");
     }, 30);
   }
 
@@ -179,7 +181,6 @@
 
   const observer = new ResizeObserver(measure);
   if (document.body) observer.observe(document.body);
-  observer.observe(document.documentElement);
 
   if (document.body) {
     const classObserver = new MutationObserver(measure);

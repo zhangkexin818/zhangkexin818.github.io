@@ -45,7 +45,6 @@
   let pulse = null;
   let exitPoint = null;
   let particleMode = "word";
-  let gestureAudioContext = null;
 
   const pointer = {
     x: -1000,
@@ -61,17 +60,11 @@
   const clamp = (value, minimum = 0, maximum = 1) => Math.max(minimum, Math.min(maximum, value));
 
   function enableSiteSound() {
-    let primedContext = null;
     try {
-      const AudioEngine = window.AudioContext || window.webkitAudioContext;
-      if (AudioEngine) {
-        gestureAudioContext = gestureAudioContext || new AudioEngine();
-        if (gestureAudioContext.state === "suspended") void gestureAudioContext.resume();
-        primedContext = gestureAudioContext;
-      }
-    } catch (_) { /* AudioContext unavailable */ }
-    try {
-      window.parent?.ZKAudio?.enableFromGesture?.(primedContext);
+      // Build and resume the audio graph in the top-level document while the
+      // mobile tap is still an active user gesture. An iframe-owned context is
+      // not a dependable unlock token in iOS Safari.
+      window.parent?.ZKAudio?.enableFromGesture?.();
     } catch (_) { /* cross-origin parent */ }
     window.parent?.postMessage({ type: "zk:sound-on" }, "*");
   }
@@ -466,6 +459,10 @@
   skip?.addEventListener("click", skipGameAndEnterContent);
   portalSkip?.addEventListener("click", skipGameAndEnterContent);
   enter?.addEventListener("click", skipGameAndEnterContent);
+  [core, skip, portalSkip, enter, ...signalNodes].forEach((control) => {
+    control?.addEventListener("pointerdown", enableSiteSound, { passive: true });
+    control?.addEventListener("touchstart", enableSiteSound, { passive: true });
+  });
   signalNodes.forEach((node) => node.addEventListener("click", () => {
     enableSiteSound();
     collectSignal(node);
