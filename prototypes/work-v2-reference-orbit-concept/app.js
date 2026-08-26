@@ -742,6 +742,25 @@
     });
   });
 
+  const warmEvidencePosters = () => {
+    document.querySelectorAll(".aigc-film img[loading='lazy'], .course-tile-sample img[loading='lazy']").forEach((image) => {
+      image.loading = "eager";
+      image.fetchPriority = "low";
+      image.decode?.().catch(() => {});
+    });
+  };
+  const evidencePosterBoundary = document.querySelector(".case-evidence");
+  if (evidencePosterBoundary && "IntersectionObserver" in window) {
+    const posterObserver = new IntersectionObserver((entries, observer) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      warmEvidencePosters();
+      observer.disconnect();
+    }, { rootMargin: "3000px 0px" });
+    posterObserver.observe(evidencePosterBoundary);
+  } else {
+    warmEvidencePosters();
+  }
+
   document.querySelectorAll("[data-evidence-video]").forEach((trigger) => {
     trigger.addEventListener("click", () => {
       if (!evidenceLightbox || !evidenceLightboxVideo) return;
