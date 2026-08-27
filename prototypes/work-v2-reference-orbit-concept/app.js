@@ -515,12 +515,13 @@
   let workbenchActivated = false;
 
   function activateEvidenceGroup(group) {
-    if (!interviewMode || !group || group.dataset.mediaActivated === "true") return;
+    if (!group || group.dataset.mediaActivated === "true") return;
     group.dataset.mediaActivated = "true";
     group.querySelectorAll("img[data-src]").forEach((image) => {
       image.src = image.dataset.src;
       image.removeAttribute("data-src");
     });
+    if (!interviewMode) return;
     const videos = new Set();
     group.querySelectorAll("video[data-poster]").forEach((video) => {
       video.poster = video.dataset.poster;
@@ -545,8 +546,7 @@
     publicWorkbenchFrame.removeAttribute("data-src");
   }
 
-  function stageInterviewResources() {
-    if (!interviewMode) return;
+  function stageDeferredResources() {
     stagedEvidenceGroups.forEach((group) => {
       const bounds = group.getBoundingClientRect();
       if (bounds.top < window.innerHeight * 1.55 && bounds.bottom > -window.innerHeight * 0.4) {
@@ -589,7 +589,7 @@
 
   function updateProductionNarrative() {
     narrativeTicking = false;
-    stageInterviewResources();
+    stageDeferredResources();
     if (productionShell && workflowStages.length && Date.now() >= manualStageLockUntil) {
       const bounds = productionShell.getBoundingClientRect();
       const travel = Math.max(window.innerHeight, bounds.height - window.innerHeight * 0.72);

@@ -1342,6 +1342,15 @@ html:not([data-interview-mode="true"]) [data-interview-only] {
   display: none !important;
 }
 
+html:not([data-interview-mode="true"]) .gauth-hero-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+html:not([data-interview-mode="true"]) .gauth-launch-poster {
+  width: min(100%, 1180px);
+  margin-inline: auto;
+}
+
 html:not([data-interview-mode="true"]) .experience {
   min-height: max(820px, 100svh);
   box-shadow: inset 0 -1px 0 rgba(225, 225, 222, 0.9);
