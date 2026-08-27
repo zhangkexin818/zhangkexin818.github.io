@@ -1640,6 +1640,29 @@ main,
   }
 }
 
+/* Final viewport guard for the two cinematic evidence bridges. */
+body .bridge-media-experience figure:nth-child(3),
+body .bridge-media-source figure:nth-child(5) {
+  right: clamp(18px, 2.5vw, 40px);
+}
+
+@media (max-width: 760px) {
+  body .bridge-media-experience figure:nth-child(2) {
+    right: 4%;
+    width: 52vw;
+  }
+
+  body .bridge-media-source figure:nth-child(1) {
+    left: 4%;
+    width: 66vw;
+  }
+
+  body .bridge-media-source figure:nth-child(3) {
+    right: 4%;
+    width: 52vw;
+  }
+}
+
 /* Final bridge containment: keep every evidence card inside the chapter canvas. */
 .chapter-bridge,
 .bridge-media {
