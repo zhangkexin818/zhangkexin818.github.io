@@ -12,6 +12,12 @@
     <title>WORK V2｜张可欣个人网站</title>
     <script>try{if(sessionStorage.getItem("zk-route-transition"))document.documentElement.classList.add("zk-route-pending")}catch(_){}</script>
     <script>if(window.parent!==window)document.documentElement.classList.add("zk-continuous-child")</script>
+    <script>
+      (() => {
+        const enabled = new URLSearchParams(window.location.search).get("interview") === "1";
+        document.documentElement.dataset.interviewMode = enabled ? "true" : "false";
+      })();
+    </script>
     <link rel="stylesheet" href="../shared/site-bridge.css" />
     <link rel="stylesheet" href="../shared/continuous-child.css" />
     <link rel="stylesheet" href="./styles.css?v=aigc-film-index-v1" />
@@ -162,6 +168,7 @@
 
           <a
             class="experience-node node-doubao"
+            data-interview-only
             href="https://apps.apple.com/cn/app/id6469102455"
             target="_blank"
             rel="noopener noreferrer"
@@ -180,6 +187,7 @@
 
           <a
             class="experience-node node-gauth"
+            data-interview-only
             href="https://www.gauth.com/course"
             target="_blank"
             rel="noopener noreferrer"
@@ -220,6 +228,7 @@
 
         <button
           class="course-index-trigger"
+          data-interview-only
           type="button"
           data-course-toggle
           aria-expanded="false"
@@ -232,6 +241,7 @@
 
         <aside
           class="course-drawer"
+          data-interview-only
           id="gauth-course-drawer"
           data-course-drawer
           aria-hidden="true"
@@ -264,7 +274,7 @@
 
       </section>
 
-      <section class="case-evidence" id="case-evidence" aria-labelledby="case-evidence-title" data-zk-surface="light">
+      <section class="case-evidence" id="case-evidence" aria-labelledby="case-evidence-title" data-zk-surface="light" data-interview-only>
         <header class="case-evidence-intro">
           <div>
             <p>PRODUCT EVIDENCE · 2026</p>
@@ -273,7 +283,7 @@
           <p>从国内的豆包课堂，到海外的 Gauth AI Course：这里不再只陈列项目名称，而是把真实 UI、课程视频、发布报道与生产过程放回同一条体验路径。</p>
         </header>
 
-        <article class="evidence-chapter evidence-doubao" aria-labelledby="doubao-evidence-title">
+        <article class="evidence-chapter evidence-doubao" aria-labelledby="doubao-evidence-title" data-stage-media>
           <div class="evidence-copy">
             <p class="evidence-index">01 / PRODUCT UI</p>
             <h3 id="doubao-evidence-title">豆包爱学<br />沉浸式 AI 课堂</h3>
@@ -295,23 +305,23 @@
             </div>
             <div class="phone-reel" data-evidence-reel tabindex="0" aria-label="豆包爱学界面截图，可横向滚动">
               <button class="phone-shot is-featured" type="button" data-evidence-image="./assets/case-evidence/doubao/doubao-screen-01.png" data-evidence-caption="豆包爱学 · 精品课程首页">
-                <img src="./assets/case-evidence/doubao/doubao-screen-01.png" alt="豆包爱学精品课程首页，展示唐国强合作课程" loading="lazy" />
+                <img data-src="./assets/case-evidence/doubao/doubao-screen-01.png" alt="豆包爱学精品课程首页，展示唐国强合作课程" loading="lazy" />
                 <span>首页 / FEATURED</span>
               </button>
               <button class="phone-shot" type="button" data-evidence-image="./assets/case-evidence/doubao/doubao-screen-02.png" data-evidence-caption="豆包爱学 · 出师表专题课">
-                <img src="./assets/case-evidence/doubao/doubao-screen-02.png" alt="豆包爱学出师表专题课程列表" loading="lazy" />
+                <img data-src="./assets/case-evidence/doubao/doubao-screen-02.png" alt="豆包爱学出师表专题课程列表" loading="lazy" />
                 <span>专题 / SERIES</span>
               </button>
               <button class="phone-shot" type="button" data-evidence-image="./assets/case-evidence/doubao/doubao-screen-03.png" data-evidence-caption="豆包爱学 · 古诗分类课程">
-                <img src="./assets/case-evidence/doubao/doubao-screen-03.png" alt="豆包爱学古诗精品课程列表" loading="lazy" />
+                <img data-src="./assets/case-evidence/doubao/doubao-screen-03.png" alt="豆包爱学古诗精品课程列表" loading="lazy" />
                 <span>分类 / CATALOG</span>
               </button>
               <button class="phone-shot" type="button" data-evidence-image="./assets/case-evidence/doubao/doubao-screen-04.png" data-evidence-caption="豆包爱学 · 七步诗与岁时风物">
-                <img src="./assets/case-evidence/doubao/doubao-screen-04.png" alt="豆包爱学七步诗与岁时风物课程" loading="lazy" />
+                <img data-src="./assets/case-evidence/doubao/doubao-screen-04.png" alt="豆包爱学七步诗与岁时风物课程" loading="lazy" />
                 <span>内容 / STORY</span>
               </button>
               <button class="phone-shot" type="button" data-evidence-image="./assets/case-evidence/doubao/doubao-screen-05.png" data-evidence-caption="豆包爱学 · 课程浏览终点">
-                <img src="./assets/case-evidence/doubao/doubao-screen-05.png" alt="豆包爱学课程浏览页面" loading="lazy" />
+                <img data-src="./assets/case-evidence/doubao/doubao-screen-05.png" alt="豆包爱学课程浏览页面" loading="lazy" />
                 <span>长页 / JOURNEY</span>
               </button>
             </div>
@@ -329,17 +339,17 @@
             <p>电影化 PGC 课程与可创建的 UGC 学习路径并行：历史主题被拆成视频、结构化思维导图、自适应测验和 AI Tutor 可以接续理解的内容系统。</p>
           </header>
 
-          <div class="gauth-hero-grid">
+          <div class="gauth-hero-grid" data-stage-media>
             <figure class="gauth-launch-poster">
               <button type="button" data-evidence-image="./assets/case-evidence/gauth/seedance25-course-poster.png" data-evidence-caption="Gauth × Seedance 2.5 AI Course 发布主视觉">
-                <img src="./assets/case-evidence/gauth/seedance25-course-poster.png" alt="Gauth 与 Seedance 2.5 AI Course 发布主视觉" loading="lazy" />
+                <img data-src="./assets/case-evidence/gauth/seedance25-course-poster.png" alt="Gauth 与 Seedance 2.5 AI Course 发布主视觉" loading="lazy" />
                 <span class="media-open-mark" aria-hidden="true">↗</span>
               </button>
               <figcaption><span>LAUNCH VISUAL</span><strong>Gauth × Seedance 2.5</strong></figcaption>
             </figure>
             <figure class="gauth-course-film">
               <button class="media-window-trigger" type="button" aria-label="播放 Gauth 完整课程主视频" data-evidence-video="./assets/case-evidence/gauth/video/course-hero.mp4" data-evidence-poster="./assets/case-evidence/gauth/gauth-course-official.png" data-evidence-caption="Gauth 官网实景 · 完整课程主视频">
-                <img src="./assets/case-evidence/gauth/gauth-course-official.png" alt="Gauth AI Course 官网实景" loading="lazy" />
+                <img data-src="./assets/case-evidence/gauth/gauth-course-official.png" alt="Gauth AI Course 官网实景" loading="lazy" />
                 <span class="media-play-mark" aria-hidden="true"><i></i></span>
               </button>
               <figcaption><span>OFFICIAL SITE / FILM</span><strong>官网实景 · 点击播放完整课程主视频</strong></figcaption>
@@ -351,11 +361,11 @@
             <a class="evidence-link" href="https://www.gauth.com/course" target="_blank" rel="noopener noreferrer">访问 Gauth Course <span aria-hidden="true">↗</span></a>
           </div>
 
-          <div class="course-wall" data-course-wall>
+          <div class="course-wall" data-course-wall data-stage-media>
             <figure class="course-tile course-tile-video course-tile-feature">
               <button class="media-window-trigger" type="button" aria-label="播放 Gauth 瀑布流动态课程" data-evidence-video="./assets/case-evidence/gauth/video/course-waterfall.mp4" data-evidence-poster="./assets/case-evidence/gauth/stills/meiji-03.png" data-evidence-caption="Gauth Course · 瀑布流动态课程">
-                <video autoplay muted loop playsinline preload="metadata" poster="./assets/case-evidence/gauth/stills/meiji-03.png" aria-hidden="true">
-                  <source src="./assets/case-evidence/gauth/video/course-waterfall.mp4" type="video/mp4" />
+                <video autoplay muted loop playsinline preload="none" data-poster="./assets/case-evidence/gauth/stills/meiji-03.png" aria-hidden="true">
+                  <source data-src="./assets/case-evidence/gauth/video/course-waterfall.mp4" type="video/mp4" />
                 </video>
                 <span class="media-play-mark" aria-hidden="true"><i></i></span>
               </button>
@@ -363,42 +373,42 @@
             </figure>
             <figure class="course-tile course-tile-video course-tile-side">
               <button class="media-window-trigger" type="button" aria-label="播放 Gauth 精彩片段" data-evidence-video="./assets/case-evidence/gauth/video/gauth-highlights.mp4" data-evidence-poster="./assets/case-evidence/gauth/stills/infirmary-03.png" data-evidence-caption="Gauth 精彩片段">
-                <img src="./assets/case-evidence/gauth/stills/infirmary-03.png" alt="Gauth 精彩片段视频封面" loading="lazy" />
+                <img data-src="./assets/case-evidence/gauth/stills/infirmary-03.png" alt="Gauth 精彩片段视频封面" loading="lazy" />
                 <span class="media-play-mark" aria-hidden="true"><i></i></span>
               </button>
               <figcaption><span>FEATURED CUT</span><strong>Gauth 精彩片段</strong></figcaption>
             </figure>
             <figure class="course-tile course-tile-video course-tile-sample">
               <button class="media-window-trigger" type="button" aria-label="播放 Gauth 历史人物课程片段" data-evidence-video="./assets/case-evidence/gauth/video/gauth-course-knight.mp4" data-evidence-poster="./assets/case-evidence/gauth/poster/gauth-course-knight.jpg" data-evidence-caption="Gauth Course · 历史人物叙事片段">
-                <img src="./assets/case-evidence/gauth/poster/gauth-course-knight.jpg" alt="Gauth 历史人物课程视频封面" loading="lazy" decoding="async" />
+                <img data-src="./assets/case-evidence/gauth/poster/gauth-course-knight.jpg" alt="Gauth 历史人物课程视频封面" loading="lazy" decoding="async" />
                 <span class="media-play-mark" aria-hidden="true"><i></i></span>
               </button>
               <figcaption><span>HISTORICAL CHARACTER</span><strong>人物与时代现场</strong></figcaption>
             </figure>
             <figure class="course-tile course-tile-video course-tile-sample">
               <button class="media-window-trigger" type="button" aria-label="播放 Gauth 第一人称课程片段" data-evidence-video="./assets/case-evidence/gauth/video/gauth-course-pov.mp4" data-evidence-poster="./assets/case-evidence/gauth/poster/gauth-course-pov.jpg" data-evidence-caption="Gauth Course · 第一人称沉浸叙事片段">
-                <img src="./assets/case-evidence/gauth/poster/gauth-course-pov.jpg" alt="Gauth 第一人称课程视频封面" loading="lazy" decoding="async" />
+                <img data-src="./assets/case-evidence/gauth/poster/gauth-course-pov.jpg" alt="Gauth 第一人称课程视频封面" loading="lazy" decoding="async" />
                 <span class="media-play-mark" aria-hidden="true"><i></i></span>
               </button>
               <figcaption><span>IMMERSIVE POV</span><strong>第一人称课堂叙事</strong></figcaption>
             </figure>
             <button class="course-tile" type="button" data-evidence-image="./assets/case-evidence/gauth/stills/infirmary-01.png" data-evidence-caption="电影化历史课程 · 战地医院">
-              <img src="./assets/case-evidence/gauth/stills/infirmary-01.png" alt="战地医院课程画面" loading="lazy" /><span>01 · LIED INTO THE TRENCHES</span>
+              <img data-src="./assets/case-evidence/gauth/stills/infirmary-01.png" alt="战地医院课程画面" loading="lazy" /><span>01 · LIED INTO THE TRENCHES</span>
             </button>
             <button class="course-tile" type="button" data-evidence-image="./assets/case-evidence/gauth/stills/pearl-01.png" data-evidence-caption="电影化历史课程 · 珍珠港">
-              <img src="./assets/case-evidence/gauth/stills/pearl-01.png" alt="珍珠港历史课程画面" loading="lazy" /><span>02 · THE PRICE OF ENDING WAR</span>
+              <img data-src="./assets/case-evidence/gauth/stills/pearl-01.png" alt="珍珠港历史课程画面" loading="lazy" /><span>02 · THE PRICE OF ENDING WAR</span>
             </button>
             <button class="course-tile" type="button" data-evidence-image="./assets/case-evidence/gauth/stills/empire-02.png" data-evidence-caption="电影化历史课程 · 第一人称叙事">
-              <img src="./assets/case-evidence/gauth/stills/empire-02.png" alt="第一人称历史课程画面" loading="lazy" /><span>03 · POV STORYTELLING</span>
+              <img data-src="./assets/case-evidence/gauth/stills/empire-02.png" alt="第一人称历史课程画面" loading="lazy" /><span>03 · POV STORYTELLING</span>
             </button>
             <button class="course-tile" type="button" data-evidence-image="./assets/case-evidence/gauth/stills/meiji-02.png" data-evidence-caption="电影化历史课程 · 明治维新">
-              <img src="./assets/case-evidence/gauth/stills/meiji-02.png" alt="明治维新课程画面" loading="lazy" /><span>04 · FROM SAMURAI TO SMOKESTACKS</span>
+              <img data-src="./assets/case-evidence/gauth/stills/meiji-02.png" alt="明治维新课程画面" loading="lazy" /><span>04 · FROM SAMURAI TO SMOKESTACKS</span>
             </button>
             <button class="course-tile" type="button" data-evidence-image="./assets/case-evidence/gauth/stills/qibushi-03.png" data-evidence-caption="古诗视频课程 · 七步诗">
-              <img src="./assets/case-evidence/gauth/stills/qibushi-03.png" alt="七步诗课程画面" loading="lazy" /><span>05 · POETRY AS CINEMA</span>
+              <img data-src="./assets/case-evidence/gauth/stills/qibushi-03.png" alt="七步诗课程画面" loading="lazy" /><span>05 · POETRY AS CINEMA</span>
             </button>
             <button class="course-tile" type="button" data-evidence-image="./assets/case-evidence/gauth/stills/samurai-01.png" data-evidence-caption="电影化历史课程 · 群像叙事">
-              <img src="./assets/case-evidence/gauth/stills/samurai-01.png" alt="武士群像历史课程画面" loading="lazy" /><span>06 · CHARACTER CONSISTENCY</span>
+              <img data-src="./assets/case-evidence/gauth/stills/samurai-01.png" alt="武士群像历史课程画面" loading="lazy" /><span>06 · CHARACTER CONSISTENCY</span>
             </button>
           </div>
 
@@ -410,30 +420,30 @@
             <span>点击任一画面放大查看</span>
           </div>
 
-          <div class="course-shot-grid" aria-label="Gauth 课程镜头档案">
+          <div class="course-shot-grid" aria-label="Gauth 课程镜头档案" data-stage-media>
             <button class="course-shot course-shot-wide" type="button" data-evidence-image="./assets/case-evidence/gauth/stills/infirmary-02.png" data-evidence-caption="Lied Into the Trenches · 战地医院">
-              <img src="./assets/case-evidence/gauth/stills/infirmary-02.png" alt="战地医院课程的伤员视角" loading="eager" decoding="async" /><span>01 / INFIRMARY</span>
+              <img data-src="./assets/case-evidence/gauth/stills/infirmary-02.png" alt="战地医院课程的伤员视角" loading="eager" decoding="async" /><span>01 / INFIRMARY</span>
             </button>
             <button class="course-shot" type="button" data-evidence-image="./assets/case-evidence/gauth/stills/pearl-02.png" data-evidence-caption="The Price of Ending War · 珍珠港">
-              <img src="./assets/case-evidence/gauth/stills/pearl-02.png" alt="珍珠港历史课程画面" loading="eager" decoding="async" /><span>02 / PEARL HARBOR</span>
+              <img data-src="./assets/case-evidence/gauth/stills/pearl-02.png" alt="珍珠港历史课程画面" loading="eager" decoding="async" /><span>02 / PEARL HARBOR</span>
             </button>
             <button class="course-shot" type="button" data-evidence-image="./assets/case-evidence/gauth/stills/empire-01.png" data-evidence-caption="Empire of the Sun · 第一人称叙事">
-              <img src="./assets/case-evidence/gauth/stills/empire-01.png" alt="帝国历史课程画面" loading="eager" decoding="async" /><span>03 / EMPIRE</span>
+              <img data-src="./assets/case-evidence/gauth/stills/empire-01.png" alt="帝国历史课程画面" loading="eager" decoding="async" /><span>03 / EMPIRE</span>
             </button>
             <button class="course-shot course-shot-wide" type="button" data-evidence-image="./assets/case-evidence/gauth/stills/meiji-01.png" data-evidence-caption="From Samurai to Smokestacks · 明治维新">
-              <img src="./assets/case-evidence/gauth/stills/meiji-01.png" alt="明治维新课程的城市现场" loading="eager" decoding="async" /><span>04 / MEIJI</span>
+              <img data-src="./assets/case-evidence/gauth/stills/meiji-01.png" alt="明治维新课程的城市现场" loading="eager" decoding="async" /><span>04 / MEIJI</span>
             </button>
             <button class="course-shot" type="button" data-evidence-image="./assets/case-evidence/gauth/stills/qibushi-02.png" data-evidence-caption="七步诗 · 人物与烛光">
-              <img src="./assets/case-evidence/gauth/stills/qibushi-02.png" alt="七步诗课程人物画面" loading="eager" decoding="async" /><span>05 / POETRY</span>
+              <img data-src="./assets/case-evidence/gauth/stills/qibushi-02.png" alt="七步诗课程人物画面" loading="eager" decoding="async" /><span>05 / POETRY</span>
             </button>
             <button class="course-shot" type="button" data-evidence-image="./assets/case-evidence/gauth/stills/samurai-02.png" data-evidence-caption="Character Consistency · 武士群像">
-              <img src="./assets/case-evidence/gauth/stills/samurai-02.png" alt="武士课程群像画面" loading="eager" decoding="async" /><span>06 / SAMURAI</span>
+              <img data-src="./assets/case-evidence/gauth/stills/samurai-02.png" alt="武士课程群像画面" loading="eager" decoding="async" /><span>06 / SAMURAI</span>
             </button>
             <button class="course-shot" type="button" data-evidence-image="./assets/case-evidence/gauth/stills/pearl-04.png" data-evidence-caption="The Price of Ending War · 决策现场">
-              <img src="./assets/case-evidence/gauth/stills/pearl-04.png" alt="战争决策历史课程画面" loading="eager" decoding="async" /><span>07 / DECISION</span>
+              <img data-src="./assets/case-evidence/gauth/stills/pearl-04.png" alt="战争决策历史课程画面" loading="eager" decoding="async" /><span>07 / DECISION</span>
             </button>
             <button class="course-shot course-shot-wide" type="button" data-evidence-image="./assets/case-evidence/gauth/stills/empire-03.png" data-evidence-caption="Empire of the Sun · 叙事转场">
-              <img src="./assets/case-evidence/gauth/stills/empire-03.png" alt="历史课程电影化转场画面" loading="eager" decoding="async" /><span>08 / TRANSITION</span>
+              <img data-src="./assets/case-evidence/gauth/stills/empire-03.png" alt="历史课程电影化转场画面" loading="eager" decoding="async" /><span>08 / TRANSITION</span>
             </button>
           </div>
         </article>
@@ -457,7 +467,7 @@
           </div>
         </section>
 
-      <section class="production-system" id="ai-production-workflow" aria-labelledby="production-title">
+      <section class="production-system" id="ai-production-workflow" aria-labelledby="production-title" data-interview-only>
         <div class="production-restored">
             <div class="restored-hero" data-zk-surface="light">
             <div class="restored-hero-grain" aria-hidden="true"></div>
@@ -690,9 +700,9 @@
             <iframe
               class="public-workbench-frame"
               data-public-workbench
-              src="./workflow-public/index.html?cursor=starlight-v3"
+              data-src="./workflow-public/index.html?cursor=starlight-v3"
               title="PGC 到 UGC AI 内容再创作工作台"
-              loading="eager"
+              loading="lazy"
             ></iframe>
           </div>
           <footer>

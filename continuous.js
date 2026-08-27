@@ -15,7 +15,9 @@
   const particleCanvas = document.querySelector("[data-seam-particles]");
   const particleContext = particleCanvas?.getContext("2d", { alpha: true });
   const frameMap = new Map();
+  const frameRecords = [];
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+  const interviewMode = new URLSearchParams(window.location.search).get("interview") === "1";
 
   let activeIndex = 0;
   let ticking = false;
@@ -43,14 +45,43 @@
   shells.forEach((shell, index) => {
     const frame = shell.querySelector("iframe");
     if (!frame) return;
-    frameMap.set(frame.contentWindow, { shell, frame, index, surface: index === 0 ? "light" : "dark" });
+    let source = frame.dataset.src || frame.getAttribute("src") || "";
+    if (index === 1 && interviewMode && source) {
+      const interviewUrl = new URL(source, window.location.href);
+      interviewUrl.searchParams.set("interview", "1");
+      source = interviewUrl.href;
+    }
+    const record = {
+      shell,
+      frame,
+      index,
+      surface: index === 0 ? "light" : "dark",
+      source,
+      activated: frame.hasAttribute("src"),
+      ready: false,
+    };
+    frameRecords.push(record);
+    frameMap.set(frame.contentWindow, record);
     frame.addEventListener("load", () => {
+      if (!record.activated) return;
+      record.ready = true;
       frame.contentWindow?.postMessage({ type: "zk:light-mode", mode: lightMode }, "*");
+      frame.contentWindow?.postMessage({ type: "zk:measure" }, "*");
     });
     shell.style.height = "100svh";
   });
 
   const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+
+  function activateFrame(index, { eager = false } = {}) {
+    const record = frameRecords[index];
+    if (!record || record.activated || !record.source) return record;
+    record.activated = true;
+    record.frame.loading = eager ? "eager" : "lazy";
+    if (eager) record.frame.fetchPriority = "high";
+    record.frame.src = record.source;
+    return record;
+  }
 
   function updateThemeColor() {
     if (!themeColor) return;
@@ -66,7 +97,8 @@
     lightPull?.setAttribute("aria-label", isStarlight ? "切换到黑夜模式" : "切换到星光模式");
     if (lightLabel) lightLabel.textContent = isStarlight ? "STARLIGHT" : "NIGHT";
     updateThemeColor();
-    frameMap.forEach(({ frame }) => {
+    frameRecords.forEach(({ frame, activated }) => {
+      if (!activated) return;
       frame.contentWindow?.postMessage({ type: "zk:light-mode", mode: lightMode }, "*");
     });
     particleCanvas?.classList.toggle("is-visible", isStarlight || boundaryEnergy > 0.02);
@@ -145,10 +177,11 @@
   }
 
   function setActive(index) {
+    activateFrame(index, { eager: true });
     if (index === activeIndex && !document.body.classList.contains("is-composing")) return;
     activeIndex = index;
     document.body.dataset.activeChapter = shells[index]?.dataset.chapter || "home";
-    const activeRecord = [...frameMap.values()].find((item) => item.index === index);
+    const activeRecord = frameRecords[index];
     document.body.dataset.activeSurface = activeRecord?.surface || (index === 0 ? "light" : "dark");
     updateThemeColor();
     navButtons.forEach((button) => {
@@ -358,6 +391,7 @@
   function goToChapter(name, behavior = "smooth") {
     const target = shells.find((shell) => shell.dataset.chapter === name);
     if (!target) return;
+    activateFrame(Number(target.dataset.index), { eager: true });
     const top = chapterTop(target);
     window.scrollTo({ top, behavior: reducedMotion.matches ? "auto" : behavior });
     history.replaceState(null, "", `#${name}`);
@@ -380,14 +414,21 @@
       const top = chapterTop(shell);
       const maxLocal = Math.max(0, shell.offsetHeight - viewport);
       const local = clamp(y - top, 0, maxLocal);
-      const record = [...frameMap.values()].find((item) => item.shell === shell);
+      const record = frameRecords[index];
       const isNearViewport = y + viewport * 1.5 >= top && y - viewport * 0.5 <= top + shell.offsetHeight;
-      if (record && isNearViewport) {
+      if (record?.activated && isNearViewport) {
         record.frame.contentWindow?.postMessage({
           type: "zk:set-scroll",
           y: local,
           progress: maxLocal > 0 ? local / maxLocal : 0,
         }, "*");
+      }
+
+      if (record?.activated && index < shells.length - 1) {
+        const chapterProgress = maxLocal > 0
+          ? local / maxLocal
+          : clamp((y + viewport - top) / Math.max(viewport, shell.offsetHeight), 0, 1);
+        if (chapterProgress >= 0.62) activateFrame(index + 1);
       }
       if (marker >= top) nextActive = index;
 
@@ -550,19 +591,26 @@
     clearTimeout(resizeTimer);
     resizeTimer = window.setTimeout(() => {
       resizeParticles();
-      frameMap.forEach(({ frame }) => frame.contentWindow?.postMessage({ type: "zk:measure" }, "*"));
+      frameRecords.forEach(({ frame, activated }) => {
+        if (activated) frame.contentWindow?.postMessage({ type: "zk:measure" }, "*");
+      });
       requestSync();
     }, 120);
   });
 
   resizeParticles();
   document.body.dataset.activeSurface = "light";
+  const initialHash = location.hash.slice(1).toLowerCase();
+  const initialHashIndex = chapterNames.findIndex((name) => name.toLowerCase() === initialHash);
+  activateFrame(initialHashIndex >= 0 ? initialHashIndex : 0, { eager: true });
   requestAnimationFrame(drawParticles);
   requestSync();
 
   readyTimer = window.setTimeout(() => document.body.classList.remove("is-composing"), 12000);
   window.setTimeout(() => {
-    frameMap.forEach(({ frame }) => frame.contentWindow?.postMessage({ type: "zk:measure" }, "*"));
+    frameRecords.forEach(({ frame, activated }) => {
+      if (activated) frame.contentWindow?.postMessage({ type: "zk:measure" }, "*");
+    });
     const hash = location.hash.slice(1);
     if (chapterNames.map((name) => name.toLowerCase()).includes(hash)) goToChapter(hash, "auto");
   }, 500);

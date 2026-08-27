@@ -340,15 +340,16 @@
     const run = (element) => {
       if (element.dataset.counted === "true") return;
       element.dataset.counted = "true";
-      const target = Number(element.dataset.countup);
+      const target = Math.max(0, Number(element.dataset.countup) || 0);
       const duration = reducedMotion ? 1 : 1100;
       const start = performance.now();
 
       const tick = (now) => {
-        const progress = Math.min(1, (now - start) / duration);
+        const progress = Math.max(0, Math.min(1, (now - start) / duration));
         const eased = 1 - Math.pow(1 - progress, 3);
         element.textContent = Math.round(target * eased).toLocaleString("zh-CN");
         if (progress < 1) window.requestAnimationFrame(tick);
+        else element.textContent = target.toLocaleString("zh-CN");
       };
       window.requestAnimationFrame(tick);
     };
@@ -539,25 +540,40 @@
     const section = q(".aigc-exploration");
     if (!section) return;
 
-    const posters = qa(".aigc-film img[loading='lazy']", section);
+    const posters = qa(".aigc-film img[data-stage-poster]", section);
     const warmPoster = (image) => {
+      if (image.dataset.src) {
+        image.src = image.dataset.src;
+        image.removeAttribute("data-src");
+      }
       image.loading = "eager";
       image.fetchPriority = "low";
       image.decode?.().catch(() => {});
     };
 
-    if ("IntersectionObserver" in window) {
-      const posterObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          warmPoster(entry.target);
-          observer.unobserve(entry.target);
-        });
-      }, { rootMargin: "2200px 0px" });
-      posters.forEach((image) => posterObserver.observe(image));
-    } else {
-      posters.forEach(warmPoster);
-    }
+    posters.slice(0, 2).forEach(warmPoster);
+    let stagedPosterCount = Math.min(2, posters.length);
+    let posterFrame = 0;
+    const stagePosters = () => {
+      posterFrame = 0;
+      const bounds = section.getBoundingClientRect();
+      if (bounds.top > window.innerHeight * 1.45 || bounds.bottom < 0) return;
+      const travel = Math.max(1, bounds.height + window.innerHeight * 0.45);
+      const progress = Math.max(0, Math.min(1, (window.innerHeight * 1.05 - bounds.top) / travel));
+      const desired = Math.min(posters.length, 2 + Math.ceil(progress * Math.max(0, posters.length - 2)));
+      while (stagedPosterCount < desired) {
+        warmPoster(posters[stagedPosterCount]);
+        stagedPosterCount += 1;
+      }
+    };
+    const requestPosterStage = () => {
+      if (posterFrame) return;
+      posterFrame = window.requestAnimationFrame(stagePosters);
+    };
+    window.addEventListener("scroll", requestPosterStage, { passive: true });
+    window.addEventListener("zk:continuous-scroll", requestPosterStage);
+    window.addEventListener("resize", requestPosterStage, { passive: true });
+    stagePosters();
 
     if (!reducedMotion) {
       document.documentElement.classList.add("aigc-motion-ready");

@@ -49,7 +49,9 @@
     },
   };
 
-  const nodes = [...document.querySelectorAll("[data-experience]")];
+  const interviewMode = document.documentElement.dataset.interviewMode === "true";
+  const nodes = [...document.querySelectorAll("[data-experience]")]
+    .filter((node) => interviewMode || !node.hasAttribute("data-interview-only"));
   const readout = document.querySelector("[data-experience-readout]");
   const title = readout.querySelector("[data-title]");
   const period = readout.querySelector("[data-period]");
@@ -509,6 +511,53 @@
   });
 
   const publicWorkbenchFrame = document.querySelector("[data-public-workbench]");
+  const stagedEvidenceGroups = [...document.querySelectorAll("[data-stage-media]")];
+  let workbenchActivated = false;
+
+  function activateEvidenceGroup(group) {
+    if (!interviewMode || !group || group.dataset.mediaActivated === "true") return;
+    group.dataset.mediaActivated = "true";
+    group.querySelectorAll("img[data-src]").forEach((image) => {
+      image.src = image.dataset.src;
+      image.removeAttribute("data-src");
+    });
+    const videos = new Set();
+    group.querySelectorAll("video[data-poster]").forEach((video) => {
+      video.poster = video.dataset.poster;
+      video.removeAttribute("data-poster");
+    });
+    group.querySelectorAll("video source[data-src]").forEach((source) => {
+      if (!source.dataset.src) return;
+      source.src = source.dataset.src;
+      source.removeAttribute("data-src");
+      if (source.parentElement instanceof HTMLVideoElement) videos.add(source.parentElement);
+    });
+    videos.forEach((video) => {
+      video.load();
+      if (video.autoplay) video.play().catch(() => {});
+    });
+  }
+
+  function activateWorkbench() {
+    if (!interviewMode || workbenchActivated || !publicWorkbenchFrame?.dataset.src) return;
+    workbenchActivated = true;
+    publicWorkbenchFrame.src = publicWorkbenchFrame.dataset.src;
+    publicWorkbenchFrame.removeAttribute("data-src");
+  }
+
+  function stageInterviewResources() {
+    if (!interviewMode) return;
+    stagedEvidenceGroups.forEach((group) => {
+      const bounds = group.getBoundingClientRect();
+      if (bounds.top < window.innerHeight * 1.55 && bounds.bottom > -window.innerHeight * 0.4) {
+        activateEvidenceGroup(group);
+      }
+    });
+    if (workbenchExpansion && workbenchExpansion.getBoundingClientRect().top < window.innerHeight * 1.35) {
+      activateWorkbench();
+    }
+  }
+
   window.addEventListener("message", (event) => {
     if (!publicWorkbenchFrame || event.source !== publicWorkbenchFrame.contentWindow) return;
     if (!event.data || typeof event.data !== "object") return;
@@ -540,6 +589,7 @@
 
   function updateProductionNarrative() {
     narrativeTicking = false;
+    stageInterviewResources();
     if (productionShell && workflowStages.length && Date.now() >= manualStageLockUntil) {
       const bounds = productionShell.getBoundingClientRect();
       const travel = Math.max(window.innerHeight, bounds.height - window.innerHeight * 0.72);
@@ -743,6 +793,7 @@
   });
 
   const warmEvidencePosters = () => {
+    if (!interviewMode) return;
       document.querySelectorAll(".course-tile-sample img[loading='lazy']").forEach((image) => {
       image.loading = "eager";
       image.fetchPriority = "low";
@@ -783,7 +834,7 @@
   });
 
   const ambientEvidenceVideos = [...document.querySelectorAll(".course-wall video[autoplay]")];
-  if ("IntersectionObserver" in window && ambientEvidenceVideos.length) {
+  if (interviewMode && "IntersectionObserver" in window && ambientEvidenceVideos.length) {
     const videoObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         const video = entry.target;

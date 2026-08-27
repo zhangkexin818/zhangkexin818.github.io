@@ -1640,6 +1640,112 @@ main,
   }
 }
 
+/* Final bridge containment: keep every evidence card inside the chapter canvas. */
+.chapter-bridge,
+.bridge-media {
+  overflow: hidden;
+}
+
+.bridge-media-experience figure:nth-child(1) {
+  right: 36%;
+  bottom: 8%;
+}
+
+.bridge-media-experience figure:nth-child(2) {
+  right: 8%;
+  top: 12%;
+}
+
+.bridge-media-experience figure:nth-child(3) {
+  right: 2%;
+  bottom: 3%;
+}
+
+.bridge-media-source figure:nth-child(1) {
+  left: 5%;
+  right: auto;
+  top: auto;
+  bottom: 7%;
+  width: clamp(250px, 30vw, 470px);
+}
+
+.bridge-media-source figure:nth-child(2) {
+  left: 34%;
+  right: auto;
+  top: 13%;
+  bottom: auto;
+  width: clamp(210px, 24vw, 380px);
+}
+
+.bridge-media-source figure:nth-child(3) {
+  left: auto;
+  right: 5%;
+  top: 10%;
+  bottom: auto;
+  width: clamp(200px, 22vw, 350px);
+}
+
+.bridge-media-source figure:nth-child(4) {
+  --bridge-depth: 24px;
+  --bridge-tilt: 2deg;
+  left: 54%;
+  right: auto;
+  top: auto;
+  bottom: 4%;
+  width: clamp(210px, 24vw, 380px);
+  aspect-ratio: 16 / 9;
+}
+
+.bridge-media-source figure:nth-child(5) {
+  --bridge-depth: -28px;
+  --bridge-tilt: -3deg;
+  left: auto;
+  right: 2%;
+  top: auto;
+  bottom: 6%;
+  width: clamp(180px, 19vw, 300px);
+  aspect-ratio: 16 / 9;
+}
+
+@media (max-width: 760px) {
+  .bridge-media-experience figure:nth-child(1) {
+    right: 26%;
+    bottom: 10%;
+    width: 62vw;
+  }
+
+  .bridge-media-experience figure:nth-child(2) {
+    right: 4%;
+    top: 28%;
+    width: 44vw;
+  }
+
+  .bridge-media-experience figure:nth-child(3) {
+    display: none;
+  }
+
+  .bridge-media-source figure:nth-child(1) {
+    left: 4%;
+    right: auto;
+    bottom: 8%;
+    width: 66vw;
+  }
+
+  .bridge-media-source figure:nth-child(2),
+  .bridge-media-source figure:nth-child(4),
+  .bridge-media-source figure:nth-child(5) {
+    display: none;
+  }
+
+  .bridge-media-source figure:nth-child(3) {
+    left: auto;
+    right: 4%;
+    top: 34%;
+    bottom: auto;
+    width: 46vw;
+  }
+}
+
 /* Ongoing AIGC lab: a quiet evidence layer between method and archive. */
 .aigc-exploration {
   position: relative;
