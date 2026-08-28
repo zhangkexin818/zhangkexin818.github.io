@@ -518,8 +518,12 @@
     if (!group || group.dataset.mediaActivated === "true") return;
     group.dataset.mediaActivated = "true";
     group.querySelectorAll("img[data-src]").forEach((image) => {
+      image.loading = "eager";
+      image.fetchPriority = "low";
+      image.decoding = "async";
       image.src = image.dataset.src;
       image.removeAttribute("data-src");
+      image.decode?.().catch(() => {});
     });
     if (!interviewMode) return;
     const videos = new Set();
@@ -549,7 +553,7 @@
   function stageDeferredResources() {
     stagedEvidenceGroups.forEach((group) => {
       const bounds = group.getBoundingClientRect();
-      if (bounds.top < window.innerHeight * 1.55 && bounds.bottom > -window.innerHeight * 0.4) {
+      if (bounds.top < window.innerHeight * 2.65 && bounds.bottom > -window.innerHeight * 0.4) {
         activateEvidenceGroup(group);
       }
     });

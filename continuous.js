@@ -59,12 +59,14 @@
       source,
       activated: frame.hasAttribute("src"),
       ready: false,
+      warmQueued: false,
     };
     frameRecords.push(record);
     frameMap.set(frame.contentWindow, record);
     frame.addEventListener("load", () => {
       if (!record.activated) return;
       record.ready = true;
+      record.shell.classList.add("is-frame-ready");
       frame.contentWindow?.postMessage({ type: "zk:light-mode", mode: lightMode }, "*");
       frame.contentWindow?.postMessage({ type: "zk:measure" }, "*");
     });
@@ -77,10 +79,33 @@
     const record = frameRecords[index];
     if (!record || record.activated || !record.source) return record;
     record.activated = true;
-    record.frame.loading = eager ? "eager" : "lazy";
-    if (eager) record.frame.fetchPriority = "high";
+    // A frame with an assigned src is already deliberately staged. Keep the
+    // browser from postponing that request until it is inside the viewport.
+    record.frame.loading = "eager";
+    record.frame.fetchPriority = eager ? "high" : "low";
     record.frame.src = record.source;
     return record;
+  }
+
+  function queueFrameAhead(index) {
+    const current = frameRecords[index];
+    const next = frameRecords[index + 1];
+    if (!current || !next || next.activated || current.warmQueued) return;
+    current.warmQueued = true;
+
+    const stageNext = () => {
+      const begin = () => activateFrame(index + 1, { eager: false });
+      window.setTimeout(() => {
+        if ("requestIdleCallback" in window) {
+          window.requestIdleCallback(begin, { timeout: 650 });
+        } else {
+          begin();
+        }
+      }, 140);
+    };
+
+    if (current.ready) stageNext();
+    else current.frame.addEventListener("load", stageNext, { once: true });
   }
 
   function updateThemeColor() {
@@ -178,6 +203,9 @@
 
   function setActive(index) {
     activateFrame(index, { eager: true });
+    // Keep exactly one chapter prepared ahead of the reader. This removes the
+    // blank-on-arrival state without downloading every iframe at startup.
+    queueFrameAhead(index);
     if (index === activeIndex && !document.body.classList.contains("is-composing")) return;
     activeIndex = index;
     document.body.dataset.activeChapter = shells[index]?.dataset.chapter || "home";
@@ -391,9 +419,40 @@
   function goToChapter(name, behavior = "smooth") {
     const target = shells.find((shell) => shell.dataset.chapter === name);
     if (!target) return;
-    activateFrame(Number(target.dataset.index), { eager: true });
-    const top = chapterTop(target);
-    window.scrollTo({ top, behavior: reducedMotion.matches ? "auto" : behavior });
+    const targetIndex = Number(target.dataset.index);
+    const requiredRecords = frameRecords.slice(0, targetIndex + 1);
+    const navigationToken = (goToChapter.token || 0) + 1;
+    goToChapter.token = navigationToken;
+    let settled = false;
+    const commit = () => {
+      if (settled || navigationToken !== goToChapter.token) return;
+      settled = true;
+      const top = chapterTop(target);
+      window.scrollTo({ top, behavior: reducedMotion.matches ? "auto" : behavior });
+
+      // Child frames can report a final height shortly after their load event.
+      // Re-align once the smooth scroll has settled so late layout measurements
+      // cannot leave the requested chapter a few pixels above or below the view.
+      window.setTimeout(() => {
+        if (navigationToken !== goToChapter.token || location.hash !== `#${name}`) return;
+        const settledTop = chapterTop(target);
+        if (Math.abs(window.scrollY - settledTop) > 6) {
+          window.scrollTo({ top: settledTop, behavior: "auto" });
+        }
+      }, reducedMotion.matches || behavior === "auto" ? 220 : 1100);
+    };
+
+    const waiting = requiredRecords.filter((record) => !record.ready);
+    let pending = waiting.length;
+    const markReady = () => {
+      pending -= 1;
+      if (pending <= 0) window.setTimeout(commit, 120);
+    };
+    waiting.forEach((record) => record.frame.addEventListener("load", markReady, { once: true }));
+    requiredRecords.forEach((record) => activateFrame(record.index, { eager: record.index === targetIndex }));
+    if (!pending) window.setTimeout(commit, 0);
+    // Never trap navigation if a third-party asset stalls the load event.
+    window.setTimeout(commit, 3200);
     history.replaceState(null, "", `#${name}`);
   }
 
@@ -428,7 +487,7 @@
         const chapterProgress = maxLocal > 0
           ? local / maxLocal
           : clamp((y + viewport - top) / Math.max(viewport, shell.offsetHeight), 0, 1);
-        if (chapterProgress >= 0.62) activateFrame(index + 1);
+        if (chapterProgress >= 0.28) activateFrame(index + 1, { eager: false });
       }
       if (marker >= top) nextActive = index;
 

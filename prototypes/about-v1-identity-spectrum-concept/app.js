@@ -492,7 +492,7 @@
       entries.forEach((entry) => {
         if (entry.isIntersecting) entry.target.classList.add("is-present");
       });
-    }, { threshold: .045, rootMargin: "0px 0px -4%" });
+    }, { threshold: .01, rootMargin: "45% 0px 60% 0px" });
 
     chapters.forEach((chapter) => observer.observe(chapter));
   }
@@ -551,16 +551,16 @@
       image.decode?.().catch(() => {});
     };
 
-    posters.slice(0, 2).forEach(warmPoster);
-    let stagedPosterCount = Math.min(2, posters.length);
+    posters.slice(0, 4).forEach(warmPoster);
+    let stagedPosterCount = Math.min(4, posters.length);
     let posterFrame = 0;
     const stagePosters = () => {
       posterFrame = 0;
       const bounds = section.getBoundingClientRect();
-      if (bounds.top > window.innerHeight * 1.45 || bounds.bottom < 0) return;
-      const travel = Math.max(1, bounds.height + window.innerHeight * 0.45);
-      const progress = Math.max(0, Math.min(1, (window.innerHeight * 1.05 - bounds.top) / travel));
-      const desired = Math.min(posters.length, 2 + Math.ceil(progress * Math.max(0, posters.length - 2)));
+      if (bounds.top > window.innerHeight * 2.8 || bounds.bottom < 0) return;
+      const leadDistance = Math.max(1, window.innerHeight * 1.8);
+      const progress = Math.max(0, Math.min(1, (window.innerHeight * 2.65 - bounds.top) / leadDistance));
+      const desired = Math.min(posters.length, 4 + Math.ceil(progress * Math.max(0, posters.length - 4)));
       while (stagedPosterCount < desired) {
         warmPoster(posters[stagedPosterCount]);
         stagedPosterCount += 1;
@@ -579,7 +579,7 @@
       document.documentElement.classList.add("aigc-motion-ready");
       const reveal = () => {
         const bounds = section.getBoundingClientRect();
-        if (bounds.top < window.innerHeight * 1.12 && bounds.bottom > 0) {
+        if (bounds.top < window.innerHeight * 1.65 && bounds.bottom > 0) {
           section.classList.add("is-present");
         }
       };
