@@ -512,19 +512,57 @@
 
   const publicWorkbenchFrame = document.querySelector("[data-public-workbench]");
   const stagedEvidenceGroups = [...document.querySelectorAll("[data-stage-media]")];
+  const evidenceLookahead = 4;
+  const stagedEvidenceImages = [...document.querySelectorAll("[data-stage-media] img[data-src]")]
+    .filter((image) => interviewMode || !image.closest("[data-interview-only]"));
   let workbenchActivated = false;
+
+  function warmEvidenceImage(image, priority = "low") {
+    if (!image) return;
+    if (image.dataset.mediaWarm === "true") {
+      if (priority === "high") image.fetchPriority = "high";
+      return;
+    }
+    image.dataset.mediaWarm = "true";
+    image.loading = "eager";
+    image.fetchPriority = priority;
+    image.decoding = "async";
+    if (image.dataset.src) {
+      image.src = image.dataset.src;
+      image.removeAttribute("data-src");
+    }
+    image.decode?.().catch(() => {});
+  }
+
+  function stageEvidenceImages() {
+    if (!stagedEvidenceImages.length) return;
+    const viewportHeight = Math.max(1, window.innerHeight);
+    const bounds = stagedEvidenceImages.map((image) => image.getBoundingClientRect());
+    const firstUpcoming = bounds.findIndex((rect) => rect.bottom > -viewportHeight * 0.28);
+    if (firstUpcoming < 0) return;
+
+    let lastNearViewport = -1;
+    bounds.forEach((rect, index) => {
+      if (rect.top < viewportHeight * 1.15 && rect.bottom > -viewportHeight * 0.35) {
+        lastNearViewport = index;
+      }
+    });
+
+    const lookaheadEnd = firstUpcoming + evidenceLookahead + 1;
+    const visibleEnd = lastNearViewport >= 0
+      ? lastNearViewport + evidenceLookahead + 1
+      : 0;
+    const desiredEnd = Math.min(stagedEvidenceImages.length, Math.max(lookaheadEnd, visibleEnd));
+
+    for (let index = 0; index < desiredEnd; index += 1) {
+      const isNearViewport = index <= lastNearViewport;
+      warmEvidenceImage(stagedEvidenceImages[index], isNearViewport ? "high" : "low");
+    }
+  }
 
   function activateEvidenceGroup(group) {
     if (!group || group.dataset.mediaActivated === "true") return;
     group.dataset.mediaActivated = "true";
-    group.querySelectorAll("img[data-src]").forEach((image) => {
-      image.loading = "eager";
-      image.fetchPriority = "low";
-      image.decoding = "async";
-      image.src = image.dataset.src;
-      image.removeAttribute("data-src");
-      image.decode?.().catch(() => {});
-    });
     if (!interviewMode) return;
     const videos = new Set();
     group.querySelectorAll("video[data-poster]").forEach((video) => {
@@ -551,6 +589,7 @@
   }
 
   function stageDeferredResources() {
+    stageEvidenceImages();
     stagedEvidenceGroups.forEach((group) => {
       const bounds = group.getBoundingClientRect();
       if (bounds.top < window.innerHeight * 2.65 && bounds.bottom > -window.innerHeight * 0.4) {

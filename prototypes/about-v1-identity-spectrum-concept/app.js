@@ -541,29 +541,54 @@
     if (!section) return;
 
     const posters = qa(".aigc-film img[data-stage-poster]", section);
-    const warmPoster = (image) => {
+    const posterLookahead = 4;
+    const warmPoster = (image, priority = "low") => {
+      if (image.dataset.posterWarm === "true") {
+        if (priority === "high") image.fetchPriority = "high";
+        return;
+      }
+      image.dataset.posterWarm = "true";
+      image.loading = "eager";
+      image.fetchPriority = priority;
+      image.decoding = "async";
       if (image.dataset.src) {
         image.src = image.dataset.src;
         image.removeAttribute("data-src");
       }
-      image.loading = "eager";
-      image.fetchPriority = "low";
       image.decode?.().catch(() => {});
     };
 
-    posters.slice(0, 4).forEach(warmPoster);
-    let stagedPosterCount = Math.min(4, posters.length);
+    posters.slice(0, posterLookahead + 1).forEach((image) => warmPoster(image));
+    let stagedPosterCount = Math.min(posterLookahead + 1, posters.length);
     let posterFrame = 0;
     const stagePosters = () => {
       posterFrame = 0;
-      const bounds = section.getBoundingClientRect();
-      if (bounds.top > window.innerHeight * 2.8 || bounds.bottom < 0) return;
-      const leadDistance = Math.max(1, window.innerHeight * 1.8);
-      const progress = Math.max(0, Math.min(1, (window.innerHeight * 2.65 - bounds.top) / leadDistance));
-      const desired = Math.min(posters.length, 4 + Math.ceil(progress * Math.max(0, posters.length - 4)));
+      if (!posters.length) return;
+      const viewportHeight = Math.max(1, window.innerHeight);
+      const posterBounds = posters.map((image) => (
+        image.closest(".aigc-film") || image
+      ).getBoundingClientRect());
+      const firstUpcoming = posterBounds.findIndex((bounds) => bounds.bottom > -viewportHeight * 0.28);
+      if (firstUpcoming < 0) return;
+
+      let lastNearViewport = -1;
+      posterBounds.forEach((bounds, index) => {
+        if (bounds.top < viewportHeight * 1.15 && bounds.bottom > -viewportHeight * 0.35) {
+          lastNearViewport = index;
+        }
+      });
+
+      const lookaheadEnd = firstUpcoming + posterLookahead + 1;
+      const visibleEnd = lastNearViewport >= 0
+        ? lastNearViewport + posterLookahead + 1
+        : 0;
+      const desired = Math.min(posters.length, Math.max(lookaheadEnd, visibleEnd));
       while (stagedPosterCount < desired) {
-        warmPoster(posters[stagedPosterCount]);
+        warmPoster(posters[stagedPosterCount], stagedPosterCount <= lastNearViewport ? "high" : "low");
         stagedPosterCount += 1;
+      }
+      for (let index = firstUpcoming; index <= lastNearViewport; index += 1) {
+        warmPoster(posters[index], "high");
       }
     };
     const requestPosterStage = () => {
