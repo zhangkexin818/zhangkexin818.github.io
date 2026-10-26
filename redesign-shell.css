@@ -1,0 +1,53 @@
+/* 2026-10 redesign: shell-level fixes and chapter transition. */
+
+/* Chapter boundary: a glowing line draws across as the next chapter arrives. */
+.chapter-seam::after {
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  content: "";
+  border-radius: 0;
+  background: linear-gradient(90deg, transparent, rgba(201, 166, 234, 0.9) 30%, #f3f1f7 50%, rgba(201, 166, 234, 0.9) 70%, transparent);
+  box-shadow: 0 0 22px 4px rgba(139, 44, 194, 0.55);
+  opacity: calc(var(--seam-energy, 0) * 0.95);
+  transform: scaleX(calc(0.15 + var(--seam-energy, 0) * 0.85));
+  transform-origin: 50% 50%;
+  filter: none;
+  animation: none;
+  transition: opacity 180ms linear, transform 260ms cubic-bezier(.22,.72,.16,1);
+}
+
+/* Sound control moves into the header row on desktop so it never covers content. */
+@media (min-width: 821px) {
+  .orbit-sound {
+    top: 16px;
+    bottom: auto;
+    right: clamp(20px, 3.4vw, 58px);
+    min-height: 36px;
+  }
+  .orbit-readout { margin-right: 150px; }
+  .orbit-sound:hover,
+  .orbit-sound:focus-visible,
+  .orbit-sound[aria-pressed="true"] { transform: none; }
+}
+
+/* Mobile: smaller, quieter sound dot. */
+@media (max-width: 820px) {
+  .orbit-sound { width: 36px; min-height: 36px; right: 12px; bottom: 12px; opacity: .78; }
+}
+
+/* Light chapters: the nav pill keeps a clear edge over white content. */
+body[data-active-surface="light"] .orbit-nav {
+  background: rgba(255, 255, 255, 0.66);
+  border-color: rgba(20, 22, 24, 0.16);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
+.orbit-nav { transition: background 420ms ease, border-color 420ms ease, box-shadow 420ms ease; }
+
+@media (prefers-reduced-motion: reduce) {
+  .chapter-seam::after { transition: none; }
+}

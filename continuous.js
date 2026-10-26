@@ -42,6 +42,24 @@
   let audioPulseToken = 0;
   let audioStarting = false;
 
+  // 2026-10: reserve each chapter's real height before its iframe loads, so the
+  // page no longer grows from 13k to 36k px mid-scroll (the main cause of
+  // jumping transitions and half-cut headlines).
+  const heightBucket = `${innerWidth < 760 ? "m" : "d"}-${Math.round(innerWidth / 160)}`;
+  const HEIGHT_KEY = "zk-chapter-heights-v3";
+  const EST_VH = innerWidth < 760 ? [4.14, 10.8, 12.46, 5.77, 19.07] : [3.89, 9.4, 12.16, 5.5, 16.66];
+  let heightCache = {};
+  try { heightCache = JSON.parse(localStorage.getItem(HEIGHT_KEY) || "{}"); } catch (_) { heightCache = {}; }
+  function estimateHeight(index) {
+    const cached = heightCache[`${heightBucket}:${index}`];
+    if (cached && cached > innerHeight) return cached;
+    return Math.round((EST_VH[index] || 1) * innerHeight);
+  }
+  function rememberHeight(index, height) {
+    heightCache[`${heightBucket}:${index}`] = height;
+    try { localStorage.setItem(HEIGHT_KEY, JSON.stringify(heightCache)); } catch (_) { /* storage unavailable */ }
+  }
+
   shells.forEach((shell, index) => {
     const frame = shell.querySelector("iframe");
     if (!frame) return;
@@ -70,7 +88,7 @@
       frame.contentWindow?.postMessage({ type: "zk:light-mode", mode: lightMode }, "*");
       frame.contentWindow?.postMessage({ type: "zk:measure" }, "*");
     });
-    shell.style.height = "100svh";
+    shell.style.height = `${estimateHeight(index)}px`;
   });
 
   const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
@@ -606,10 +624,16 @@
 
     if (event.data.type === "zk:height") {
       const height = Math.max(window.innerHeight, Math.ceil(Number(event.data.height) || 0));
-      if (height && Math.abs(record.shell.offsetHeight - height) > 2) {
+      const previous = record.shell.offsetHeight;
+      if (height && Math.abs(previous - height) > 2) {
+        // Scroll anchoring: if the chapter that changed sits entirely above the
+        // reader, shift the scroll by the same amount so the view stays put.
+        const above = chapterTop(record.shell) + previous <= window.scrollY + 1;
         record.shell.style.height = `${height}px`;
+        if (above) window.scrollBy({ top: height - previous, behavior: "auto" });
         requestSync();
       }
+      if (height && !event.data.loading) rememberHeight(record.index, height);
       if (record.index === 0 && !event.data.loading) {
         clearTimeout(readyTimer);
         document.body.classList.remove("is-composing");
