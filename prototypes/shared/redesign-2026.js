@@ -245,7 +245,87 @@
     update();
   }
 
-  const init = () => { setupReveal(); setupCounter(); setupFilms(); setupShowreel(); setupParallax(); };
+  /* ---------- autoplay muted loops only while visible ---------- */
+  function setupAutoplay() {
+    const vids = [...document.querySelectorAll("video[data-rd-autoplay]")];
+    if (!vids.length || !("IntersectionObserver" in window)) return;
+    const io = new IntersectionObserver((entries) => entries.forEach(({ target: v, isIntersecting }) => {
+      if (isIntersecting && !reduce) {
+        if (v.preload === "none") { v.preload = "auto"; v.load(); }
+        v.muted = true;
+        v.play().catch(() => {});
+      } else v.pause();
+    }), { threshold: 0.2 });
+    vids.forEach((v) => io.observe(v));
+  }
+
+  /* ---------- method film: step rail follows the film's timecode ---------- */
+  function setupMethodFilm() {
+    const film = document.querySelector(".rd-method-film video");
+    const steps = [...document.querySelectorAll(".rd-method-steps li")];
+    if (!film || !steps.length) return;
+    const S = [2.4, 6.6, 10.8, 15.0, 19.2, 23.4];
+    const sync = () => {
+      const t = film.currentTime;
+      steps.forEach((li, i) => {
+        const p = Math.min(1, Math.max(0, (t - S[i]) / (S[i + 1] - S[i])));
+        li.style.setProperty("--p", p.toFixed(3));
+        li.classList.toggle("is-on", t >= S[i] && t < S[i + 1]);
+        li.classList.toggle("is-done", t >= S[i + 1]);
+      });
+    };
+    film.addEventListener("timeupdate", sync);
+    const loop = () => { if (!film.paused) sync(); requestAnimationFrame(loop); };
+    requestAnimationFrame(loop);
+  }
+
+  /* ---------- scroll-driven progress (ending wordmark, 福小灵 curtain, read-along headlines) ---------- */
+  function setupScrollFx() {
+    const end = document.querySelector("[data-rd-end]");
+    const fxl = document.querySelector(".rd-fxl-hero");
+    const reads = [...document.querySelectorAll(".rd-method-head h2, .rd-showreel h2, #profile > header h2, .profile h2, #aigc-exploration-title, .rd-fxl h2")]
+      .filter((h) => h.classList.contains("rd-split"));
+    reads.forEach((h) => h.classList.add("rd-read"));
+    if (reduce || (!end && !fxl && !reads.length)) return;
+    const prog = (el, a, b) => { const r = el.getBoundingClientRect(); return Math.min(1, Math.max(0, (innerHeight * a - r.top) / (innerHeight * (a - b)))); };
+    const update = () => {
+      if (end) end.style.setProperty("--end-p", prog(end, 1, 0.25).toFixed(4));
+      if (fxl) fxl.style.setProperty("--rd-fxl-curtain", (1 - prog(fxl, 1, 0.35)).toFixed(4));
+      reads.forEach((h) => {
+        const chars = h.querySelectorAll(".rd-w");
+        const p = prog(h, 0.86, 0.42) * (chars.length + 4);
+        chars.forEach((c, i) => c.style.setProperty("--o", Math.min(1, Math.max(0.18, p - i)).toFixed(2)));
+      });
+    };
+    addEventListener("scroll", update, { passive: true });
+    addEventListener("zk:continuous-scroll", update);
+    addEventListener("resize", update);
+    update();
+  }
+
+  /* ---------- tactile tilt with glare ---------- */
+  function setupTilt() {
+    if (reduce || !matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    document.querySelectorAll("[data-rd-tilt], .rd-film").forEach((el) => {
+      const max = el.matches("[data-rd-tilt]") ? 3 : 6;
+      el.addEventListener("pointermove", (e) => {
+        const r = el.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+        el.classList.add("is-tilting");
+        el.style.setProperty("--ry", ((x - 0.5) * max).toFixed(2) + "deg");
+        el.style.setProperty("--rx", ((0.5 - y) * max).toFixed(2) + "deg");
+        el.style.setProperty("--gx", (x * 100).toFixed(1) + "%");
+        el.style.setProperty("--gy", (y * 100).toFixed(1) + "%");
+      });
+      el.addEventListener("pointerleave", () => {
+        el.classList.remove("is-tilting");
+        el.style.setProperty("--rx", "0deg");
+        el.style.setProperty("--ry", "0deg");
+      });
+    });
+  }
+
+  const init = () => { setupReveal(); setupCounter(); setupFilms(); setupShowreel(); setupParallax(); setupAutoplay(); setupMethodFilm(); setupScrollFx(); setupTilt(); };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
 })();

@@ -6,7 +6,8 @@ const versions = [
   { number: "05", date: "2026.08.17", title: "经历轨道", note: "把实习与项目沿时间组织，统一标识形状与信息层级。" },
   { number: "06", date: "2026.08.17", title: "IP 连续世界", note: "从角色设定进入场景，开始拆出作品内容而非嵌入整页。" },
   { number: "07", date: "2026.08.18", title: "IP 叙事重排", note: "减少拼贴边界，让排版、动效和内容拥有连续呼吸。" },
-  { number: "08", date: "2026.08.20", title: "粒子边界 IP", note: "线稿与三维对应、角色坠落、粒子缝合，形成当前版。" },
+  { number: "08", date: "2026.08.20", title: "粒子边界 IP", note: "线稿与三维对应、角色坠落、粒子缝合，确立 IP 叙事。" },
+  { number: "09", date: "2026.10.27", title: "影像优先", note: "作品集视频、新作与福小灵进入主线，文字让位给影像，形成当前版。" },
 ];
 
 const versionCards = [...document.querySelectorAll(".stratum-card")];
@@ -46,7 +47,7 @@ function setVersion(index, burst = true) {
     card.tabIndex = cardIndex === activeVersion ? 0 : -1;
   });
   const current = versions[activeVersion];
-  versionNumber.textContent = `${current.number} / 08`;
+  versionNumber.textContent = `${current.number} / ${String(versions.length).padStart(2, "0")}`;
   versionDate.textContent = current.date;
   versionTitle.textContent = current.title;
   versionNote.textContent = current.note;

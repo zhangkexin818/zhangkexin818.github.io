@@ -362,7 +362,7 @@
       });
     }, { threshold: .32 });
 
-    const rail = q(".evidence-rail");
+    const rail = q(".evidence-rail") || q(".rd-method-stats");
     if (!rail) return;
 
     observer.observe(rail);
