@@ -1,0 +1,503 @@
+<title>《竹》美学拆解</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="《竹》AH ZHU: THE LATE ECHO 的色彩剧本、人物定妆、空间、道具母题与分镜定稿。">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="../shared/press-fx.css?v=1">
+<style>
+/* 《竹》 case: a dark projection-room page. Cold grey-green = the present, warm light = memory; the page follows the film's own colour rule. */
+:root{
+  --carbon:#0b0c0e; --panel:#111316; --ink:#f0ece3; --dim:rgba(240,236,227,.62); --faint:rgba(240,236,227,.38); --line:rgba(240,236,227,.12);
+  --cold:#a9bdb2; --warm:#e1a55c; --white:#edeae3; --silver:#a9916d; --maroon:#3f2224; --red:#8b2c26;
+  --serif:"Noto Serif SC","Songti SC",serif; --sans:"Noto Sans SC","PingFang SC",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --ease:cubic-bezier(.22,.72,.16,1); --pad:max(16px, env(safe-area-inset-left,0px));
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--carbon);color:var(--ink);font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit}
+.k{font:500 11px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--faint)}
+.wrap{max-width:1360px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+section{padding-block:clamp(72px,10vw,150px)}
+h2{font:600 clamp(30px,4.6vw,64px)/1.1 var(--serif);margin:14px 0 18px;letter-spacing:-.01em;text-wrap:balance}
+.lede{max-width:60ch;color:var(--dim);font-size:clamp(15px,1.2vw,17px)}
+.head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:clamp(20px,4vw,64px);align-items:end;margin-bottom:clamp(30px,4vw,56px)}
+@media (max-width:860px){.head{grid-template-columns:1fr}}
+
+/* top bar */
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:calc(14px + env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) 14px max(20px,env(safe-area-inset-left,0px));background:linear-gradient(180deg,rgba(11,12,14,.85),transparent);pointer-events:none}
+.bar>*{pointer-events:auto}
+.back{display:inline-flex;align-items:center;gap:8px;font:500 12px/1 var(--mono);letter-spacing:.14em;padding:10px 14px;border:1px solid var(--line);border-radius:999px;background:rgba(11,12,14,.55);backdrop-filter:blur(10px);text-decoration:none;transition:background .3s,color .3s}
+.back:hover{background:var(--ink);color:var(--carbon)}
+.chapters{display:flex;gap:4px;padding:4px;border:1px solid var(--line);border-radius:999px;background:rgba(11,12,14,.55);backdrop-filter:blur(10px)}
+.chapters a{font:500 11px/1 var(--mono);letter-spacing:.12em;padding:8px 11px;border-radius:999px;text-decoration:none;color:var(--dim);transition:background .3s,color .3s}
+.chapters a.on,.chapters a:hover{background:var(--ink);color:var(--carbon)}
+@media (max-width:760px){.chapters{display:none}}
+
+/* hero */
+.hero{position:relative;min-height:min(100svh,980px);display:grid;align-items:end;overflow:hidden;padding:0}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;transform:scale(calc(1.08 - var(--hp,0)*.08));filter:saturate(.95)}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,12,14,.15) 0%,rgba(11,12,14,.1) 45%,rgba(11,12,14,.92) 100%)}
+.hero-in{position:relative;z-index:2;padding-block:0 clamp(40px,6vw,80px);display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(20px,4vw,60px);align-items:end}
+.zhu{font:900 clamp(140px,22vw,340px)/.82 var(--serif);margin:0;letter-spacing:-.04em;color:var(--ink);text-shadow:0 30px 80px rgba(0,0,0,.5)}
+.hero-meta{display:grid;gap:16px;padding-bottom:clamp(8px,1.5vw,22px)}
+.hero-meta .en{font:500 clamp(13px,1.2vw,16px)/1.3 var(--mono);letter-spacing:.24em}
+.hero-meta p{margin:0;max-width:46ch;color:var(--dim)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:500 11px/1 var(--mono);letter-spacing:.08em;padding:7px 10px;border-radius:999px;border:1px solid var(--line);color:var(--dim);background:rgba(11,12,14,.4)}
+.chip.role{background:var(--ink);color:var(--carbon);border-color:var(--ink)}
+.play{display:inline-flex;align-items:center;gap:12px;width:max-content;padding:13px 20px 13px 14px;border-radius:999px;background:var(--ink);color:var(--carbon);font-weight:500;transition:transform .4s var(--ease),box-shadow .4s}
+.play i{width:26px;height:26px;border-radius:50%;background:var(--carbon);display:grid;place-items:center}
+.play i::after{content:"";border-left:8px solid var(--ink);border-top:5px solid transparent;border-bottom:5px solid transparent;margin-left:2px}
+.play:hover{transform:translateY(-2px);box-shadow:0 18px 40px rgba(0,0,0,.4)}
+@media (max-width:760px){.hero-in{grid-template-columns:1fr}.zhu{font-size:46vw}}
+
+/* logline */
+.logline{font:400 clamp(22px,3vw,40px)/1.55 var(--serif);max-width:28em;margin:0;text-wrap:pretty}
+.logline em{font-style:normal;color:var(--warm)}
+.logline .c{color:var(--cold)}
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:clamp(32px,4vw,56px)}
+.facts div{background:var(--carbon);padding:20px;display:grid;gap:6px}
+.facts b{font:600 clamp(24px,3vw,40px)/1 var(--serif);font-variant-numeric:tabular-nums}
+.facts span{font-size:13px;color:var(--faint)}
+@media (max-width:760px){.facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* colour script */
+.cs{display:grid;gap:22px}
+.cs-bar{position:relative;display:flex;height:clamp(64px,8vw,110px);border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.cs-bar button{position:relative;flex:var(--w);background:var(--c);transition:flex .6s var(--ease),filter .3s;min-width:0}
+.cs-bar button:hover{filter:brightness(1.12)}
+.cs-bar button.on{flex:calc(var(--w) * 1.6)}
+.cs-bar button.on::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 2px var(--ink)}
+.cs-bar button span{position:absolute;left:8px;top:8px;font:500 11px/1.2 var(--mono);letter-spacing:.06em;color:var(--lab,#0b0c0e);white-space:nowrap;opacity:.85}
+.cs-ticks{display:flex;justify-content:space-between;font:500 10px/1 var(--mono);color:var(--faint);padding:0 2px}
+.cs-detail{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(18px,3vw,40px);align-items:start}
+@media (max-width:860px){.cs-detail{grid-template-columns:1fr}}
+.cs-text h3{font:600 clamp(24px,2.6vw,36px)/1.2 var(--serif);margin:8px 0 10px}
+.cs-text p{margin:0;color:var(--dim)}
+.swatches{display:flex;height:54px;border-radius:8px;overflow:hidden;margin:18px 0 8px;border:1px solid var(--line)}
+.swatches button{flex:var(--w);background:var(--c);position:relative;transition:flex .5s var(--ease)}
+.swatches button:hover{flex:calc(var(--w) * 1.8 + .6)}
+.swatches button span{position:absolute;bottom:5px;left:6px;font:500 9.5px/1 var(--mono);opacity:0;transition:opacity .3s;color:var(--t,#fff)}
+.swatches button:hover span{opacity:1}
+.cs-frames{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.cs-frames figure{margin:0;position:relative;border-radius:8px;overflow:hidden;aspect-ratio:16/9;background:#000}
+.cs-frames img{width:100%;height:100%;object-fit:cover;animation:fadeIn .7s var(--ease) both}
+.cs-frames figcaption{position:absolute;left:0;right:0;bottom:0;padding:18px 8px 6px;font:500 10px/1.3 var(--mono);background:linear-gradient(0deg,rgba(0,0,0,.8),transparent)}
+@keyframes fadeIn{from{opacity:0;transform:scale(1.03)}to{opacity:1;transform:none}}
+.quote{border-left:2px solid var(--warm);padding-left:16px;font:400 clamp(15px,1.3vw,18px)/1.8 var(--serif);color:var(--ink);max-width:52ch}
+.cards{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;scrollbar-width:thin}
+.cards button{flex:0 0 clamp(240px,26vw,360px);scroll-snap-align:start;border-radius:8px;overflow:hidden;border:1px solid var(--line);transition:transform .4s var(--ease)}
+.cards button:hover{transform:translateY(-4px)}
+
+/* storyboard */
+.acts{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.acts button{font:500 12px/1 var(--mono);letter-spacing:.06em;padding:9px 13px;border-radius:999px;border:1px solid var(--line);color:var(--dim);transition:background .3s,color .3s,border-color .3s}
+.acts button[aria-pressed="true"]{background:var(--ink);color:var(--carbon);border-color:var(--ink)}
+.acts button i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c);margin-right:7px;vertical-align:0}
+.reel{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:max(20px,calc((100vw - 1360px)/2 + 20px));padding-bottom:10px;cursor:grab;scrollbar-width:thin}
+.reel.drag{cursor:grabbing;scroll-snap-type:none}
+.shot{flex:0 0 clamp(260px,30vw,460px);scroll-snap-align:start;margin:0;display:grid;gap:10px;transition:opacity .5s var(--ease),filter .5s}
+.shot.dim{opacity:.18;filter:grayscale(1)}
+.shot .ph{position:relative;aspect-ratio:16/9;border-radius:8px;overflow:hidden;background:#000}
+.shot .ph img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease);pointer-events:none}
+.shot:hover .ph img{transform:scale(1.05)}
+.shot .no{position:absolute;top:8px;left:8px;font:500 10px/1 var(--mono);padding:5px 7px;border-radius:3px;background:rgba(0,0,0,.6)}
+.shot figcaption{font-size:14px;color:var(--dim)}
+.shot figcaption q{display:block;font:500 15px/1.5 var(--serif);color:var(--ink);quotes:"「" "」"}
+.shot .swatch{display:inline-block;width:18px;height:3px;background:var(--c);vertical-align:middle;margin-right:8px}
+
+/* characters */
+.cast{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.6vw,22px)}
+@media (max-width:900px){.cast{grid-template-columns:1fr}}
+.person{display:grid;gap:12px}
+.person .main{position:relative;aspect-ratio:4/5;border-radius:10px;overflow:hidden;background:#15171a}
+.person .main img{width:100%;height:100%;object-fit:cover;object-position:center 20%;transition:opacity .6s var(--ease),transform 1.2s var(--ease)}
+.person .main:hover img{transform:scale(1.03)}
+.person .alt{display:flex;gap:6px}
+.person .alt button{flex:1;aspect-ratio:4/3;border-radius:6px;overflow:hidden;border:1px solid var(--line);opacity:.55;transition:opacity .3s,border-color .3s}
+.person .alt button[aria-pressed="true"],.person .alt button:hover{opacity:1;border-color:var(--ink)}
+.person .alt img{width:100%;height:100%;object-fit:cover}
+.person h3{margin:0;font:600 22px/1.3 var(--serif)}
+.person p{margin:0;color:var(--dim);font-size:14px}
+.person .tagline{font:500 11px/1 var(--mono);letter-spacing:.14em;color:var(--faint)}
+
+/* spaces */
+.spaces{display:grid;gap:14px}
+.cmp{--x:50%;position:relative;aspect-ratio:21/9;border-radius:12px;overflow:hidden;background:#000;max-width:100%}
+.cmp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cmp .b{clip-path:inset(0 0 0 var(--x))}
+.cmp::after{content:"";position:absolute;top:0;bottom:0;left:var(--x);width:2px;background:var(--ink);box-shadow:0 0 20px rgba(0,0,0,.6);pointer-events:none}
+.cmp input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.cmp .t{position:absolute;bottom:14px;font:500 11px/1.3 var(--mono);letter-spacing:.12em;padding:7px 10px;border-radius:4px;background:rgba(0,0,0,.6);pointer-events:none}
+.cmp .t.l{left:14px;color:var(--cold)}.cmp .t.r{right:14px;color:var(--warm)}
+.cmp .knob{position:absolute;top:50%;left:var(--x);width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:var(--ink);display:grid;place-items:center;color:var(--carbon);font:600 14px/1 var(--mono);pointer-events:none;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.pairs{display:flex;gap:6px;flex-wrap:wrap}
+.pairs button{font:500 12px/1 var(--sans);padding:9px 14px;border-radius:999px;border:1px solid var(--line);color:var(--dim);transition:background .3s,color .3s}
+.pairs button[aria-pressed="true"]{background:var(--ink);color:var(--carbon)}
+.env-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:8px}
+.env-grid figure{margin:0;aspect-ratio:16/10;border-radius:6px;overflow:hidden;position:relative}
+.env-grid img{width:100%;height:100%;object-fit:cover}
+.env-grid figcaption{position:absolute;left:6px;bottom:6px;font:500 10px/1 var(--mono);padding:4px 6px;border-radius:3px;background:rgba(0,0,0,.6)}
+@media (max-width:760px){.env-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cmp{aspect-ratio:4/3}}
+
+/* blanket motif (sticky scroll) */
+.motif{position:relative;height:300vh}
+.motif-stick{position:sticky;top:0;height:100svh;display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(20px,4vw,60px);align-items:center}
+@media (max-width:860px){.motif-stick{grid-template-columns:1fr;align-content:center}}
+.motif-imgs{position:relative;aspect-ratio:16/10;border-radius:12px;overflow:hidden;background:#000}
+.motif-imgs img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.04);transition:opacity .9s var(--ease),transform 1.6s var(--ease)}
+.motif-imgs img.on{opacity:1;transform:none}
+.steps{display:grid;gap:4px;margin-top:20px}
+.steps li{list-style:none;display:grid;grid-template-columns:44px 1fr;gap:10px;padding:14px 0;border-top:1px solid var(--line);opacity:.35;transition:opacity .5s}
+.steps li.on{opacity:1}
+.steps b{font:500 12px/1.6 var(--mono);color:var(--warm)}
+.steps strong{display:block;font:600 18px/1.4 var(--serif)}
+.steps span{color:var(--dim);font-size:14px}
+.steps ol{margin:0;padding:0}
+
+/* props */
+.props{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:860px){.props{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.prop{margin:0;position:relative;border-radius:10px;overflow:hidden;background:#15171a;aspect-ratio:1;cursor:zoom-in}
+.prop img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.prop:hover img{transform:scale(1.06)}
+.prop figcaption{position:absolute;left:0;right:0;bottom:0;padding:30px 12px 12px;background:linear-gradient(0deg,rgba(0,0,0,.85),transparent);display:grid;gap:2px}
+.prop figcaption b{font:600 15px/1.3 var(--serif)}
+.prop figcaption span{font-size:12px;color:var(--dim)}
+.prop.wide{grid-column:span 2;aspect-ratio:2/1}
+
+/* rules */
+.rules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+@media (max-width:860px){.rules{grid-template-columns:1fr}}
+.rules div{background:var(--carbon);padding:clamp(18px,2vw,28px);display:grid;gap:10px;align-content:start}
+.rules b{font:500 11px/1 var(--mono);letter-spacing:.16em;color:var(--warm)}
+.rules p{margin:0;font:400 clamp(16px,1.4vw,19px)/1.6 var(--serif)}
+.rules span{font-size:13px;color:var(--faint)}
+
+.end{padding-block:clamp(60px,8vw,120px);text-align:center;display:grid;gap:22px;justify-items:center}
+.end .zh{font:900 clamp(60px,9vw,140px)/1 var(--serif)}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:100;background:rgba(5,5,6,.94);display:grid;place-items:center;padding:max(16px,4vw);opacity:0;pointer-events:none;transition:opacity .35s}
+.lb.on{opacity:1;pointer-events:auto}
+.lb img,.lb video{max-width:100%;max-height:84vh;border-radius:8px;transform:scale(.96);transition:transform .45s var(--ease)}
+.lb.on img,.lb.on video{transform:none}
+.lb p{margin:14px 0 0;font:500 12px/1.4 var(--mono);color:var(--dim);text-align:center}
+.lb button{position:absolute;top:calc(16px + env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px));font:500 12px/1 var(--mono);padding:10px 14px;border:1px solid var(--line);border-radius:999px}
+.lb button:hover{background:var(--ink);color:var(--carbon)}
+.zoomable{cursor:zoom-in}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.motif{height:auto}.motif-stick{position:static;height:auto}}
+</style>
+<header class="bar">
+  <a class="back" href="../../index.html#about" target="_top">← 返回作品集</a>
+  <nav class="chapters" aria-label="章节">
+    <a href="#color">色彩</a><a href="#board">分镜</a><a href="#cast">人物</a><a href="#space">空间</a><a href="#motif">母题</a><a href="#rules">规则</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero" id="top">
+    <img src="assets/poster-wide.jpg" alt="《竹》海报：年轻的阿竹与梅，红色背景">
+    <div class="wrap hero-in">
+      <h1 class="zhu">竹</h1>
+      <div class="hero-meta">
+        <span class="en">AH ZHU: THE LATE ECHO</span>
+        <p>一部 6 分 56 秒的 AI 剧情短片。这一页拆开它的视觉：色彩怎样分出现在与回忆，人物、空间和道具怎样一起讲同一个故事。</p>
+        <div class="chips"><span class="chip role">我的角色 · 美学执行</span><span class="chip">亚洲巅峰黑客松上海站 · 参赛作品</span><span class="chip">Midjourney v8.2 · Seedance 2.5 · TapNow</span></div>
+        <button class="play" id="playFilm" type="button"><i aria-hidden="true"></i>观看完整影片 6′56″</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="story">
+    <div class="wrap">
+      <p class="k">LOGLINE · 一句话</p>
+      <p class="logline">九十六岁的盲眼老人阿竹，独自走进县城那座<span class="c">还在营业、却已空无一人</span>的旧影院；在黑下来的影厅里，她<em>听见</em>了 1940 年代的三段往事。</p>
+      <div class="facts">
+        <div><b>93</b><span>个分镜定稿</span></div>
+        <div><b>5</b><span>幕：断 · 空 · 三幅画 · 回声 · 凹陷</span></div>
+        <div><b>3</b><span>段回忆：后台 · 医院 · 影院后排</span></div>
+        <div><b>0</b><span>配乐，只用音效</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="color">
+    <div class="wrap cs">
+      <div class="head">
+        <div><p class="k">01 · COLOUR SCRIPT</p><h2>色彩剧本</h2></div>
+        <p class="quote">现实是冷的、灰绿的，是她看不见的光；回忆有真正的光源，是暖的。三段回忆一暖（灯泡）、一白（医院）、一暖银（放映机），每次切回现在，都一下变冷。</p>
+      </div>
+      <div class="cs-bar" id="csBar" role="tablist" aria-label="全片色彩时间轴"></div>
+      <div class="cs-ticks" aria-hidden="true"><span>0:00</span><span>1:00</span><span>2:00</span><span>3:00</span><span>4:00</span><span>5:00</span><span>6:00</span></div>
+      <div class="cs-detail">
+        <div class="cs-text">
+          <p class="k" id="csTime"></p>
+          <h3 id="csName"></h3>
+          <p id="csNote"></p>
+          <div class="swatches" id="csSw"></div>
+          <p class="k" id="csShots"></p>
+        </div>
+        <div class="cs-frames" id="csFrames"></div>
+      </div>
+      <p class="k" style="margin-top:12px">原始色卡 · 点开查看</p>
+      <div class="cards" id="csCards"></div>
+    </div>
+  </section>
+
+  <section id="board">
+    <div class="wrap">
+      <div class="head">
+        <div><p class="k">02 · STORYBOARD</p><h2>分镜定稿</h2></div>
+        <p class="lede">从 93 个分镜里挑出 26 格。按幕筛选，或者直接拖动胶片。每格标着分镜号和这一镜里的那句台词。</p>
+      </div>
+      <div class="acts" id="acts"></div>
+    </div>
+    <div class="reel" id="reel" style="padding-left:max(20px,calc((100vw - 1360px)/2 + 20px));padding-right:20px"></div>
+  </section>
+
+  <section id="cast">
+    <div class="wrap">
+      <div class="head">
+        <div><p class="k">03 · CHARACTERS</p><h2>人物定妆</h2></div>
+        <p class="lede">三个人：现在的阿竹、1940 年代的阿竹、梅。老王从不出现在画面里，只剩一件外套、一副断腿的老花镜和一把空椅子。</p>
+      </div>
+      <div class="cast" id="castGrid"></div>
+    </div>
+  </section>
+
+  <section id="space">
+    <div class="wrap spaces">
+      <div class="head">
+        <div><p class="k">04 · SPACES</p><h2>同一座城，两种光</h2></div>
+        <p class="lede">拖动中间的分割线：左边是她现在走过的地方，右边是她听见的 1940 年代。冷与暖在同一个画框里对照。</p>
+      </div>
+      <div class="pairs" id="pairs"></div>
+      <div class="cmp" id="cmp"><img class="a" id="cmpA" alt=""><img class="b" id="cmpB" alt=""><input type="range" min="0" max="100" value="50" aria-label="现在与 1940 年代对照分割线" id="cmpR"><span class="t l" id="cmpTL"></span><span class="t r" id="cmpTR"></span><span class="knob" aria-hidden="true">⇆</span></div>
+      <div class="env-grid">
+        <figure class="zoomable" data-full="assets/env-home-gate.jpg"><img src="assets/env-home-gate.jpg" alt="阿竹家院门" loading="lazy"><figcaption>E01 · 院门</figcaption></figure>
+        <figure class="zoomable" data-full="assets/env-dusk-street.jpg"><img src="assets/env-dusk-street.jpg" alt="县城黄昏街道" loading="lazy"><figcaption>E02 · 黄昏街道</figcaption></figure>
+        <figure class="zoomable" data-full="assets/env-corridor.jpg"><img src="assets/env-corridor.jpg" alt="影厅走廊门缝白雾" loading="lazy"><figcaption>E04 · 门缝白雾</figcaption></figure>
+        <figure class="zoomable" data-full="assets/env-1940-theatre.jpg"><img src="assets/env-1940-theatre.jpg" alt="1940 年代的影院" loading="lazy"><figcaption>E09 · 1940 影院</figcaption></figure>
+        <figure class="zoomable" data-full="assets/env-hospital-2.jpg"><img src="assets/env-hospital-2.jpg" alt="1940 年代医院走廊" loading="lazy"><figcaption>E08 · 医院走廊</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="motif" id="motif">
+    <div class="wrap motif-stick">
+      <div>
+        <p class="k">05 · MOTIF</p>
+        <h2>一条毯子，三种形状</h2>
+        <p class="lede">全片没有一句台词解释她失去了什么。这件事交给一条旧毯子：往下滚动，看它怎样从 1940 年代走到现在。</p>
+        <ol class="steps" id="steps">
+          <li data-i="0"><b>1940</b><div><strong>裹在腹部</strong><span>后台，年轻的阿竹把毯子围在身上。</span></div></li>
+          <li data-i="1"><b>现在</b><div><strong>中央的空缺</strong><span>膝上的褶皱围出一个很小的空位。她把指尖按在中央，停三秒。</span></div></li>
+          <li data-i="2"><b>结尾</b><div><strong>空座上的凹陷</strong><span>她走后，毯子留在空座位上，中间的浅凹慢慢回弹。</span></div></li>
+        </ol>
+      </div>
+      <div class="motif-imgs" id="motifImgs">
+        <img src="assets/blanket-1940.jpg" alt="1940 年代，毯子裹在腹部" class="on">
+        <img src="assets/blanket-hollow.jpg" alt="毯子中央的空缺">
+        <img src="assets/blanket-seat.jpg" alt="空座椅上的毯子凹陷">
+      </div>
+    </div>
+  </section>
+
+  <section id="props">
+    <div class="wrap">
+      <div class="head">
+        <div><p class="k">06 · PROPS</p><h2>会说话的物件</h2></div>
+        <p class="lede">她看不见，所以每一件道具都要能被摸到、被听到。点开任意一件看大图。</p>
+      </div>
+      <div class="props">
+        <figure class="prop wide zoomable" data-full="assets/bowl-1940.jpg"><img src="assets/bowl-1940.jpg" alt="1940 年代的粗瓷粥碗" loading="lazy"><figcaption><b>粗瓷粥碗 · 1940</b><span>梅递来的粥，她不接，后来又推回给梅。</span></figcaption></figure>
+        <figure class="prop zoomable" data-full="assets/bowl-now.jpg"><img src="assets/bowl-now.jpg" alt="现在的瓷碗与勺子" loading="lazy"><figcaption><b>瓷碗与勺子 · 现在</b><span>片尾黑场里，勺子刮过碗底三次。</span></figcaption></figure>
+        <figure class="prop zoomable" data-full="assets/diary-mei.jpg"><img src="assets/diary-mei.jpg" alt="写着梅字的旧日记与画片" loading="lazy"><figcaption><b>日记「梅」与画片</b><span>四张画片，其中一张撕破了。</span></figcaption></figure>
+        <figure class="prop zoomable" data-full="assets/cane.jpg"><img src="assets/cane.jpg" alt="竹制盲杖" loading="lazy"><figcaption><b>盲杖</b><span>行动和声音的母题，杖声的回声越来越短。</span></figcaption></figure>
+        <figure class="prop zoomable" data-full="assets/rattan-chair.jpg"><img src="assets/rattan-chair.jpg" alt="藤椅三视图" loading="lazy"><figcaption><b>藤椅 · 断藤</b><span>「又断了。」</span></figcaption></figure>
+        <figure class="prop zoomable" data-full="assets/record-player.jpg"><img src="assets/record-player.jpg" alt="唱片机与女驸马唱片" loading="lazy"><figcaption><b>唱片机</b><span>唱针卡在划痕上，转盘空转。</span></figcaption></figure>
+        <figure class="prop zoomable" data-full="assets/ticket-knot.jpg"><img src="assets/ticket-knot.jpg" alt="老王的旧戏票与修补结扣" loading="lazy"><figcaption><b>旧戏票与结扣</b><span>老王留下的东西。</span></figcaption></figure>
+        <figure class="prop wide zoomable" data-full="assets/boots-keys.jpg"><img src="assets/boots-keys.jpg" alt="军靴、皮带扣、钥匙与铁门" loading="lazy"><figcaption><b>军靴 · 钥匙 · 铁门</b><span>回忆里只出现声音和局部，人不露脸。</span></figcaption></figure>
+        <figure class="prop wide zoomable" data-full="assets/check-paper.jpg"><img src="assets/check-paper.jpg" alt="医院检查纸" loading="lazy"><figcaption><b>检查纸</b><span>医院那一段，一只手单独攥着一张纸。</span></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="rules">
+    <div class="wrap">
+      <div class="head">
+        <div><p class="k">07 · RULES</p><h2>给自己定的规矩</h2></div>
+        <p class="lede">美学执行不只是挑好看的画面，更多是守住几条贯穿全片的约束，让 93 个分镜看起来出自同一个人的眼睛。</p>
+      </div>
+      <div class="rules">
+        <div><b>RULE 01</b><p>暖色只属于回忆。</p><span>现在的戏一律冷、灰绿；回忆都有真实光源。</span></div>
+        <div><b>RULE 02</b><p>进入影厅之后，现在只拍手和毯子。</p><span>直到第三段回忆结束，老人的脸不出现。</span></div>
+        <div><b>RULE 03</b><p>梅是一个真实的人，不是鬼魂。</p><span>不做透明、虚化、飘忽的处理。</span></div>
+        <div><b>RULE 04</b><p>没有配乐。</p><span>唱片底噪、杖声、风机声和勺子刮碗声讲故事。</span></div>
+        <div><b>RULE 05</b><p>她的嗓子一直是坏的。</p><span>年轻和年老都沙哑，口音统一为安庆话。</span></div>
+        <div><b>RULE 06</b><p>不流血，不暴力。</p><span>失去只通过物件和空缺表现。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="end">
+    <p class="k">AH ZHU: THE LATE ECHO</p>
+    <p class="zh">竹</p>
+    <button class="play" id="playFilm2" type="button"><i aria-hidden="true"></i>观看完整影片</button>
+    <a class="back" href="../../index.html#about" target="_top" style="position:static">← 返回作品集</a>
+  </section>
+</main>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="大图查看"><button type="button" id="lbClose">关闭 ×</button><div id="lbBody"></div></div>
+
+<script>
+(() => {
+  "use strict";
+  const $ = (s, r = document) => r.querySelector(s);
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- lightbox ---------- */
+  const lb = $("#lb"), lbBody = $("#lbBody");
+  let lastFocus = null;
+  function openLB(html) { lastFocus = document.activeElement; lbBody.innerHTML = html; lb.classList.add("on"); $("#lbClose").focus({ preventScroll: true }); }
+  function closeLB() { lb.classList.remove("on"); const v = lbBody.querySelector("video"); if (v) v.pause(); setTimeout(() => { lbBody.innerHTML = ""; }, 350); lastFocus?.focus?.({ preventScroll: true }); }
+  $("#lbClose").addEventListener("click", closeLB);
+  lb.addEventListener("click", (e) => { if (e.target === lb) closeLB(); });
+  addEventListener("keydown", (e) => { if (e.key === "Escape" && lb.classList.contains("on")) closeLB(); });
+  function zoom(src, cap) { openLB(`<img src="${src}" alt=""><p>${cap || ""}</p>`); }
+  document.addEventListener("click", (e) => { const z = e.target.closest(".zoomable"); if (!z) return; zoom(z.dataset.full, z.querySelector("figcaption")?.innerText?.replace(/\n/g, " · ")); });
+  document.querySelectorAll(".zoomable").forEach((z) => { z.tabIndex = 0; z.setAttribute("role", "button"); z.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); z.click(); } }); });
+  const film = () => openLB(`<video src="../about-v1-identity-spectrum-concept/assets/aigc/full/zhu.mp4?v=720" controls autoplay playsinline poster="assets/poster-wide.jpg"></video><p>《竹》AH ZHU: THE LATE ECHO · 6′56″</p>`);
+  $("#playFilm").addEventListener("click", film); $("#playFilm2").addEventListener("click", film);
+
+  /* ---------- hero parallax ---------- */
+  const hero = $(".hero");
+  addEventListener("scroll", () => { const p = Math.min(1, scrollY / innerHeight); hero.style.setProperty("--hp", p.toFixed(3)); }, { passive: true });
+
+  /* ---------- data ---------- */
+  const SB = {
+    n1110: ["S07", "侧脸近景", "又断了。"], n1116: ["S11", "推门，白光吞没", ""], n1118: ["S12", "白光匹配 → 黄昏逆光，背影很小", ""], n1126: ["S15", "机器人轻撞她的脚", ""], n1132: ["S16", "空镜 · 大厅无人，灯亮着", ""], n1138: ["S18", "侧背近景", "老王，你这桌子……"], n1153: ["S23", "杖推开门，白雾漫过镜头", ""],
+    n1157: ["S25", "手和毯子 · 军靴声里，手攥紧扶手", ""], n1165: ["S27", "年轻阿竹张嘴，没有声音", ""], n1173: ["S30", "双人中景", "唱不了戏，还能活。"], n1202: ["S34·S40", "两只手（握住 · 再握住）", ""],
+    n1214: ["S42", "白色长走廊，一坐一站", ""], n1232: ["S52", "梅眼睛特写", "我听见了。"], n1237: ["S54", "把粥推到梅那边", ""], n1244: ["S58", "一个人坐着；走廊尽头的白", ""],
+    n1248: ["S59", "放映机光束 → 后排的梅", ""], n1257: ["S63", "一掌的距离，没有碰", ""],
+    n1268: ["S67", "银幕 · 第三幅画慢慢淡去", ""], n1271: ["S68·S70", "攥着画片的手（毯子上）", ""], n1284: ["S75", "逆光剪影", "这出戏唱完了？"], n1291: ["S76", "高位俯拍 · 整个空影院，一个老人", ""], n1298: ["S80", "手按在空缺中央", ""], n1306: ["S83", "拄杖站起，毯子滑落", ""],
+    n1314: ["S88", "拄杖一步步向出口走", ""], n1319: ["S90", "推门进强光；门慢慢合上", ""], n1320: ["S93", "空电影院继续运转", ""]
+  };
+  const SEG = [
+    { id: "k1", name: "一 · 断", sub: "K1 · 家", t: [1, 33], c: "#6e6a5e", lab: "#f0ece3", note: "家里的光是灰绿的、旧的。唱针卡住，藤条断了，她第一次开口：「又断了。」", shots: "S02—S11", pal: [["#0f140d",.62],["#3b342a",.14],["#24333a",.1],["#6e6b5c",.06],["#877062",.03],["#b6bcb0",.03],["#c9cab8",.02]], frames: ["n1110","n1116"], card: "color-k1" },
+    { id: "k2", name: "二 · 空", sub: "K2 · 黄昏 · 街", t: [34, 40], c: "#c98d51", note: "黄昏是现在唯一一点暖，但它来自街上，不属于她。", shots: "S12—S14", pal: [["#1c2125",.4],["#4b4b43",.2],["#2b2a25",.12],["#24333a",.08],["#aa9f89",.07],["#5f8b8a",.04],["#c88e4f",.04],["#ded7ba",.01]], frames: ["n1118"], card: "color-k2" },
+    { id: "k3", name: "二 · 空", sub: "K3 · 影院大厅 · 冷荧光", t: [41, 66], c: "#a9bdb2", note: "影院还在营业，却空无一人。冷荧光、机器人的电子声替代了人的迎接。", shots: "S15—S23", pal: [["#131917",.35],["#5f675c",.2],["#a8beb1",.12],["#4a6669",.1],["#24333a",.07],["#4b3e38",.05],["#b78957",.03],["#d3d8db",.02]], frames: ["n1126","n1132","n1138","n1153"], card: "color-k3" },
+    { id: "k4a", name: "空影厅", sub: "K4 · 现在", t: [66, 72], c: "#3f2224", lab: "#f0ece3", note: "雾散开，空影厅只剩暗红的座椅。从这里起，现在只拍手和毯子。", shots: "S24—S25", pal: [["#0b0c0e",.6],["#412124",.12],["#54626d",.07],["#24333a",.07],["#adb7b9",.05],["#8d392e",.03],["#8a6d5f",.02]], frames: ["n1157"], card: "color-k4" },
+    { id: "a", name: "画一 · 后台", sub: "A · 1940 · 灯泡", t: [73, 129], c: "#e1a55c", note: "第一段回忆：戏台后台，裸灯泡是真正的光源。梅端来粥，「唱不了戏，还能活。」", shots: "S26—S40", pal: [["#100b07",.5],["#483322",.12],["#8b2c26",.1],["#2c3a47",.08],["#9c7c4b",.05],["#bc8767",.06],["#dccdba",.04],["#e5ac67",.01]], frames: ["n1165","n1173","n1202"], card: "color-a" },
+    { id: "b", name: "画二 · 医院", sub: "B · 1940 · 白", t: [130, 203], c: "#edeae3", note: "第二段回忆是白的：长走廊、窗光、检查纸。「弄坏的东西，还能修。」「我听见了。」", shots: "S41—S58", pal: [["#f0ece3",.38],["#d4d0c5",.25],["#7f8581",.1],["#66563f",.05],["#5f6d7a",.07],["#2c3a47",.05],["#c7a693",.04],["#a1473e",.02]], frames: ["n1214","n1232","n1237","n1244"], card: "color-b" },
+    { id: "c", name: "画三 · 后排", sub: "C · 1940 · 放映光", t: [204, 242], c: "#a9916d", note: "第三段回忆回到同一座影院的后排。放映机的暖银光里，梅的手停在一掌之外，然后离开。", shots: "S59—S64、S66", pal: [["#100b07",.52],["#3e342b",.12],["#593f32",.1],["#2c3a45",.07],["#ab9273",.05],["#9f7658",.05],["#d1cbbb",.01]], frames: ["n1248","n1257"], card: "color-c" },
+    { id: "k4b", name: "四 · 回声", sub: "K4 · 空影厅 · 现在", t: [242, 324], c: "#3f2224", lab: "#f0ece3", note: "回到现在。银幕淡去，她问：「这出戏唱完了？」手按在毯子的空缺中央。", shots: "S65、S67—S83", pal: [["#0b0c0e",.6],["#412124",.12],["#54626d",.07],["#24333a",.07],["#adb7b9",.05],["#8d392e",.03],["#8a6d5f",.02]], frames: ["n1268","n1284","n1298"], card: "color-k4" },
+    { id: "k4c", name: "五 · 凹陷", sub: "K4 · 现在 → 黑", t: [324, 360], c: "#2a1719", lab: "#f0ece3", note: "她拄杖走向出口，推门进入强光。门合上，空电影院继续运转。", shots: "S84—S93", pal: [["#0b0c0e",.7],["#412124",.12],["#24333a",.08],["#adb7b9",.06],["#8d392e",.04]], frames: ["n1306","n1319","n1320"], card: "color-00" }
+  ];
+
+  /* ---------- colour script ---------- */
+  const bar = $("#csBar");
+  SEG.forEach((s, i) => {
+    const b = document.createElement("button"); b.type = "button"; b.setAttribute("role", "tab");
+    b.style.setProperty("--w", s.t[1] - s.t[0]); b.style.setProperty("--c", s.c); if (s.lab) b.style.setProperty("--lab", s.lab);
+    b.innerHTML = s.t[1] - s.t[0] > 20 ? `<span>${s.name}</span>` : "";
+    b.setAttribute("aria-label", `${s.name} ${s.sub}`);
+    b.addEventListener("click", () => showSeg(i)); b.addEventListener("mouseenter", () => matchMedia("(hover:hover)").matches && showSeg(i));
+    bar.appendChild(b);
+  });
+  const mmss = (t) => `${Math.floor(t / 60)}:${String(t % 60).padStart(2, "0")}`;
+  function showSeg(i) {
+    const s = SEG[i];
+    bar.querySelectorAll("button").forEach((b, j) => { b.classList.toggle("on", j === i); b.setAttribute("aria-selected", String(j === i)); });
+    $("#csTime").textContent = `${mmss(s.t[0])} — ${mmss(s.t[1])} · ${s.sub}`;
+    $("#csName").textContent = s.name; $("#csNote").textContent = s.note; $("#csShots").textContent = `分镜 ${s.shots}`;
+    const sw = $("#csSw"); sw.innerHTML = "";
+    s.pal.forEach(([c, w]) => { const b = document.createElement("button"); b.type = "button"; b.style.setProperty("--c", c); b.style.setProperty("--w", w); const l = parseInt(c.slice(1, 3), 16) * .3 + parseInt(c.slice(3, 5), 16) * .59 + parseInt(c.slice(5, 7), 16) * .11; b.style.setProperty("--t", l > 140 ? "#0b0c0e" : "#fff"); b.innerHTML = `<span>${c.toUpperCase()}</span>`; b.setAttribute("aria-label", `复制色值 ${c}`); b.addEventListener("click", () => { navigator.clipboard?.writeText(c.toUpperCase()).catch(() => {}); b.querySelector("span").textContent = "已复制"; setTimeout(() => b.querySelector("span").textContent = c.toUpperCase(), 1000); }); sw.appendChild(b); });
+    const fr = $("#csFrames"); fr.innerHTML = "";
+    s.frames.forEach((k) => { const f = document.createElement("figure"); f.className = "zoomable"; f.dataset.full = `assets/sb/${k}.jpg`; f.innerHTML = `<img src="assets/sb/${k}.jpg" alt=""><figcaption>${SB[k][0]} · ${SB[k][1]}</figcaption>`; f.tabIndex = 0; f.setAttribute("role", "button"); fr.appendChild(f); });
+  }
+  showSeg(4);
+  const cards = ["color-00","color-k1","color-k2","color-k3","color-k4","color-a","color-b","color-c"];
+  cards.forEach((c) => { const b = document.createElement("button"); b.type = "button"; b.className = "zoomable"; b.dataset.full = `assets/${c}.jpg`; b.innerHTML = `<img src="assets/${c}.jpg" alt="色卡 ${c}" loading="lazy">`; $("#csCards").appendChild(b); });
+
+  /* ---------- storyboard ---------- */
+  const ACTS = [["all", "全部", "#f0ece3"], ["k1", "一 · 断", "#6e6a5e"], ["k3", "二 · 空", "#a9bdb2"], ["a", "画一 · 后台", "#e1a55c"], ["b", "画二 · 医院", "#edeae3"], ["c", "画三 · 后排", "#a9916d"], ["k4b", "四 · 回声", "#8d392e"], ["k4c", "五 · 凹陷", "#2a1719"]];
+  const actOf = (k) => { for (const s of SEG) if (s.frames.includes(k)) return s.id === "k2" || s.id === "k4a" ? (s.id === "k2" ? "k3" : "k3") : s.id; return "all"; };
+  const order = ["n1110","n1116","n1118","n1126","n1132","n1138","n1153","n1157","n1165","n1173","n1202","n1214","n1232","n1237","n1244","n1248","n1257","n1268","n1271","n1284","n1291","n1298","n1306","n1314","n1319","n1320"];
+  const extraAct = { n1271: "k4b", n1291: "k4b", n1314: "k4c" };
+  const reel = $("#reel");
+  order.forEach((k) => {
+    const a = extraAct[k] || actOf(k); const s = SEG.find((x) => x.id === a) || SEG[0];
+    const f = document.createElement("figure"); f.className = "shot"; f.dataset.act = a;
+    f.innerHTML = `<div class="ph zoomable" data-full="assets/sb/${k}.jpg"><img src="assets/sb/${k}.jpg" alt="${SB[k][1]}" loading="lazy" draggable="false"><span class="no">${SB[k][0]}</span><figcaption hidden>${SB[k][0]} · ${SB[k][1]}</figcaption></div><figcaption><span class="swatch" style="--c:${s.c}"></span>${SB[k][1]}${SB[k][2] ? `<q>${SB[k][2]}</q>` : ""}</figcaption>`;
+    reel.appendChild(f);
+  });
+  const actsBox = $("#acts");
+  ACTS.forEach(([id, label, c], i) => {
+    const b = document.createElement("button"); b.type = "button"; b.setAttribute("aria-pressed", String(i === 0)); b.innerHTML = `${i ? `<i style="--c:${c}"></i>` : ""}${label}`;
+    b.addEventListener("click", () => {
+      actsBox.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      const shots = [...reel.children]; shots.forEach((s) => s.classList.toggle("dim", id !== "all" && s.dataset.act !== id));
+      const first = shots.find((s) => id === "all" || s.dataset.act === id); if (first) reel.scrollTo({ left: first.offsetLeft - reel.offsetLeft - 20, behavior: reduce ? "auto" : "smooth" });
+    });
+    actsBox.appendChild(b);
+  });
+  // drag to scroll (mouse)
+  let down = false, sx = 0, sl = 0, moved = 0;
+  reel.addEventListener("pointerdown", (e) => { if (e.pointerType !== "mouse") return; down = true; moved = 0; sx = e.clientX; sl = reel.scrollLeft; });
+  addEventListener("pointermove", (e) => { if (!down) return; const d = e.clientX - sx; moved = Math.max(moved, Math.abs(d)); if (moved > 4) reel.classList.add("drag"); reel.scrollLeft = sl - d; });
+  addEventListener("pointerup", () => { down = false; setTimeout(() => reel.classList.remove("drag"), 0); });
+  reel.addEventListener("click", (e) => { if (moved > 6) { e.stopPropagation(); e.preventDefault(); moved = 0; } }, true);
+
+  /* ---------- cast ---------- */
+  const CAST = [
+    { name: "阿竹 · 现在", tag: "C01 · 96 岁 · 盲", note: "曾经的黄梅戏演员，后来在影院做清洁。灰白的瞳孔，竹杖，旧毯子。表演只留呼吸和手。", imgs: [["old-portrait.jpg", "正面肖像"], ["old-triptych.jpg", "三联肖像"], ["old-sheet.jpg", "身高与盲杖比例"], ["old-turnaround.jpg", "三视图"]] },
+    { name: "阿竹 · 1940", tag: "C02 · 戏服 · 后台", note: "红色戏服、白水袖、满头点翠。回忆里她的脸第一次被灯泡照亮。", imgs: [["young-face.jpg", "妆面特写"], ["young-hair.jpg", "发型三视"], ["young-full.jpg", "全身 · 水袖"], ["young-full2.jpg", "全身 · 侧"]] },
+    { name: "梅", tag: "C03 · 真实的人，不是鬼魂", note: "粗布衣、布鞋。她最后离开时，鞋底在地上擦出一声「擦——」。", imgs: [["mei-turnaround.jpg", "全身三视图"], ["mei-shoes.jpg", "布鞋 · 擦——"], ["env-backstage-bowl.jpg", "递粥"]] }
+  ];
+  CAST.forEach((p) => {
+    const el = document.createElement("article"); el.className = "person";
+    el.innerHTML = `<div class="main zoomable" data-full="assets/${p.imgs[0][0]}"><img src="assets/${p.imgs[0][0]}" alt="${p.name} ${p.imgs[0][1]}" loading="lazy"><figcaption hidden>${p.name} · ${p.imgs[0][1]}</figcaption></div><div class="alt">${p.imgs.map((m, i) => `<button type="button" aria-pressed="${i === 0}" aria-label="${m[1]}"><img src="assets/${m[0]}" alt="" loading="lazy"></button>`).join("")}</div><span class="tagline">${p.tag}</span><h3>${p.name}</h3><p>${p.note}</p>`;
+    const main = el.querySelector(".main"), mimg = main.querySelector("img"), cap = main.querySelector("figcaption");
+    el.querySelectorAll(".alt button").forEach((b, i) => b.addEventListener("click", () => {
+      el.querySelectorAll(".alt button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      mimg.style.opacity = 0; setTimeout(() => { mimg.src = `assets/${p.imgs[i][0]}`; mimg.alt = `${p.name} ${p.imgs[i][1]}`; main.dataset.full = mimg.src; cap.textContent = `${p.name} · ${p.imgs[i][1]}`; mimg.onload = () => mimg.style.opacity = 1; }, 250);
+    }));
+    $("#castGrid").appendChild(el);
+  });
+
+  /* ---------- spaces compare ---------- */
+  const PAIRS = [
+    ["影院", "env-hall-now.jpg", "现在 · 空影厅", "env-1940-beam.jpg", "1940 · 影院后排 · 放映光"],
+    ["后台 / 家", "env-home-wall.jpg", "现在 · 阿竹的家", "env-backstage.jpg", "1940 · 戏台后台 · 灯泡"],
+    ["大厅 / 走廊", "env-lobby.jpg", "现在 · 售票大厅 · 冷荧光", "env-hospital.jpg", "1940 · 医院长走廊 · 白"],
+  ];
+  const cmp = $("#cmp");
+  PAIRS.forEach((p, i) => { const b = document.createElement("button"); b.type = "button"; b.textContent = p[0]; b.setAttribute("aria-pressed", String(i === 0)); b.addEventListener("click", () => { $("#pairs").querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b))); setPair(i); }); $("#pairs").appendChild(b); });
+  function setPair(i) { const p = PAIRS[i]; $("#cmpA").src = `assets/${p[1]}`; $("#cmpA").alt = p[2]; $("#cmpB").src = `assets/${p[3]}`; $("#cmpB").alt = p[4]; $("#cmpTL").textContent = p[2]; $("#cmpTR").textContent = p[4]; }
+  setPair(0);
+  $("#cmpR").addEventListener("input", (e) => cmp.style.setProperty("--x", e.target.value + "%"));
+  // gentle hint: the divider drifts once when the comparison first scrolls into view
+  if (!reduce && "IntersectionObserver" in window) { const io = new IntersectionObserver(([e]) => { if (!e.isIntersecting) return; io.disconnect(); let t0 = null; const tick = (t) => { t0 ??= t; const p = Math.min(1, (t - t0) / 1600); const x = 50 + Math.sin(p * Math.PI * 2) * 18 * (1 - p); cmp.style.setProperty("--x", x + "%"); $("#cmpR").value = x; if (p < 1) requestAnimationFrame(tick); }; requestAnimationFrame(tick); }, { threshold: .6 }); io.observe(cmp); }
+
+  /* ---------- blanket motif ---------- */
+  const motif = $("#motif"), imgs = [...$("#motifImgs").children], steps = [...$("#steps").children];
+  function motifUpdate() {
+    const r = motif.getBoundingClientRect(); const p = Math.min(.999, Math.max(0, -r.top / (r.height - innerHeight)));
+    const i = Math.floor(p * 3); imgs.forEach((im, j) => im.classList.toggle("on", j === i)); steps.forEach((s, j) => s.classList.toggle("on", j === i));
+  }
+  addEventListener("scroll", motifUpdate, { passive: true }); motifUpdate();
+  steps.forEach((s, j) => { s.style.cursor = "pointer"; s.addEventListener("click", () => { const r = motif.getBoundingClientRect(); scrollTo({ top: scrollY + r.top + (r.height - innerHeight) * (j + .5) / 3, behavior: reduce ? "auto" : "smooth" }); }); });
+
+  /* ---------- chapter highlight ---------- */
+  const links = [...document.querySelectorAll(".chapters a")];
+  const secs = links.map((a) => $(a.getAttribute("href")));
+  addEventListener("scroll", () => { let on = -1; secs.forEach((s, i) => { if (s.getBoundingClientRect().top < innerHeight * .4) on = i; }); links.forEach((a, i) => a.classList.toggle("on", i === on)); }, { passive: true });
+})();
+</script>
+<script src="../shared/press-fx.js?v=1" defer></script>
