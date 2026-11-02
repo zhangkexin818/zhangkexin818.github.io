@@ -5,7 +5,7 @@
   const root = document.documentElement;
 
   /* ---------- masked headline reveal ---------- */
-  const SKIP = "[aria-label], #version-title, #film-title, .hero h1, dialog *, .rd-player *";
+  const SKIP = "[aria-label], #version-title, #film-title, .hero h1, dialog *, .rd-player *, .ayao-copy h2";
   function splitNode(node, counter) {
     [...node.childNodes].forEach((child) => {
       if (child.nodeType === 3) {
@@ -36,7 +36,18 @@
         });
         child.replaceWith(frag);
       } else if (child.nodeType === 1 && child.tagName !== "BR" && !child.classList.contains("rd-w")) {
-        splitNode(child, counter);
+        const cs = getComputedStyle(child);
+        if (cs.webkitBackgroundClip === "text" || cs.backgroundClip === "text") {
+          // gradient text can't be split (the clip doesn't reach transformed children): move it as one unit
+          const w = document.createElement("span");
+          w.className = "rd-w";
+          const c = document.createElement("span");
+          c.className = "rd-c";
+          c.style.setProperty("--i", counter.n++);
+          child.replaceWith(w);
+          c.appendChild(child);
+          w.appendChild(c);
+        } else splitNode(child, counter);
       }
     });
   }
@@ -341,6 +352,9 @@
     addEventListener("resize", update);
     update();
   }
+
+  // let page scripts open the shared viewer for an image
+  window.rdOpenImage = (el, opts) => openPlayer(el, opts);
 
   const init = () => { setupReveal(); setupCounter(); setupFilms(); setupShowreel(); setupParallax(); setupAutoplay(); setupMethodFilm(); setupScrollFx(); setupTilt(); setupParade(); };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

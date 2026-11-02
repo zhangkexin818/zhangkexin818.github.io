@@ -20,6 +20,7 @@
   const interviewMode = new URLSearchParams(window.location.search).get("interview") === "1";
 
   let activeIndex = 0;
+  let navLock = null;
   let ticking = false;
   let resizeTimer = 0;
   let readyTimer = 0;
@@ -442,22 +443,30 @@
     const navigationToken = (goToChapter.token || 0) + 1;
     goToChapter.token = navigationToken;
     let settled = false;
+    const story = document.querySelector("[data-continuous-story]");
     const commit = () => {
       if (settled || navigationToken !== goToChapter.token) return;
       settled = true;
-      const top = chapterTop(target);
-      window.scrollTo({ top, behavior: reducedMotion.matches ? "auto" : behavior });
-
-      // Child frames can report a final height shortly after their load event.
-      // Re-align once the smooth scroll has settled so late layout measurements
-      // cannot leave the requested chapter a few pixels above or below the view.
-      window.setTimeout(() => {
-        if (navigationToken !== goToChapter.token || location.hash !== `#${name}`) return;
-        const settledTop = chapterTop(target);
-        if (Math.abs(window.scrollY - settledTop) > 6) {
-          window.scrollTo({ top: settledTop, behavior: "auto" });
-        }
-      }, reducedMotion.matches || behavior === "auto" ? 220 : 1100);
+      // Jump instead of a 20k-px smooth scroll: a short dip-to-dark hides the cut,
+      // and the chapter stays pinned while late frames report their heights.
+      const land = () => {
+        navLock = { target, until: performance.now() + 2600 };
+        window.scrollTo({ top: chapterTop(target), behavior: "auto" });
+        requestSync();
+      };
+      const far = Math.abs(chapterTop(target) - window.scrollY) > window.innerHeight * 1.5;
+      if (story && story.animate && far && !reducedMotion.matches && behavior !== "auto") {
+        story.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 160, easing: "ease-in", fill: "forwards" }).finished.then(() => {
+          land();
+          story.animate([{ opacity: 0, transform: "translateY(18px)" }, { opacity: 1, transform: "none" }], { duration: 420, easing: "cubic-bezier(.22,.72,.16,1)", fill: "none" });
+          story.getAnimations().forEach((a) => { if (a.effect && a.playState === "finished") a.cancel(); });
+        });
+      } else if (far || behavior === "auto" || reducedMotion.matches) {
+        land();
+      } else {
+        navLock = { target, until: performance.now() + 2600 };
+        window.scrollTo({ top: chapterTop(target), behavior });
+      }
     };
 
     const waiting = requiredRecords.filter((record) => !record.ready);
@@ -477,6 +486,7 @@
   navButtons.forEach((button) => {
     button.addEventListener("click", () => goToChapter(button.dataset.go));
   });
+  ["wheel", "touchstart", "keydown"].forEach((type) => window.addEventListener(type, () => { navLock = null; }, { passive: true }));
 
   function syncScroll() {
     ticking = false;
@@ -630,7 +640,8 @@
         // reader, shift the scroll by the same amount so the view stays put.
         const above = chapterTop(record.shell) + previous <= window.scrollY + 1;
         record.shell.style.height = `${height}px`;
-        if (above) window.scrollBy({ top: height - previous, behavior: "auto" });
+        if (navLock && performance.now() < navLock.until) window.scrollTo({ top: chapterTop(navLock.target), behavior: "auto" });
+        else if (above) window.scrollBy({ top: height - previous, behavior: "auto" });
         requestSync();
       }
       if (height && !event.data.loading) rememberHeight(record.index, height);
@@ -665,6 +676,7 @@
 
     if (event.data.type === "zk:wheel") {
       const delta = clamp(Number(event.data.deltaY) || 0, -520, 520);
+      navLock = null;
       if (delta) window.scrollBy({ top: delta, behavior: "auto" });
     }
   });

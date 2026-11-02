@@ -526,12 +526,20 @@
     if (orbit) orbit.className = `media-orbit mode-${modeName}`;
     tiles.forEach((tile, index) => {
       const image = tile.querySelector("img");
-      image.src = mode.images[index];
-      image.alt = `阿瑶${mode.label}素材 ${index + 1}`;
-      tile.animate([
-        { opacity: 0.35, transform: `${getComputedStyle(tile).transform} scale(.94)` },
-        { opacity: 1, transform: getComputedStyle(tile).transform },
-      ], { duration: reducedMotion ? 1 : 520 + index * 70, easing: "cubic-bezier(.16,1,.3,1)" });
+      const button = tile.querySelector(".media-open");
+      const next = mode.images[index];
+      const label = `阿瑶${mode.label}素材 ${index + 1}`;
+      if (button) button.setAttribute("aria-label", `放大查看${label}`);
+      if (!image.getAttribute("src") || reducedMotion) { image.src = next; image.alt = label; return; }
+      // crossfade: fade out, swap once the new picture is decoded, fade back in (staggered)
+      tile.classList.add("is-swapping");
+      const pre = new Image();
+      pre.src = next;
+      const swap = () => setTimeout(() => {
+        image.src = next; image.alt = label;
+        requestAnimationFrame(() => tile.classList.remove("is-swapping"));
+      }, 160 + index * 55);
+      (pre.decode ? pre.decode() : Promise.resolve()).then(swap, swap);
     });
     tabs.forEach((tab) => {
       const selected = tab.dataset.mode === modeName;
@@ -546,6 +554,19 @@
     const sticky = document.querySelector(".ayao-sticky");
     document.querySelectorAll(".ayao-tabs button").forEach((tab) => {
       tab.addEventListener("click", () => setAyaoMode(tab.dataset.mode));
+    });
+    document.querySelectorAll(".media-tile .media-open").forEach((button) => {
+      button.addEventListener("click", () => {
+        const image = button.querySelector("img");
+        const tab = document.querySelector(".ayao-tabs button.is-active");
+        if (!image || !window.rdOpenImage) return;
+        window.rdOpenImage(button.closest(".media-tile"), {
+          image: image.currentSrc || image.src,
+          title: image.alt,
+          meta: `AYAO · ${tab ? tab.textContent.trim() : "视觉切片"}`,
+          ratio: (image.naturalWidth / image.naturalHeight) || 16 / 9,
+        });
+      });
     });
     if (sticky && !coarsePointer) {
       sticky.addEventListener("pointermove", (event) => {
@@ -574,7 +595,7 @@
     if (ayao && orbit && feature && copy) {
       const maxTravel = Math.max(1, ayao.offsetHeight - innerHeight);
       const progress = clamp((window.scrollY - ayao.offsetTop) / maxTravel);
-      orbit.style.transform = `translate3d(${lerp(9, -2, progress)}vw, ${lerp(9, 0, progress)}vh, 0)`;
+      orbit.style.transform = `translate3d(0, ${lerp(3, 0, progress)}vh, 0)`;
       feature.style.transform = `translate3d(${lerp(0, -1.8, progress)}vw, 0, 0) scale(${lerp(1.035, 1.105, progress)})`;
       copy.style.transform = `translate3d(0, ${lerp(2, -1.5, progress)}vh, 0)`;
       copy.style.opacity = String(lerp(1, 0.72, progress));

@@ -175,7 +175,7 @@ h1, h2, h3 { text-wrap: balance; line-break: strict; }
 
 /* ---------- ARCHIVE · new filmstrip frames ---------- */
 .rd-new-frame { position: relative; }
-.rd-new-frame::after { content: "NEW"; position: absolute; left: 10px; top: 10px; z-index: 3; font: 600 9.5px/1 var(--rd-mono); letter-spacing: 0.14em; color: #120a04; background: var(--rd-new); padding: 4px 6px; border-radius: 2px; pointer-events: none; }
+.rd-new-frame::before { content: "NEW"; position: absolute; left: 34px; top: 22px; right: auto; bottom: auto; z-index: 3; font: 600 9.5px/1 var(--rd-mono); letter-spacing: 0.14em; color: #120a04; background: var(--rd-new); padding: 4px 6px; border-radius: 2px; pointer-events: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .rd-split .rd-c, .rd-ledger li *, .rd-player, .rd-player-frame, .rd-film img, .rd-film video, .rd-shot img { transition: none !important; }

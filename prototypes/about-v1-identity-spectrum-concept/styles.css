@@ -3868,3 +3868,16 @@ html.zk-continuous-child .sound-toggle {
     width: 58vw;
   }
 }
+
+/* ---------- V.10b · AYAO status card: one clear tap, a visible change ---------- */
+.ayao-status { cursor: pointer; transition: transform .45s var(--ease), border-color .35s ease, background .35s ease, box-shadow .45s ease; }
+.ayao-status:hover { transform: translateY(-3px); border-color: rgba(201, 166, 234, .38); box-shadow: 0 18px 44px rgba(0, 0, 0, .45), 0 0 0 1px rgba(139, 44, 194, .18); }
+.ayao-avatar { transition: width .6s var(--ease), height .6s var(--ease), border-radius .6s var(--ease); }
+.ayao-status.is-maker { border-color: rgba(201, 166, 234, .5); background: rgba(24, 10, 34, .78); }
+.ayao-status.is-maker .ayao-avatar { width: 132px; height: 132px; border-radius: 20px; }
+.ayao-status [data-avatar-state] { transition: opacity .25s ease; }
+.ayao-status.is-maker > i { background: #c9a6ea; box-shadow: 0 0 14px rgba(201, 166, 234, .9); }
+.ayao-avatar.is-flipping { animation: ayao-flip .6s var(--ease); }
+@keyframes ayao-flip { 0% { transform: perspective(500px) rotateY(0); } 45% { transform: perspective(500px) rotateY(90deg); } 55% { transform: perspective(500px) rotateY(-90deg); } 100% { transform: perspective(500px) rotateY(0); } }
+@media (max-width: 760px) { .ayao-status.is-maker .ayao-avatar { width: 104px; height: 104px; } }
+@media (prefers-reduced-motion: reduce) { .ayao-avatar.is-flipping { animation: none; } }

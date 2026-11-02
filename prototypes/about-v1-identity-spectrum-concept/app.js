@@ -261,11 +261,27 @@
   function setupAvatar() {
     const avatar = q("[data-avatar-control]");
     if (!avatar) return;
-    avatar.addEventListener("click", () => {
-      const makerMode = avatar.classList.toggle("is-maker");
-      avatar.setAttribute("aria-pressed", String(makerMode));
-      announce(makerMode ? "阿瑶进入黑龙角创作状态。" : "阿瑶回到观察状态。");
-    });
+    const card = avatar.closest(".ayao-status");
+    const state = q("[data-avatar-state]");
+    let busy = false;
+    const toggle = () => {
+      if (busy) return;
+      busy = true;
+      avatar.classList.remove("is-flipping");
+      void avatar.offsetWidth;
+      avatar.classList.add("is-flipping");
+      // swap the picture at the flip's midpoint so the change reads as a turn
+      setTimeout(() => {
+        const makerMode = avatar.classList.toggle("is-maker");
+        card?.classList.toggle("is-maker", makerMode);
+        avatar.setAttribute("aria-pressed", String(makerMode));
+        if (state) state.textContent = makerMode ? "黑龙角 · 创作中" : "PERSONAL IP · 观察中";
+        announce(makerMode ? "阿瑶进入黑龙角创作状态。" : "阿瑶回到观察状态。");
+      }, reducedMotion ? 0 : 270);
+      setTimeout(() => { avatar.classList.remove("is-flipping"); busy = false; }, reducedMotion ? 0 : 620);
+    };
+    avatar.addEventListener("click", (event) => { event.stopPropagation(); toggle(); });
+    card?.addEventListener("click", toggle);
   }
 
   function setupExperience() {
