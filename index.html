@@ -11,7 +11,7 @@
     <link rel="icon" href="data:," />
     <title>张可欣</title>
     <script src="./audio-bootstrap.js?v=first-gesture-v2"></script>
-    <link rel="stylesheet" href="./continuous.css?v=redesign-2026-10" />
+    <link rel="stylesheet" href="./continuous.css?v=v11" />
     <link rel="stylesheet" href="./redesign-shell.css?v=1" />
       <link rel="stylesheet" href="./prototypes/shared/press-fx.css?v=1" />
   </head>
@@ -29,6 +29,7 @@
         <button type="button" data-go="work">WORK</button>
         <button type="button" data-go="ip">IP</button>
         <button type="button" data-go="archive">ARCHIVE</button>
+        <button type="button" data-go="lab">LAB</button>
         <button type="button" data-go="about">ABOUT</button>
       </nav>
 
@@ -94,7 +95,19 @@
         <div class="chapter-seam" aria-hidden="true"></div>
       </section>
 
-      <section class="chapter-shell chapter-about" id="about" data-chapter="about" data-index="4">
+      <section class="chapter-shell chapter-lab" id="lab" data-chapter="lab" data-index="4">
+        <div class="chapter-stage">
+          <iframe
+            data-src="./prototypes/lab-v1-tools/index.html?v=1&amp;bridge=sound-resume-v1"
+            title="LAB — 六件小工具"
+            scrolling="no"
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="chapter-seam" aria-hidden="true"></div>
+      </section>
+
+      <section class="chapter-shell chapter-about" id="about" data-chapter="about" data-index="5">
         <div class="chapter-stage">
           <iframe
             data-src="./prototypes/about-v1-identity-spectrum-concept/index.html?bridge=sound-resume-v1"
@@ -110,7 +123,7 @@
       <p class="noscript-note">请启用 JavaScript 体验连续章节与粒子交互。</p>
     </noscript>
     <script src="./prototypes/shared/cursor-system.js?v=iframe-pointer-v2" defer></script>
-  <script src="./continuous.js?v=v10c" defer></script>
+  <script src="./continuous.js?v=v11" defer></script>
       <script src="./prototypes/shared/press-fx.js?v=1" defer></script>
   </body>
 </html>

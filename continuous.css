@@ -298,6 +298,10 @@ body[data-active-surface="light"] .orbit-nav button.is-active {
   --chapter-bg: #090a0c;
 }
 
+.chapter-lab {
+  --chapter-bg: #08070b;
+}
+
 .chapter-about {
   --chapter-bg: #08090a;
 }
@@ -854,6 +858,7 @@ html.is-light-switching .starlight-atmosphere {
 html[data-light-mode="starlight"] .chapter-work .chapter-stage iframe,
 html[data-light-mode="starlight"] .chapter-ip .chapter-stage iframe,
 html[data-light-mode="starlight"] .chapter-archive .chapter-stage iframe,
+html[data-light-mode="starlight"] .chapter-lab .chapter-stage iframe,
 html[data-light-mode="starlight"] .chapter-about .chapter-stage iframe {
   filter: none;
 }
@@ -897,7 +902,7 @@ html[data-light-mode="starlight"] .chapter-home {
   --chapter-bg: #08070b;
 }
 
-html[data-light-mode="starlight"] :is(.chapter-work, .chapter-ip, .chapter-archive, .chapter-about) {
+html[data-light-mode="starlight"] :is(.chapter-work, .chapter-ip, .chapter-archive, .chapter-lab, .chapter-about) {
   --chapter-bg: #f7f4fa;
 }
 
@@ -1023,17 +1028,20 @@ html[data-light-mode="starlight"] body[data-active-surface="light"] .light-pull_
 
 /* ARCHIVE already resolves to ABOUT's ink tone. A separate masked seam here
    created a visible band, so the two iframe chapters now meet directly. */
-.chapter-archive .chapter-seam {
+.chapter-archive .chapter-seam,
+.chapter-lab .chapter-seam {
   display: none;
 }
 
-.chapter-archive + .chapter-about {
+.chapter-archive + .chapter-lab,
+.chapter-lab + .chapter-about {
   margin-top: -2px;
   background: #08070b;
 }
 
 /* Let ABOUT emerge from ARCHIVE's final ink instead of exposing the iframe edge. */
-.chapter-archive + .chapter-about::before {
+.chapter-archive + .chapter-lab::before,
+.chapter-lab + .chapter-about::before {
   display: block;
   position: absolute;
   z-index: 3;

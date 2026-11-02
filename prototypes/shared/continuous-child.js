@@ -8,6 +8,7 @@
     ["work-v2-reference-orbit-concept", "work"],
     ["ip-v5-particle-boundary-fall-concept", "ip"],
     ["archive-v1-version-strata-concept", "archive"],
+    ["lab-v1-tools", "lab"],
     ["about-v1-identity-spectrum-concept", "about"],
   ];
   const pageName = pageMap.find(([needle]) => location.pathname.includes(needle))?.[1] || "unknown";
@@ -70,7 +71,7 @@
       const sectionButton = event.target.closest("[data-section]");
       if (sectionButton) {
         const chapter = sectionButton.dataset.section;
-        if (["home", "work", "ip", "archive", "about"].includes(chapter)) {
+        if (["home", "work", "ip", "archive", "lab", "about"].includes(chapter)) {
           event.preventDefault();
           event.stopImmediatePropagation();
           window.parent.postMessage({ type: "zk:navigate", chapter }, "*");

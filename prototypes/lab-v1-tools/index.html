@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="张可欣的 vibe coding 小工具：镜头提示词、色板卡、多平台画幅、中文排版、两地约时间、图片瘦身。" />
+    <title>LAB · 小工具实验室</title>
+    <link rel="icon" href="data:," />
+    <script>try{if(sessionStorage.getItem("zk-route-transition"))document.documentElement.classList.add("zk-route-pending")}catch(_){}</script>
+    <script>if(window.parent!==window)document.documentElement.classList.add("zk-continuous-child")</script>
+    <link rel="stylesheet" href="../shared/site-bridge.css" />
+    <link rel="stylesheet" href="../shared/continuous-child.css" />
+    <link rel="stylesheet" href="lab.css?v=1" />
+    <link rel="stylesheet" href="../shared/press-fx.css?v=1" />
+  </head>
+  <body data-zk-surface="dark">
+    <div class="cursor-core" aria-hidden="true"></div>
+    <div class="cursor-orbit" aria-hidden="true"></div>
+
+    <header class="site-header" aria-label="主导航">
+      <a class="brand" href="../homepage-v9-particle-spectrum-concept/index.html" aria-label="返回首页"><span class="brand-mark" aria-hidden="true"></span><span>ZHANG KEXIN</span></a>
+      <nav class="nav-line" aria-label="页面导航">
+        <a href="../work-v2-reference-orbit-concept/index.html">WORK</a><span aria-hidden="true">/</span>
+        <a href="../ip-v5-particle-boundary-fall-concept/index.html">IP</a><span aria-hidden="true">/</span>
+        <a href="../archive-v1-version-strata-concept/index.html">ARCHIVE</a><span aria-hidden="true">/</span>
+        <a class="is-active" href="#top" aria-current="page">LAB</a><span aria-hidden="true">/</span>
+        <a href="../about-v1-identity-spectrum-concept/index.html">ABOUT</a>
+      </nav>
+    </header>
+
+    <main id="top" class="lab">
+      <section class="hero">
+        <div class="hero-bg" aria-hidden="true"><span>L</span><span>A</span><span>B</span></div>
+        <div class="hero-copy">
+          <p class="k">LAB · VIBE CODING · 06</p>
+          <h1>六件小工具</h1>
+          <p class="sub">从做片子的日常里长出来。<br />都在浏览器本地运行，不上传、不登录。</p>
+        </div>
+        <div class="deck" id="deck">
+          <button class="tc" type="button" data-t="0">
+            <span class="tc-num">01</span>
+            <span class="glyph g-prompt" aria-hidden="true"><i>近景</i><i>缓推</i><i>500T</i><b></b></span>
+            <span class="tc-name">镜头提示词台</span><span class="tc-en">SHOT PROMPT</span>
+          </button>
+          <button class="tc" type="button" data-t="1">
+            <span class="tc-num">02</span>
+            <span class="glyph g-palette" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+            <span class="tc-name">色板卡</span><span class="tc-en">PALETTE</span>
+          </button>
+          <button class="tc" type="button" data-t="2">
+            <span class="tc-num">03</span>
+            <span class="glyph g-frame" aria-hidden="true"><i></i></span>
+            <span class="tc-name">多平台画幅</span><span class="tc-en">FRAMING</span>
+          </button>
+          <button class="tc" type="button" data-t="3">
+            <span class="tc-num">04</span>
+            <span class="glyph g-type" aria-hidden="true"><span>AI</span><i></i><span>短片</span></span>
+            <span class="tc-name">中文排版</span><span class="tc-en">TYPESET</span>
+          </button>
+          <button class="tc" type="button" data-t="4">
+            <span class="tc-num">05</span>
+            <span class="glyph g-tz" aria-hidden="true"><i><b></b></i><i><b></b></i></span>
+            <span class="tc-name">两地约时间</span><span class="tc-en">NY ⇄ SH</span>
+          </button>
+          <button class="tc" type="button" data-t="5">
+            <span class="tc-num">06</span>
+            <span class="glyph g-slim" aria-hidden="true"><i></i><em>−72%</em></span>
+            <span class="tc-name">图片瘦身</span><span class="tc-en">SLIM</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="bench" id="bench" aria-label="工具台">
+        <div class="tabs" role="tablist" aria-label="选择工具" id="tabs">
+          <span class="tab-ind" aria-hidden="true"></span>
+          <button role="tab" type="button" aria-selected="true" aria-controls="p0" id="tab0"><b>01</b>提示词</button>
+          <button role="tab" type="button" aria-selected="false" aria-controls="p1" id="tab1"><b>02</b>色板</button>
+          <button role="tab" type="button" aria-selected="false" aria-controls="p2" id="tab2"><b>03</b>画幅</button>
+          <button role="tab" type="button" aria-selected="false" aria-controls="p3" id="tab3"><b>04</b>排版</button>
+          <button role="tab" type="button" aria-selected="false" aria-controls="p4" id="tab4"><b>05</b>约时间</button>
+          <button role="tab" type="button" aria-selected="false" aria-controls="p5" id="tab5"><b>06</b>瘦身</button>
+        </div>
+
+        <div class="panels">
+          <!-- 01 PROMPT -->
+          <div class="panel is-on" role="tabpanel" id="p0" aria-labelledby="tab0">
+            <div class="ph" data-st><span class="num">01</span><div><p class="k">SHOT PROMPT MIXER</p><h2>镜头提示词台</h2><p>点选镜头语言，同一套设定同时出静帧和视频提示词。</p></div>
+              <button class="btn dice" type="button" id="dice"><span class="die" aria-hidden="true">⚄</span>随机一组</button></div>
+            <div class="split">
+              <div class="ctl" data-st>
+                <div class="group"><label for="subject">画面主体</label><input class="field" id="subject" value="九十六岁的盲眼老妇人，坐在旧藤椅上，手里攥着一张撕破的戏票"></div>
+                <div class="group"><span class="gl">景别</span><div class="chips" data-g="size"></div></div>
+                <div class="group"><span class="gl">运镜</span><div class="chips" data-g="move"></div></div>
+                <div class="group"><span class="gl">光线</span><div class="chips" data-g="light"></div></div>
+                <div class="group"><span class="gl">胶片质感</span><div class="chips" data-g="film"></div></div>
+                <div class="group"><span class="gl">画幅</span><div class="chips" data-g="ar"></div></div>
+                <div class="range"><span>风格化</span><input type="range" id="stylize" min="0" max="400" step="25" value="50"><output id="stylizeOut">50</output></div>
+              </div>
+              <div class="out" data-st>
+                <div class="card" id="mjCard"><div class="card-top"><span>MIDJOURNEY · 静帧</span><button class="btn cp" type="button" data-copy="mjOut"><span>复制</span><span>已复制 ✓</span></button></div><pre id="mjOut"></pre></div>
+                <div class="card" id="sdCard"><div class="card-top"><span>SEEDANCE · 视频</span><button class="btn cp" type="button" data-copy="sdOut"><span>复制</span><span>已复制 ✓</span></button></div><pre id="sdOut"></pre></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 02 PALETTE -->
+          <div class="panel" role="tabpanel" id="p1" aria-labelledby="tab1">
+            <div class="ph" data-st><span class="num">02</span><div><p class="k">PALETTE CARD</p><h2>色板卡</h2><p>任意一帧取 5 个主色，点色块复制色值，导出成参考卡。</p></div>
+              <button class="btn" type="button" id="pSave">下载 PNG</button></div>
+            <div class="split">
+              <div class="ctl" data-st>
+                <div class="thumbs big" id="pThumbs"></div>
+                <label class="drop sm" data-drop="palette"><input type="file" accept="image/*" hidden><span class="plus">＋</span>拖入或选择你的图片</label>
+              </div>
+              <div class="palette-card" data-st><img id="pImg" alt="取色画面"><div class="sw" id="pSw"></div><div class="meta-row"><span id="pName">《竹》</span><span>PALETTE · 5</span></div></div>
+            </div>
+          </div>
+
+          <!-- 03 FRAMES -->
+          <div class="panel" role="tabpanel" id="p2" aria-labelledby="tab2">
+            <div class="ph" data-st><span class="num">03</span><div><p class="k">MULTI-PLATFORM FRAMING</p><h2>多平台画幅</h2><p>在原图上点或拖主体，六个平台的裁切一起对准它。</p></div>
+              <label class="switch"><input type="checkbox" id="fSafe" checked><i></i>安全区</label></div>
+            <div class="split" id="fBench">
+              <div class="ctl" data-st>
+                <div class="focus-src" id="fSrc"><img id="fImg" alt="原图" draggable="false"><span class="dot" id="fDot"></span></div>
+                <div class="row"><div class="thumbs" id="fThumbs"></div><label class="drop sm" data-drop="frames"><input type="file" accept="image/*" hidden><span class="plus">＋</span>你的图</label></div>
+              </div>
+              <div class="stage" id="fStage" data-st></div>
+            </div>
+          </div>
+
+          <!-- 04 TYPESET -->
+          <div class="panel" role="tabpanel" id="p3" aria-labelledby="tab3">
+            <div class="ph" data-st><span class="num">04</span><div><p class="k">CHINESE TYPESETTING</p><h2>中文排版</h2><p>粘贴文案，空格、标点、空行一键理顺，改动处高亮。</p></div></div>
+            <div class="chips" id="tsOpts" data-st></div>
+            <div class="split">
+              <div class="group" data-st><label for="tsIn">原文</label><textarea class="field" id="tsIn" rows="8" data-zk-local-wheel>我用Claude opus5.5和Seedance2.5做了一条3分钟的AI短片,拿到了H3帧美学入围展映奖!!
+
+
+整个流程分成5步:剧本->分镜->角色定妆->生成->剪辑 。 欢迎来小红书交流～</textarea></div>
+              <div class="card" data-st><div class="card-top"><span>整理后 · <b id="tsStat"></b></span><button class="btn cp" type="button" id="tsCopy"><span>复制</span><span>已复制 ✓</span></button></div><pre id="tsOut"></pre></div>
+            </div>
+          </div>
+
+          <!-- 05 TIMEZONE -->
+          <div class="panel" role="tabpanel" id="p4" aria-labelledby="tab4">
+            <div class="ph" data-st><span class="num">05</span><div><p class="k">NEW YORK ⇄ SHANGHAI</p><h2>两地约时间</h2><p>拖动纽约时间，上海跟着走；绿色是两边都醒着的时段。夏令时自动处理。</p></div></div>
+            <div class="split">
+              <div class="ctl" data-st>
+                <div class="group"><label for="tzDate">纽约日期</label><input class="field" type="date" id="tzDate"></div>
+                <div class="range"><span>纽约时间</span><input type="range" id="tzTime" min="0" max="1425" step="15" value="1200"><output id="tzTimeOut">20:00</output></div>
+                <div class="range"><span>时长</span><input type="range" id="tzDur" min="15" max="180" step="15" value="60"><output id="tzDurOut">60</output><span>分钟</span></div>
+                <div class="tz-bars" id="tzBars"></div>
+              </div>
+              <div class="out" data-st>
+                <div class="tz-clock"><div><span>NEW YORK</span><b id="tzNY">—</b><i id="tzNYd"></i></div><div><span>上海</span><b id="tzSH">—</b><i id="tzSHd"></i></div></div>
+                <div class="card"><div class="card-top"><span>双语消息</span><button class="btn cp" type="button" id="tzCopy"><span>复制</span><span>已复制 ✓</span></button></div><pre id="tzMsg"></pre></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 06 IMAGE -->
+          <div class="panel" role="tabpanel" id="p5" aria-labelledby="tab5">
+            <div class="ph" data-st><span class="num">06</span><div><p class="k">IMAGE SLIMMER</p><h2>图片瘦身</h2><p>选最长边、画质和格式，本地压缩，拖动中线对比画质。</p></div>
+              <a class="btn" id="imSave" href="#" download>下载</a></div>
+            <div class="split">
+              <div class="ctl" data-st>
+                <div class="thumbs big" id="imThumbs"></div>
+                <label class="drop sm" data-drop="slim"><input type="file" accept="image/*" hidden><span class="plus">＋</span>拖入或选择你的图片</label>
+                <div class="range"><span>最长边</span><input type="range" id="imMax" min="480" max="2400" step="80" value="1600"><output id="imMaxOut">1600</output></div>
+                <div class="range"><span>画质</span><input type="range" id="imQ" min="40" max="95" step="5" value="80"><output id="imQOut">80</output></div>
+                <div class="chips" id="imFmt"></div>
+                <div class="sum" id="imSum">
+                  <div><b data-n="orig">—</b><span id="imS0">原图</span></div>
+                  <div><b data-n="out">—</b><span id="imS1">压缩后</span></div>
+                  <div class="hi"><b data-n="pct">—</b><span>体积减少</span></div>
+                </div>
+              </div>
+              <div class="cmp" id="imCmp" data-st><img id="imA" alt="原图" draggable="false"><img id="imB" alt="压缩后" draggable="false"><span class="knob" aria-hidden="true">‹ ›</span><input type="range" id="imSplit" min="0" max="100" value="50" aria-label="对比分割线"><span class="tag l">原图</span><span class="tag r">压缩后</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="foot"><p>LAB 会继续长：穿帮对照台、方言台词注音、胶片质感对照……</p><a class="next" href="../about-v1-identity-spectrum-concept/index.html">进入 ABOUT <span>→</span></a></footer>
+    </main>
+    <div class="toast" id="toast" role="status"></div>
+
+    <script src="../shared/cursor-system.js?v=iframe-pointer-v2"></script>
+    <script src="../shared/continuous-child.js?v=lab-v1"></script>
+    <script src="../shared/site-bridge.js"></script>
+    <script src="lab.js?v=1"></script>
+    <script src="../shared/press-fx.js?v=1" defer></script>
+  </body>
+</html>

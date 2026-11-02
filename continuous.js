@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const chapterNames = ["HOME", "WORK", "IP", "ARCHIVE", "ABOUT"];
+  const chapterNames = ["HOME", "WORK", "IP", "ARCHIVE", "LAB", "ABOUT"];
   const shells = [...document.querySelectorAll("[data-chapter]")];
   const navButtons = [...document.querySelectorAll("[data-go]")];
   const progress = document.querySelector(".scroll-progress i");
@@ -47,8 +47,8 @@
   // page no longer grows from 13k to 36k px mid-scroll (the main cause of
   // jumping transitions and half-cut headlines).
   const heightBucket = `${innerWidth < 760 ? "m" : "d"}-${Math.round(innerWidth / 160)}`;
-  const HEIGHT_KEY = "zk-chapter-heights-v5";
-  const EST_VH = innerWidth < 760 ? [4.14, 9.8, 12.7, 5.88, 15.38] : [3.89, 8.02, 12.55, 5.72, 15.11];
+  const HEIGHT_KEY = "zk-chapter-heights-v6";
+  const EST_VH = innerWidth < 760 ? [4.14, 9.8, 12.7, 5.88, 6.2, 15.38] : [3.89, 8.02, 12.55, 5.72, 3.4, 15.11];
   let heightCache = {};
   try { heightCache = JSON.parse(localStorage.getItem(HEIGHT_KEY) || "{}"); } catch (_) { heightCache = {}; }
   function estimateHeight(index) {
@@ -240,7 +240,7 @@
       }
     });
     if (readoutName) readoutName.textContent = chapterNames[index] || "HOME";
-    if (readoutCount) readoutCount.textContent = `${String(index + 1).padStart(2, "0")} — 05`;
+    if (readoutCount) readoutCount.textContent = `${String(index + 1).padStart(2, "0")} — ${String(chapterNames.length).padStart(2, "0")}`;
   }
 
   function stopAmbientSound({ remember = true } = {}) {
