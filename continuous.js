@@ -456,11 +456,13 @@
       };
       const far = Math.abs(chapterTop(target) - window.scrollY) > window.innerHeight * 1.5;
       if (story && story.animate && far && !reducedMotion.matches && behavior !== "auto") {
-        story.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 160, easing: "ease-in", fill: "forwards" }).finished.then(() => {
+        // timers, not animation promises: a background tab never finishes animations
+        const out = story.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 160, easing: "ease-in", fill: "forwards" });
+        window.setTimeout(() => {
           land();
-          story.animate([{ opacity: 0, transform: "translateY(18px)" }, { opacity: 1, transform: "none" }], { duration: 420, easing: "cubic-bezier(.22,.72,.16,1)", fill: "none" });
-          story.getAnimations().forEach((a) => { if (a.effect && a.playState === "finished") a.cancel(); });
-        });
+          out.cancel();
+          story.animate([{ opacity: 0, transform: "translateY(18px)" }, { opacity: 1, transform: "none" }], { duration: 420, easing: "cubic-bezier(.22,.72,.16,1)" });
+        }, 170);
       } else if (far || behavior === "auto" || reducedMotion.matches) {
         land();
       } else {
