@@ -7,7 +7,8 @@ const versions = [
   { number: "06", date: "2026.08.17", title: "IP 连续世界", note: "从角色设定进入场景，开始拆出作品内容而非嵌入整页。" },
   { number: "07", date: "2026.08.18", title: "IP 叙事重排", note: "减少拼贴边界，让排版、动效和内容拥有连续呼吸。" },
   { number: "08", date: "2026.08.20", title: "粒子边界 IP", note: "线稿与三维对应、角色坠落、粒子缝合，确立 IP 叙事。" },
-  { number: "09", date: "2026.10.27", title: "影像优先", note: "作品集视频、新作与福小灵进入主线，文字让位给影像，形成当前版。" },
+  { number: "09", date: "2026.10.27", title: "影像优先", note: "作品集视频、新作与福小灵进入主线，文字让位给影像。" },
+  { number: "10", date: "2026.11.02", title: "新作上墙", note: "志怪角色群像、毛绒苹果园与分水线设定加入，所有可点击处有了按压反馈。" },
 ];
 
 const versionCards = [...document.querySelectorAll(".stratum-card")];
@@ -393,7 +394,7 @@ const counterObserver = new IntersectionObserver((entries) => {
 }, { threshold: .55 });
 counterObserver.observe(counter);
 
-document.querySelectorAll(".decision-ledger button").forEach((button) => button.addEventListener("mouseenter", () => {
+document.querySelectorAll(".decision-ledger .ledger-row").forEach((button) => button.addEventListener("mouseenter", () => {
   const rect = button.getBoundingClientRect();
   particleSystem.burst(rect.right - 60, rect.top + rect.height / 2, 16, button.dataset.state === "drop" ? "mint" : "copper");
 }));

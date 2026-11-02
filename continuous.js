@@ -46,8 +46,8 @@
   // page no longer grows from 13k to 36k px mid-scroll (the main cause of
   // jumping transitions and half-cut headlines).
   const heightBucket = `${innerWidth < 760 ? "m" : "d"}-${Math.round(innerWidth / 160)}`;
-  const HEIGHT_KEY = "zk-chapter-heights-v4";
-  const EST_VH = innerWidth < 760 ? [4.14, 9.8, 12.7, 5.88, 13.77] : [3.89, 8.27, 12.55, 5.72, 13.37];
+  const HEIGHT_KEY = "zk-chapter-heights-v5";
+  const EST_VH = innerWidth < 760 ? [4.14, 9.8, 12.7, 5.88, 15.38] : [3.89, 8.02, 12.55, 5.72, 15.11];
   let heightCache = {};
   try { heightCache = JSON.parse(localStorage.getItem(HEIGHT_KEY) || "{}"); } catch (_) { heightCache = {}; }
   function estimateHeight(index) {

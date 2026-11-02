@@ -11,11 +11,11 @@
   background: radial-gradient(circle at 80% 30%, rgba(139, 44, 194, .11), transparent 34%), #211a25;
 }
 
-.decision-ledger button[data-state="drop"]::before {
+.decision-ledger .ledger-row[data-state="drop"]::before {
   background: linear-gradient(90deg, rgba(139, 44, 194, .12), transparent 70%);
 }
 
-.decision-ledger button[data-state="drop"] b {
+.decision-ledger .ledger-row[data-state="drop"] b {
   color: #c7a8dc;
 }
 

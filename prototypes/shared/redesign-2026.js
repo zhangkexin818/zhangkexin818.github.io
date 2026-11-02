@@ -325,7 +325,24 @@
     });
   }
 
-  const init = () => { setupReveal(); setupCounter(); setupFilms(); setupShowreel(); setupParallax(); setupAutoplay(); setupMethodFilm(); setupScrollFx(); setupTilt(); };
+  /* ---------- 志怪 parade: the line of characters walks right-to-left as you scroll ---------- */
+  function setupParade() {
+    const box = document.querySelector("[data-rd-parade]");
+    if (!box) return;
+    const track = box.querySelector(".rd-parade-track");
+    const update = () => {
+      const r = box.getBoundingClientRect();
+      const travel = Math.max(0, track.scrollWidth - box.clientWidth);
+      const p = reduce ? 0 : Math.min(1, Math.max(0, (innerHeight - r.top) / (innerHeight + r.height)));
+      track.style.setProperty("--parade-x", (-travel * p).toFixed(1) + "px");
+    };
+    addEventListener("scroll", update, { passive: true });
+    addEventListener("zk:continuous-scroll", update);
+    addEventListener("resize", update);
+    update();
+  }
+
+  const init = () => { setupReveal(); setupCounter(); setupFilms(); setupShowreel(); setupParallax(); setupAutoplay(); setupMethodFilm(); setupScrollFx(); setupTilt(); setupParade(); };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
 })();

@@ -133,14 +133,14 @@ body.header-light .brand-mark { border-color: rgba(22,24,25,.4); }
 .decision-stat strong { font: 300 clamp(70px, 9vw, 140px)/.7 "Songti SC", serif; color: var(--copper-bright); }
 .decision-stat span { max-width: 120px; color: rgba(232,230,223,.42); font-size: 10px; line-height: 1.6; }
 .decision-ledger { margin-top: 110px; border-top: 1px solid rgba(232,230,223,.15); }
-.decision-ledger button { position: relative; display: grid; grid-template-columns: 70px 82px minmax(220px, 1fr) minmax(180px, .85fr) 50px; align-items: center; width: 100%; min-height: 104px; padding: 18px 10px; border-bottom: 1px solid rgba(232,230,223,.12); background: transparent; text-align: left; cursor: none; overflow: hidden; }
-.decision-ledger button::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(228,135,97,.15), transparent 70%); transform: translateX(-105%); transition: transform .55s cubic-bezier(.2,.8,.16,1); }
-.decision-ledger button[data-state="drop"]::before { background: linear-gradient(90deg, rgba(139,44,194,.12), transparent 70%); }
-.decision-ledger button:hover::before, .decision-ledger button:focus-visible::before { transform: translateX(0); }
+.decision-ledger .ledger-row { position: relative; display: grid; grid-template-columns: 70px 82px minmax(220px, 1fr) minmax(180px, .85fr) 50px; align-items: center; width: 100%; min-height: 104px; padding: 18px 10px; border-bottom: 1px solid rgba(232,230,223,.12); background: transparent; text-align: left; cursor: none; overflow: hidden; }
+.decision-ledger .ledger-row::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(228,135,97,.15), transparent 70%); transform: translateX(-105%); transition: transform .55s cubic-bezier(.2,.8,.16,1); }
+.decision-ledger .ledger-row[data-state="drop"]::before { background: linear-gradient(90deg, rgba(139,44,194,.12), transparent 70%); }
+.decision-ledger .ledger-row:hover::before, .decision-ledger .ledger-row:focus-visible::before { transform: translateX(0); }
 .decision-ledger span, .decision-ledger b, .decision-ledger h3, .decision-ledger p, .decision-ledger i { position: relative; z-index: 1; }
 .decision-ledger span { color: rgba(232,230,223,.28); font-size: 10px; }
 .decision-ledger b { color: var(--copper-bright); font-size: 10px; font-weight: 500; letter-spacing: .12em; }
-.decision-ledger button[data-state="drop"] b { color: var(--mint); }
+.decision-ledger .ledger-row[data-state="drop"] b { color: var(--mint); }
 .decision-ledger h3 { margin: 0; font-size: 20px; font-weight: 400; }
 .decision-ledger p { margin: 0; color: rgba(232,230,223,.4); font-size: 11px; }
 .decision-ledger i { justify-self: end; color: rgba(232,230,223,.5); font-style: normal; }
@@ -205,7 +205,7 @@ body.header-light .brand-mark { border-color: rgba(22,24,25,.4); }
   .decision-heading { grid-template-columns: 1fr; }
   .decision-stat { margin-top: 30px; }
   .decision-ledger { margin-top: 60px; }
-  .decision-ledger button { grid-template-columns: 40px 54px 1fr 24px; gap: 8px; min-height: 112px; }
+  .decision-ledger .ledger-row { grid-template-columns: 40px 54px 1fr 24px; gap: 8px; min-height: 112px; }
   .decision-ledger p { grid-column: 3; margin-top: -10px; }
   .decision-ledger i { grid-column: 4; grid-row: 1; }
   .next-chapter { min-height: 760px; padding-bottom: 100px; }
@@ -403,7 +403,7 @@ body.header-light .brand-mark { border-color: rgba(22,24,25,.4); }
   background: radial-gradient(circle at 80% 30%, rgba(100, 21, 154, .09), transparent 32%), #2a292d;
 }
 
-.decision-ledger button::before {
+.decision-ledger .ledger-row::before {
   background: linear-gradient(90deg, rgba(139, 44, 194, .14), transparent 70%);
 }
 
