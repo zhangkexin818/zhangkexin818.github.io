@@ -182,12 +182,13 @@
     document.querySelectorAll(".rd-film").forEach((card) => {
       const btn = card.querySelector("button");
       const src = card.dataset.video;
+      const previewSrc = card.dataset.preview || src;
       let preview = null;
       const start = () => {
         if (reduce || !src || matchMedia("(hover: none)").matches) return;
         if (!preview) {
           preview = document.createElement("video");
-          Object.assign(preview, { src, muted: true, loop: true, playsInline: true, preload: "auto" });
+          Object.assign(preview, { src: previewSrc, muted: true, loop: true, playsInline: true, preload: "auto" });
           preview.setAttribute("aria-hidden", "true");
           card.insertBefore(preview, btn);
         }
