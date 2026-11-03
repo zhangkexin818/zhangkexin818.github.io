@@ -402,3 +402,7 @@ body:has(.rd-end) .site-footer a { color: #c9a6ea; }
 .rd-end-files > :is(a, button) > * { display: block; line-height: 1; }
 .rd-end-files > :is(a, button) b { font-size: 16px; padding-top: 1px; }
 .rd-end-files > :is(a, button) small { padding-top: 2px; }
+/* centre the ink, not the font box: CJK fonts on macOS carry tall ascenders */
+@supports (text-box: trim-both cap alphabetic) {
+  .rd-end-files > :is(a, button) > * { text-box: trim-both cap alphabetic; padding-top: 0; }
+}
