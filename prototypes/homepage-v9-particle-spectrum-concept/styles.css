@@ -846,7 +846,8 @@ a:focus-visible {
 .route-tabs {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, auto);
+  justify-content: space-between;
   align-items: end;
 }
 

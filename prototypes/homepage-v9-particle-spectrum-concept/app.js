@@ -17,6 +17,11 @@
       preview: "查看设计如何在取舍中形成",
       href: "../archive-v1-version-strata-concept/index.html",
     },
+    lab: {
+      label: "打开小工具",
+      preview: "六件打开就能用的小工具",
+      href: "../lab-v1-tools/index.html",
+    },
     about: {
       label: "了解我的方法",
       preview: "从经历、方法到协作方式",

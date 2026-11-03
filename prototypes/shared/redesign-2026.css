@@ -356,3 +356,9 @@ h1, h2, h3 { text-wrap: balance; line-break: strict; }
 .rd-proof-card.p2 { left: -2%; bottom: 6%; width: 46%; height: 34%; transform: rotate(-7deg); z-index: 4; }
 .rd-proof-layer:has(.p2) .rd-proof-card.p0 { top: 10%; height: 56%; }
 .rd-proof-layer:has(.p2) .rd-proof-card.p1 { bottom: 2%; height: 36%; }
+
+/* ---------- about: honors → style lab hand-off line ---------- */
+.profile-footnote[lang="en"] { display: flex; align-items: center; justify-content: flex-end; gap: clamp(14px, 2vw, 28px); max-width: none; margin-top: clamp(28px, 4vw, 56px); font: italic 400 clamp(18px, 2vw, 30px)/1.3 "Playfair Display", "Didot", "Bodoni 72", Georgia, serif; letter-spacing: 0.005em; color: #4b2f63; }
+.profile-footnote[lang="en"]::before { content: ""; flex: 0 1 clamp(60px, 18vw, 260px); height: 1px; background: linear-gradient(90deg, transparent, rgba(100, 21, 154, 0.45)); }
+@media (max-width: 640px) { .profile-footnote[lang="en"] { justify-content: flex-start; font-size: 20px; } .profile-footnote[lang="en"]::before { display: none; } }
+@media (min-width: 900px) { .profile-footnote[lang="en"] { white-space: nowrap; } }
