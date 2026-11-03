@@ -1,0 +1,61 @@
+/* ==========================================================================
+   PERSONAL ORBIT · visual system v1 (loaded last on every chapter)
+   One display face, one label style, three button kinds, one warm accent.
+   ========================================================================== */
+:root {
+  --o-display: "Songti SC", "STSong", "Noto Serif SC", "Noto Serif CJK SC", "SimSun", serif;
+  --o-sans: "PingFang SC", "Noto Sans SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --o-mono: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  --o-violet: #8b2cc2;
+  --o-violet-soft: #c9a6ea;
+  --o-violet-deep: #64159a;
+  --o-ember: #f07a4a;
+  --o-spring: cubic-bezier(.3, 1.35, .5, 1);
+  --rd-new: var(--o-ember);
+}
+
+/* ---- display: every chapter / section title is set in 宋体 ---- */
+main :is(h1, h2):not(.sr-only):not(.rd-contact *):not(.ayao-copy h2):not(.o-keep) {
+  font-family: var(--o-display) !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.02em !important;
+  font-synthesis: none;
+}
+main :is(h1, h2) :is(span, em, b, strong):not([class*="rd-c"]) { font-family: inherit; }
+
+/* ---- labels: mono · 11px · 0.2em · caps ---- */
+:is(.eyebrow, .o-label, .rd-honors-k, .chapter-kicker, .k) {
+  font-family: var(--o-mono) !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  line-height: 1.3 !important;
+  letter-spacing: 0.2em !important;
+  text-transform: uppercase !important;
+}
+[data-zk-surface="dark"] :is(.eyebrow, .o-label, .rd-honors-k) { color: var(--o-violet-soft) !important; }
+[data-zk-surface="light"] :is(.eyebrow, .o-label, .rd-honors-k) { color: var(--o-violet-deep) !important; }
+
+/* ---- buttons: primary pill / secondary pill / text link ---- */
+.o-btn {
+  display: inline-flex !important; align-items: center; justify-content: center; gap: 10px;
+  min-height: 0 !important; padding: 12px 22px !important;
+  border-radius: 999px !important;
+  font: 500 14px/1 var(--o-sans) !important; letter-spacing: 0.02em !important; text-transform: none !important;
+  text-decoration: none !important;
+  transition: transform .5s var(--o-spring), background-color .25s, color .25s, border-color .25s !important;
+}
+.o-btn:hover { transform: translateY(-2px); }
+.o-btn:active { transform: scale(.94); transition-duration: .1s !important; }
+.o-btn::before, .o-btn::after { border-radius: inherit !important; }
+.o-primary { background: #17131c !important; color: #f4f0f7 !important; border: 1px solid #17131c !important; }
+[data-zk-surface="dark"] .o-primary, .o-on-dark.o-primary { background: #f3f1f7 !important; color: #0b0a0e !important; border-color: #f3f1f7 !important; }
+.o-secondary { background: transparent !important; color: inherit !important; border: 1px solid currentColor !important; }
+.o-secondary:hover { background: rgba(139, 44, 194, 0.12) !important; }
+.o-link {
+  display: inline-flex !important; align-items: center; gap: 8px; padding: 0 0 6px !important;
+  font: 500 14px/1 var(--o-sans) !important; letter-spacing: 0.02em !important; text-transform: none !important;
+  text-decoration: none !important; border: 0 !important;
+  background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat !important;
+  transition: background-size .5s var(--o-spring), opacity .2s !important;
+}
+.o-link:hover { background-size: 30% 1px !important; }

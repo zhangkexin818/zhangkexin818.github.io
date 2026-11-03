@@ -62,9 +62,9 @@ body.header-light .brand-mark { border-color: rgba(22,24,25,.4); }
 .stratum-card img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.62) brightness(.66) contrast(1.08); }
 .stratum-card > span { position: absolute; z-index: 5; left: 24px; bottom: 18px; display: flex; gap: 15px; align-items: center; color: rgba(255,255,255,.72); font-size: 10px; letter-spacing: .12em; }
 .stratum-card > span b { color: var(--copper-bright); font-weight: 500; }
-.stratum-card.is-active { box-shadow: 0 35px 120px rgba(0,0,0,.65), 0 0 0 1px rgba(228,135,97,.28); }
+.stratum-card.is-active { box-shadow: 0 35px 120px rgba(0,0,0,.65), 0 0 0 1px rgba(201,166,234,.28); }
 .stratum-card.is-active img { filter: saturate(.9) brightness(.86) contrast(1.04); }
-.stratum-card.is-active::after { border-color: rgba(228,135,97,.52); }
+.stratum-card.is-active::after { border-color: rgba(201,166,234,.52); }
 
 .version-readout { position: absolute; z-index: 9; right: var(--pad); bottom: 9vh; width: min(22vw, 330px); padding: 22px 0 0; border-top: 1px solid var(--line); }
 .version-readout > span { position: absolute; right: 0; top: 18px; font: 300 34px/1 "Songti SC", serif; color: rgba(232,230,223,.22); }
@@ -108,7 +108,7 @@ body.header-light .brand-mark { border-color: rgba(22,24,25,.4); }
 .film-item img { width: 100%; height: 100%; object-fit: cover; }
 .film-item-wide { width: clamp(420px, 46vw, 720px); height: auto; aspect-ratio: 16/9; }
 .film-item-tall { width: clamp(240px, 22vw, 360px); }
-.decision-frame { display: flex; flex-direction: column; justify-content: flex-end; gap: 15px; padding: 38px; color: var(--paper); background: radial-gradient(circle at 20% 18%, rgba(228,135,97,.14), transparent 34%), var(--graphite); }
+.decision-frame { display: flex; flex-direction: column; justify-content: flex-end; gap: 15px; padding: 38px; color: var(--paper); background: radial-gradient(circle at 20% 18%, rgba(201,166,234,.14), transparent 34%), var(--graphite); }
 .decision-frame::before { content: ""; position: absolute; inset: 20px; border: 1px solid rgba(232,230,223,.13); border-radius: inherit; }
 .decision-frame span { position: absolute; top: 38px; left: 38px; color: var(--copper-bright); letter-spacing: .16em; font-size: 9px; }
 .decision-frame h3 { position: relative; margin: 0; font: 300 clamp(28px, 3vw, 48px)/1.1 "Songti SC", serif; }
@@ -134,7 +134,7 @@ body.header-light .brand-mark { border-color: rgba(22,24,25,.4); }
 .decision-stat span { max-width: 120px; color: rgba(232,230,223,.42); font-size: 10px; line-height: 1.6; }
 .decision-ledger { margin-top: 110px; border-top: 1px solid rgba(232,230,223,.15); }
 .decision-ledger .ledger-row { position: relative; display: grid; grid-template-columns: 70px 82px minmax(220px, 1fr) minmax(180px, .85fr) 50px; align-items: center; width: 100%; min-height: 104px; padding: 18px 10px; border-bottom: 1px solid rgba(232,230,223,.12); background: transparent; text-align: left; cursor: none; overflow: hidden; }
-.decision-ledger .ledger-row::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(228,135,97,.15), transparent 70%); transform: translateX(-105%); transition: transform .55s cubic-bezier(.2,.8,.16,1); }
+.decision-ledger .ledger-row::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(201,166,234,.15), transparent 70%); transform: translateX(-105%); transition: transform .55s cubic-bezier(.2,.8,.16,1); }
 .decision-ledger .ledger-row[data-state="drop"]::before { background: linear-gradient(90deg, rgba(139,44,194,.12), transparent 70%); }
 .decision-ledger .ledger-row:hover::before, .decision-ledger .ledger-row:focus-visible::before { transform: translateX(0); }
 .decision-ledger span, .decision-ledger b, .decision-ledger h3, .decision-ledger p, .decision-ledger i { position: relative; z-index: 1; }
