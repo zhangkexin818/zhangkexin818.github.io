@@ -9,6 +9,7 @@ const versions = [
   { number: "08", date: "2026.08.20", title: "粒子边界 IP", note: "线稿与三维对应、角色坠落、粒子缝合，确立 IP 叙事。" },
   { number: "09", date: "2026.10.27", title: "影像优先", note: "作品集视频、新作与福小灵进入主线，文字让位给影像。" },
   { number: "10", date: "2026.11.02", title: "新作上墙", note: "志怪角色群像、毛绒苹果园与分水线设定加入，所有可点击处有了按压反馈。" },
+  { number: "11", date: "2026.11.03", title: "LAB 上线", note: "六件小工具成为独立栏目 LAB；《竹》美学页、荣誉证据卡与全站文字校对同步上线。" },
 ];
 
 const versionCards = [...document.querySelectorAll(".stratum-card")];
