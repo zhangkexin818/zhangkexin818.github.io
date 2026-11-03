@@ -19,7 +19,7 @@
     },
     lab: {
       label: "打开小工具",
-      preview: "六件打开就能用的小工具",
+      preview: "九件打开就能用的小工具",
       href: "../lab-v1-tools/index.html",
     },
     about: {

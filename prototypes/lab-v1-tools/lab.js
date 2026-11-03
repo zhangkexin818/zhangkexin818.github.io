@@ -76,7 +76,7 @@
   /* ---------- tabs + panels ---------- */
   const tabs = $$("#tabs [role=tab]"), panels = $$(".panel"), ind = $(".tab-ind");
   let cur = 0;
-  function placeInd() { const t = tabs[cur]; ind.style.width = t.offsetWidth + "px"; ind.style.transform = `translateX(${t.offsetLeft}px)`; }
+  function placeInd() { const t = tabs[cur]; ind.style.width = t.offsetWidth + "px"; ind.style.height = t.offsetHeight + "px"; ind.style.transform = `translate(${t.offsetLeft}px, ${t.offsetTop}px)`; }
   function select(i, { focus = true } = {}) {
     if (i === cur) { placeInd(); return; }
     const prev = panels[cur]; cur = i;
@@ -89,6 +89,7 @@
     $$("[data-st]", p).forEach((el, k) => springIn(el, { delay: 90 + k * 55, y: 22, s: 0.97 }));
     if (focus) tabs[i].focus({ preventScroll: true });
     if (i === 2) requestAnimationFrame(applyFocus);
+    if (i === 6) requestAnimationFrame(flRender);
   }
   tabs.forEach((t, i) => {
     t.tabIndex = i === 0 ? 0 : -1;
@@ -395,4 +396,137 @@
   $("#imSave").addEventListener("click", (e) => { if (!outUrl) { e.preventDefault(); return; } toast("已下载压缩图"); });
   thumbs($("#imThumbs"), (src, name) => loadIm(src, name), 5); loadIm(samples[5][0], samples[5][1]);
   dropzone("slim", $("#imThumbs"), (f) => loadIm(URL.createObjectURL(f), f.name, f.size));
+
+  /* ---------- 07 film look ---------- */
+  const FL = [
+    { n: "Kodak 500T", p: "shot on 35mm Kodak Vision3 500T, tungsten balance, warm highlights, teal shadows, fine grain, halation", lift: [0.02, 0.05, 0.08], gain: [1.06, 0.98, 0.88], gamma: [0.96, 1, 1.06], sat: 0.92, contrast: 1.06, grain: 1 },
+    { n: "Fuji Eterna", p: "Fujifilm Eterna 250D, muted greens, soft contrast, low saturation, cinematic", lift: [0.03, 0.04, 0.03], gain: [0.97, 1.0, 0.95], gamma: [1.04, 0.98, 1.02], sat: 0.72, contrast: 0.9, grain: 0.7 },
+    { n: "16mm", p: "16mm film, heavy grain, crushed blacks, slight gate weave, documentary", lift: [0.0, 0.0, 0.0], gain: [1.04, 1.0, 0.94], gamma: [1.02, 1.0, 1.0], sat: 0.85, contrast: 1.22, grain: 2 },
+    { n: "Tri-X 黑白", p: "black and white, Kodak Tri-X 400, deep blacks, gritty grain, high contrast", lift: [0.02, 0.02, 0.02], gain: [1, 1, 1], gamma: [1, 1, 1], sat: 0, contrast: 1.25, grain: 1.6 },
+    { n: "漂白", p: "bleach bypass, desaturated, silvery highlights, harsh contrast", lift: [0.0, 0.0, 0.01], gain: [1.02, 1.02, 1.0], gamma: [1, 1, 1], sat: 0.42, contrast: 1.35, grain: 0.9 },
+  ];
+  let flPick = 0, flImg = null, flName = "", flTimer = 0;
+  const flCv = $("#flB"), flCmp = $("#flCmp");
+  FL.forEach((f, i) => {
+    const b = document.createElement("button"); b.type = "button"; b.className = "chip"; b.textContent = f.n; b.setAttribute("aria-pressed", String(i === 0));
+    b.addEventListener("click", () => { flPick = i; $("#flPre").querySelectorAll(".chip").forEach((c, j) => c.setAttribute("aria-pressed", String(j === i))); retrigger($("#flTag"), "tick"); flRender(); });
+    $("#flPre").appendChild(b);
+  });
+  function flRender() {
+    clearTimeout(flTimer); flTimer = setTimeout(flDraw, 40);
+    $("#flAmtOut").textContent = $("#flAmt").value; $("#flGrainOut").textContent = $("#flGrain").value; $("#flVigOut").textContent = $("#flVig").value;
+    const f = FL[flPick]; $("#flTag").textContent = f.n; $("#flPrompt").textContent = f.p;
+  }
+  function flDraw() {
+    if (!flImg) return;
+    const f = FL[flPick], amt = +$("#flAmt").value / 100, gr = +$("#flGrain").value, vg = +$("#flVig").value / 100;
+    const box = flCmp.getBoundingClientRect(); const W = Math.min(1400, Math.round(box.width * Math.min(2, devicePixelRatio || 1))) || 1000, H = Math.round(W * 9 / 16);
+    flCv.width = W; flCv.height = H;
+    const x = flCv.getContext("2d", { willReadFrequently: true });
+    const r = Math.max(W / flImg.naturalWidth, H / flImg.naturalHeight), iw = flImg.naturalWidth * r, ih = flImg.naturalHeight * r;
+    x.drawImage(flImg, (W - iw) / 2, (H - ih) / 2, iw, ih);
+    const d = x.getImageData(0, 0, W, H), px = d.data;
+    const lut = [0, 1, 2].map((c) => { const t = new Uint8ClampedArray(256); for (let v = 0; v < 256; v++) { let u = v / 255; u = Math.pow(u, f.gamma[c]); u = f.lift[c] + u * (f.gain[c] - f.lift[c]); u = (u - 0.5) * f.contrast + 0.5; t[v] = Math.round(255 * (v / 255 * (1 - amt) + Math.min(1, Math.max(0, u)) * amt)); } return t; });
+    const cx = W / 2, cy = H / 2, md = Math.hypot(cx, cy);
+    for (let i = 0, y = 0; y < H; y++) for (let xx = 0; xx < W; xx++, i += 4) {
+      let R = lut[0][px[i]], G = lut[1][px[i + 1]], B = lut[2][px[i + 2]];
+      const L = 0.3 * R + 0.59 * G + 0.11 * B, sat = 1 + (f.sat - 1) * amt;
+      R = L + (R - L) * sat; G = L + (G - L) * sat; B = L + (B - L) * sat;
+      if (gr) { const n = (Math.random() - 0.5) * gr * f.grain; R += n; G += n; B += n; }
+      if (vg) { const k = 1 - vg * Math.pow(Math.hypot(xx - cx, y - cy) / md, 2.2); R *= k; G *= k; B *= k; }
+      px[i] = R; px[i + 1] = G; px[i + 2] = B;
+    }
+    x.putImageData(d, 0, 0);
+    if (!reduce && flCv.animate) flCv.animate([{ opacity: 0.6 }, { opacity: 1 }], { duration: 260 });
+  }
+  function flLoad(src, name) { const im = new Image(); im.onload = () => { flImg = im; flName = name; $("#flA").src = src; flRender(); }; im.src = src; }
+  ["#flAmt", "#flGrain", "#flVig"].forEach((q) => $(q).addEventListener("input", flRender));
+  const flSplit = $("#flSplit");
+  flSplit.addEventListener("pointerdown", () => flCmp.classList.add("ease", "drag"));
+  flSplit.addEventListener("pointermove", (e) => { if (e.buttons) flCmp.classList.remove("ease"); });
+  ["pointerup", "pointercancel", "blur"].forEach((ev) => flSplit.addEventListener(ev, () => flCmp.classList.remove("drag")));
+  flSplit.addEventListener("input", () => flCmp.style.setProperty("--x", flSplit.value + "%"));
+  thumbs($("#flThumbs"), (src, name) => flLoad(src, name), 0); flLoad(samples[0][0], samples[0][1]);
+  dropzone("film", $("#flThumbs"), (f) => flLoad(URL.createObjectURL(f), f.name.replace(/\.[^.]+$/, "")));
+  $("#flCopy").addEventListener("click", (e) => copyText($("#flPrompt").textContent, e.currentTarget));
+  $("#flSave").addEventListener("click", () => flCv.toBlob((b) => { if (b) { save(b, `${(flName || "frame").replace(/[《》\s]/g, "")}-${FL[flPick].n.replace(/\s/g, "")}.png`); toast("已下载"); } }, "image/png"));
+  addEventListener("resize", () => { if (cur === 6) flRender(); });
+
+  /* ---------- 08 resume lint ---------- */
+  const TOOLS = /(midjourney|mj|niji|seedance|tapnow|kling|可灵|即梦|runway|comfyui|stable diffusion|sd|flux|claude|gpt|chatgpt|deepseek|minimax|海螺|suno|剪映|premiere|pr\b|after effects|ae\b|figma|blender|c4d|photoshop|ps\b|飞书|notion|lovart|libtv|vidu|hailuo|veo|sora)/i;
+  const NUM = /(\d|[一二两三四五六七八九十百千万]+(?:个|条|门|部|位|张|套|项|次|倍|天|周|强))/;
+  const RESULT = /(获|入围|提升|提高|降低|减少|缩短|增长|涨|播放|转化|上线|交付|签约|发布|落地|完成|产出|搭建|主导|打造|带来|实现|评选|奖)/;
+  const WEAK = /(负责|参与|协助|配合|熟悉|了解|学习|一些|若干|等工作|相关工作|帮助)/g;
+  function lint() {
+    const lines = $("#cvIn").value.split(/\n+/).map((x) => x.trim()).filter(Boolean);
+    let total = 0;
+    $("#cvList").innerHTML = lines.map((l, i) => {
+      const n = NUM.test(l), t = TOOLS.test(l), r = RESULT.test(l), weak = l.match(WEAK) || [], long = l.length > 70;
+      let sc = (n ? 34 : 0) + (t ? 33 : 0) + (r ? 33 : 0) - weak.length * 12 - (long ? 8 : 0); sc = Math.max(0, Math.min(100, sc)); total += sc;
+      const tips = [];
+      if (!n) tips.push("加一个数字：做了多少、提升多少、用时多久");
+      if (!t) tips.push("写出用到的工具或模型");
+      if (!r) tips.push("说清结果：入围、上线、交付或数据变化");
+      if (weak.length) tips.push(`把“${[...new Set(weak)].join("、")}”换成具体动作`);
+      if (long) tips.push("一条控制在 70 字内");
+      const esc2 = (q) => q.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]);
+      const html = esc2(l).replace(WEAK, (m) => `<mark>${m}</mark>`);
+      return `<li class="${sc >= 80 ? "good" : sc < 50 ? "weak" : ""}" style="--i:${i}"><div class="cv-line">${html}</div><div class="cv-chips"><span class="${n ? "y" : "n"}">数字 ${n ? "✓" : "✗"}</span><span class="${t ? "y" : "n"}">工具 ${t ? "✓" : "✗"}</span><span class="${r ? "y" : "n"}">结果 ${r ? "✓" : "✗"}</span>${weak.length ? `<span class="n">空词 ×${weak.length}</span>` : ""}<span>${sc} 分</span></div>${tips.length ? `<p class="cv-tip">${tips.join("；")}。</p>` : ""}</li>`;
+    }).join("");
+    const avg = lines.length ? Math.round(total / lines.length) : 0;
+    const prev = +$("#cvScore").textContent || 0; const t0 = performance.now();
+    const step = (t) => { const k = Math.min(1, (t - t0) / 600), e = 1 - Math.pow(1 - k, 3); $("#cvScore").textContent = Math.round(prev + (avg - prev) * e); if (k < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+    const ring = $("#cvRing"); ring.style.strokeDashoffset = String(327 * (1 - avg / 100)); ring.style.stroke = avg >= 80 ? "var(--ok)" : avg < 50 ? "var(--new)" : "var(--violet-soft)";
+    const weakN = $("#cvList").querySelectorAll("li.weak").length;
+    $("#cvSum").textContent = lines.length ? (weakN ? `${lines.length} 条里有 ${weakN} 条偏弱，先改标橙的那几条。` : `${lines.length} 条都写得比较扎实。`) : "粘贴经历后自动体检。";
+  }
+  let cvT = 0; $("#cvIn").addEventListener("input", () => { clearTimeout(cvT); cvT = setTimeout(lint, 220); }); lint();
+
+  /* ---------- 09 continuity board ---------- */
+  const CHECKS = ["服装", "道具", "数量", "发型", "光线"];
+  let shots = [62, 63, 65, 66, 86, 100].map((n) => ({ src: `../zhu-case/assets/film/f${String(n).padStart(3, "0")}.jpg`, name: `S${String(n).padStart(3, "0")}`, st: {}, note: "" }));
+  const grid = $("#ctGrid");
+  function ctRender() {
+    grid.innerHTML = "";
+    shots.forEach((s, i) => {
+      const c = document.createElement("div"); c.className = "ct-card"; c.style.setProperty("--i", i);
+      c.innerHTML = `<figure><img src="${s.src}" alt="生成图 ${s.name}" loading="lazy"><figcaption>${s.name}</figcaption></figure><div class="ct-checks">${CHECKS.map((k) => `<button type="button" data-k="${k}" data-s="${s.st[k] || ""}" aria-label="${k}：点按切换 通过 / 有问题 / 未检查">${k}</button>`).join("")}</div><input class="ct-note" placeholder="备注：比如“耳坠少了一只”" value="${(s.note || "").replace(/"/g, "&quot;")}">`;
+      c.querySelectorAll(".ct-checks button").forEach((b) => b.addEventListener("click", () => {
+        const k = b.dataset.k, nx = { "": "ok", ok: "bad", bad: "" }[s.st[k] || ""]; s.st[k] = nx; b.dataset.s = nx; retrigger(b, "jelly"); ctMark(c, s); ctStat();
+      }));
+      c.querySelector(".ct-note").addEventListener("input", (e) => { s.note = e.target.value; });
+      c.querySelector("figure").addEventListener("click", () => ctZoom(s));
+      ctMark(c, s); grid.appendChild(c);
+    });
+    ctStat();
+  }
+  function ctMark(c, s) { const v = Object.values(s.st); c.classList.toggle("bad", v.includes("bad")); c.classList.toggle("ok", !v.includes("bad") && CHECKS.every((k) => s.st[k] === "ok")); }
+  function ctStat() {
+    const bad = shots.filter((s) => Object.values(s.st).includes("bad")).length, done = shots.filter((s) => CHECKS.every((k) => s.st[k])).length;
+    $("#ctStat").textContent = `${shots.length} 张 · 已查完 ${done} · 有问题 ${bad}`;
+  }
+  let zoomEl = null;
+  function ctZoom(s) {
+    if (!zoomEl) { zoomEl = document.createElement("div"); zoomEl.className = "ct-zoom"; zoomEl.hidden = true; zoomEl.innerHTML = '<div><img alt="定妆参考"><img alt="生成图"></div><button class="btn" type="button">关闭</button>'; document.body.appendChild(zoomEl); zoomEl.addEventListener("click", (e) => { if (e.target === zoomEl || e.target.tagName === "BUTTON") zoomEl.hidden = true; }); addEventListener("keydown", (e) => { if (e.key === "Escape") zoomEl.hidden = true; }); }
+    const im = zoomEl.querySelectorAll("img"); im[0].src = $("#ctRef img").src; im[1].src = s.src; zoomEl.hidden = false;
+  }
+  $("#ctRef").addEventListener("click", () => ctZoom(shots[0] || { src: $("#ctRef img").src }));
+  dropzone("ctref", document.createElement("div"), (f) => { $("#ctRef img").src = URL.createObjectURL(f); });
+  // batch drop: several files at once
+  (() => {
+    const drop = $('[data-drop="ctbatch"]'), input = drop.querySelector("input");
+    const use = (files) => { const imgs = [...files].filter((f) => f.type.startsWith("image/")); if (!imgs.length) return; shots = imgs.map((f, i) => ({ src: URL.createObjectURL(f), name: f.name.replace(/\.[^.]+$/, "").slice(0, 14) || `#${i + 1}`, st: {}, note: "" })); retrigger(drop, "jelly"); ctRender(); };
+    input.addEventListener("change", () => { use(input.files); input.value = ""; });
+    ["dragenter", "dragover"].forEach((e) => drop.addEventListener(e, (ev) => { ev.preventDefault(); drop.classList.add("over"); }));
+    ["dragleave", "drop"].forEach((e) => drop.addEventListener(e, (ev) => { ev.preventDefault(); drop.classList.remove("over"); if (e === "drop") use(ev.dataTransfer.files); }));
+  })();
+  $("#ctCopy").addEventListener("click", (e) => {
+    const lines = ["穿帮检查清单", ""].concat(shots.map((s) => {
+      const bad = CHECKS.filter((k) => s.st[k] === "bad"), un = CHECKS.filter((k) => !s.st[k]);
+      return `${s.name}：${bad.length ? "有问题（" + bad.join("、") + "）" : un.length ? "未查完（" + un.join("、") + "）" : "通过"}${s.note ? " · " + s.note : ""}`;
+    }));
+    copyText(lines.join("\n"), e.currentTarget);
+  });
+  ctRender();
 })();

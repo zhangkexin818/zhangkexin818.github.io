@@ -3,15 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="张可欣的 vibe coding 小工具：镜头提示词、色板卡、多平台画幅、中文排版、两地约时间、图片瘦身。" />
-    <title>LAB · 小工具实验室</title>
+    <meta name="description" content="张可欣的 vibe coding 小工具：镜头提示词、色板卡、多平台画幅、中文排版、两地约时间、图片瘦身、胶片质感、简历体检、穿帮对照。" />
+    <title>LAB · 九件小工具</title>
     <link rel="icon" href="../../favicon.ico" sizes="any" />
     <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
     <script>try{if(sessionStorage.getItem("zk-route-transition"))document.documentElement.classList.add("zk-route-pending")}catch(_){}</script>
     <script>if(window.parent!==window)document.documentElement.classList.add("zk-continuous-child")</script>
     <link rel="stylesheet" href="../shared/site-bridge.css" />
     <link rel="stylesheet" href="../shared/continuous-child.css?v=2" />
-    <link rel="stylesheet" href="lab.css?v=3" />
+    <link rel="stylesheet" href="lab.css?v=4" />
     <link rel="stylesheet" href="../shared/press-fx.css?v=1" />
       <link rel="stylesheet" href="../shared/orbit-system.css?v=1" />
   </head>
@@ -34,8 +34,8 @@
       <section class="hero">
         <div class="hero-bg" aria-hidden="true"><span>L</span><span>A</span><span>B</span></div>
         <div class="hero-copy">
-          <p class="k">LAB · VIBE CODING · 06</p>
-          <h1>六件小工具</h1>
+          <p class="k">LAB · VIBE CODING · 09</p>
+          <h1>九件小工具</h1>
           <p class="sub">从做片子的日常里长出来。<br />都在浏览器本地运行，不上传、不登录。</p>
         </div>
         <div class="deck" id="deck">
@@ -69,6 +69,21 @@
             <span class="glyph g-slim" aria-hidden="true"><i></i><em>−72%</em></span>
             <span class="tc-name">图片瘦身</span><span class="tc-en">SLIM</span>
           </button>
+          <button class="tc" type="button" data-t="6">
+            <span class="tc-num">07</span>
+            <span class="glyph g-film" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="tc-name">胶片质感</span><span class="tc-en">FILM LOOK</span>
+          </button>
+          <button class="tc" type="button" data-t="7">
+            <span class="tc-num">08</span>
+            <span class="glyph g-cv" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="tc-name">简历句子体检</span><span class="tc-en">RESUME LINT</span>
+          </button>
+          <button class="tc" type="button" data-t="8">
+            <span class="tc-num">09</span>
+            <span class="glyph g-cont" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+            <span class="tc-name">穿帮对照台</span><span class="tc-en">CONTINUITY</span>
+          </button>
         </div>
       </section>
 
@@ -81,6 +96,9 @@
           <button role="tab" type="button" aria-selected="false" aria-controls="p3" id="tab3"><b>04</b>排版</button>
           <button role="tab" type="button" aria-selected="false" aria-controls="p4" id="tab4"><b>05</b>约时间</button>
           <button role="tab" type="button" aria-selected="false" aria-controls="p5" id="tab5"><b>06</b>瘦身</button>
+          <button role="tab" type="button" aria-selected="false" aria-controls="p6" id="tab6"><b>07</b>胶片</button>
+          <button role="tab" type="button" aria-selected="false" aria-controls="p7" id="tab7"><b>08</b>简历</button>
+          <button role="tab" type="button" aria-selected="false" aria-controls="p8" id="tab8"><b>09</b>穿帮</button>
         </div>
 
         <div class="panels">
@@ -181,17 +199,65 @@
               <div class="cmp" id="imCmp" data-st><img id="imA" alt="原图" draggable="false"><img id="imB" alt="压缩后" draggable="false"><span class="knob" aria-hidden="true">‹ ›</span><input type="range" id="imSplit" min="0" max="100" value="50" aria-label="对比分割线"><span class="tag l">原图</span><span class="tag r">压缩后</span></div>
             </div>
           </div>
+
+          <!-- 07 FILM LOOK -->
+          <div class="panel" role="tabpanel" id="p6" aria-labelledby="tab6">
+            <div class="ph" data-st><span class="num">07</span><div><p class="k">FILM LOOK</p><h2>胶片质感</h2><p>同一帧套上几种胶片底子，拖动中线比较。写提示词前先看清自己要的是哪一种。</p></div>
+              <button class="btn" type="button" id="flSave">下载 PNG</button></div>
+            <div class="split">
+              <div class="ctl" data-st>
+                <div class="chips" id="flPre"></div>
+                <div class="range"><span>强度</span><input type="range" id="flAmt" min="0" max="100" step="5" value="85"><output id="flAmtOut">85</output></div>
+                <div class="range"><span>颗粒</span><input type="range" id="flGrain" min="0" max="60" step="2" value="18"><output id="flGrainOut">18</output></div>
+                <div class="range"><span>暗角</span><input type="range" id="flVig" min="0" max="80" step="5" value="35"><output id="flVigOut">35</output></div>
+                <div class="thumbs big" id="flThumbs"></div>
+                <label class="drop sm" data-drop="film"><input type="file" accept="image/*" hidden><span class="plus">＋</span>拖入或选择你的图片</label>
+                <div class="card"><div class="card-top"><span>对应提示词</span><button class="btn cp" type="button" id="flCopy"><span>复制</span><span>已复制 ✓</span></button></div><pre id="flPrompt"></pre></div>
+              </div>
+              <div class="cmp" id="flCmp" data-st><img id="flA" alt="原图" draggable="false"><canvas id="flB" aria-label="套用胶片后的画面"></canvas><span class="knob" aria-hidden="true">‹ ›</span><input type="range" id="flSplit" min="0" max="100" value="50" aria-label="对比分割线"><span class="tag l">原图</span><span class="tag r" id="flTag">Kodak 500T</span></div>
+            </div>
+          </div>
+
+          <!-- 08 RESUME LINT -->
+          <div class="panel" role="tabpanel" id="p7" aria-labelledby="tab7">
+            <div class="ph" data-st><span class="num">08</span><div><p class="k">RESUME LINT</p><h2>简历句子体检</h2><p>一行一条经历。每条看三样：有没有数字、有没有工具、有没有结果，再挑出“负责、参与”这类空词。</p></div></div>
+            <div class="split">
+              <div class="group" data-st><label for="cvIn">项目经历（每行一条）</label><textarea class="field" id="cvIn" rows="9" data-zk-local-wheel>负责AI短片的美学执行，参与角色和场景设计
+用 Midjourney 和 Seedance 完成 93 个分镜定稿，作品入围亚洲巅峰黑客松上海站 70 强
+协助老师整理课程资料，熟悉各种AI工具
+搭建 PGC→UGC 课程视频工作流，单条视频返工率降低 50%，交付 40+ 完整设计
+参与小红书账号运营，积累了一些粉丝</textarea></div>
+              <div class="out" data-st>
+                <div class="cv-score"><svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="52" class="cv-track"/><circle cx="60" cy="60" r="52" class="cv-ring" id="cvRing"/></svg><div><b id="cvScore">0</b><span>/ 100</span></div><p id="cvSum"></p></div>
+                <ol class="cv-list" id="cvList"></ol>
+              </div>
+            </div>
+          </div>
+
+          <!-- 09 CONTINUITY -->
+          <div class="panel" role="tabpanel" id="p8" aria-labelledby="tab8">
+            <div class="ph" data-st><span class="num">09</span><div><p class="k">CONTINUITY CHECK</p><h2>穿帮对照台</h2><p>左边放定妆，右边放一批生成图。逐张点“服装、道具、数量、发型、光线”，有问题的标红，最后一键导出检查清单。</p></div>
+              <button class="btn cp" type="button" id="ctCopy"><span>导出清单</span><span>已复制 ✓</span></button></div>
+            <div class="ct" data-st>
+              <div class="ct-ref"><span class="lab2">定妆参考</span><button type="button" class="ct-refimg" id="ctRef"><img alt="定妆参考图" src="../zhu-case/assets/young-face.jpg"></button>
+                <label class="drop sm" data-drop="ctref"><input type="file" accept="image/*" hidden><span class="plus">＋</span>换参考</label></div>
+              <div class="ct-main">
+                <div class="ct-bar"><span id="ctStat"></span><label class="drop sm" data-drop="ctbatch"><input type="file" accept="image/*" multiple hidden><span class="plus">＋</span>放入一批生成图</label></div>
+                <div class="ct-grid" id="ctGrid"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <footer class="foot"><p>LAB 会继续长：穿帮对照台、方言台词注音、胶片质感对照……</p><a class="next" href="../about-v1-identity-spectrum-concept/index.html">进入 ABOUT <span>→</span></a></footer>
+      <footer class="foot"><p>LAB 会继续长：方言台词注音、分镜节奏表……</p><a class="next" href="../about-v1-identity-spectrum-concept/index.html">进入 ABOUT <span>→</span></a></footer>
     </main>
     <div class="toast" id="toast" role="status"></div>
 
     <script src="../shared/cursor-system.js?v=iframe-pointer-v2"></script>
     <script src="../shared/continuous-child.js?v=sleep-v1"></script>
     <script src="../shared/site-bridge.js"></script>
-    <script src="lab.js?v=1"></script>
+    <script src="lab.js?v=2"></script>
     <script src="../shared/press-fx.js?v=1" defer></script>
   </body>
 </html>
