@@ -396,3 +396,9 @@ h1, h2, h3 { text-wrap: balance; line-break: strict; }
 /* ---------- about: footer continues the dark end card instead of a lavender band ---------- */
 body:has(.rd-end) .site-footer { background: #050607; border-top-color: rgba(255, 255, 255, 0.08); color: rgba(255, 255, 255, 0.42); min-height: 72px; padding-bottom: 1.4rem; }
 body:has(.rd-end) .site-footer a { color: #c9a6ea; }
+
+/* ---------- end-card pills: one height, text optically centred ---------- */
+.rd-end-files > :is(a, button) { display: inline-flex; align-items: center; gap: 10px; height: 52px; padding: 0 24px; line-height: 1; box-sizing: border-box; }
+.rd-end-files > :is(a, button) > * { display: block; line-height: 1; }
+.rd-end-files > :is(a, button) b { font-size: 16px; padding-top: 1px; }
+.rd-end-files > :is(a, button) small { padding-top: 2px; }
