@@ -365,7 +365,7 @@
     const P = {
       ktk: { img: [H + "ktk-cert.jpg"], cap: "AIGC 特邀作品证书", ar: "900 / 1273" },
       xpc: { logo: H + "logo-xinpianchang.svg", cap: "新片场 Shotlab · 签约创作人" },
-      bv: { img: [H + "bv-cover.jpg"], cap: "《千年之恋 · 因 AI 永恒》", ar: "4 / 3" },
+      bv: { img: [H + "bv-couple.jpg", H + "bv-drop.jpg", H + "bv-heart.jpg"], cap: "《千年之恋 · 因 AI 永恒》" },
       xh: { img: [H + "xinhuo-cover.jpg"], cap: "《三火现象》· 2026 站酷设计周", ar: "4 / 3" },
       h3: { img: [H + "h3-screen.jpg", H + "h3-poster.jpg"], cap: "西岸美术馆 · TOP30 展映" },
       hack: { img: [H + "hack-team.jpg", H + "hack-venue.jpg"], cap: "ARENA PEAK ASIA · 上海" },

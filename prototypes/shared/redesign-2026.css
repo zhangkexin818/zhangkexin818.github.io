@@ -353,3 +353,6 @@ h1, h2, h3 { text-wrap: balance; line-break: strict; }
   .rd-thumb.is-logo.is-dark { background: #0b0a0e; }
   .rd-thumb.is-logo img { object-fit: contain; }
 }
+.rd-proof-card.p2 { left: -2%; bottom: 6%; width: 46%; height: 34%; transform: rotate(-7deg); z-index: 4; }
+.rd-proof-layer:has(.p2) .rd-proof-card.p0 { top: 10%; height: 56%; }
+.rd-proof-layer:has(.p2) .rd-proof-card.p1 { bottom: 2%; height: 36%; }
