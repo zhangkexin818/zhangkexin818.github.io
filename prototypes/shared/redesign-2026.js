@@ -355,9 +355,68 @@
   }
 
   // let page scripts open the shared viewer for an image
+
+  /* ---------- honors: proof stage ---------- */
+  function setupProof() {
+    const list = document.querySelector("[data-rd-proof-list]");
+    const stage = document.querySelector("[data-rd-proof]");
+    if (!list) return;
+    const H = "assets/honors/";
+    const P = {
+      ktk: { img: [H + "ktk-cert.jpg"], cap: "AIGC 特邀作品证书" },
+      xpc: { type: ["XINPIANCHANG", "Shotlab", "签约创作人"], mono: "XPC" },
+      bv: { type: ["ZCOOL × BATTLEVERSE", "优秀奖", "《千年之恋 · 因 AI 永恒》"], mono: "ZCOOL" },
+      xh: { img: [H + "xinhuo-card.jpg"], cap: "2026 站酷设计周 · 获奖作品" },
+      h3: { img: [H + "h3-screen.jpg", H + "h3-poster.jpg"], cap: "西岸美术馆 · TOP30 展映" },
+      hack: { img: [H + "hack-team.jpg", H + "hack-venue.jpg"], cap: "ARENA PEAK ASIA · 上海" },
+      flova: { type: ["FLOVA", "Max 超创", "精选作者"], mono: "FLOVA" },
+      ali: { type: ["ALIBABA", "公益潮玩", "设计征集 · 入围"], mono: "ALI" },
+    };
+    const SPRING = "linear(0,.034,.124,.251,.398,.551,.698,.832,.947,1.038,1.107,1.153,1.178,1.186,1.18,1.164,1.14,1.113,1.084,1.057,1.032,1.01,.993,.98,.972,.967,.965,.967,.97,.974,.979,.984,.989,.994,.998,1.001,1.004,1.005,1.006,1.006,1.006,1.006,1.005,1.004,1.003,1)";
+    const ease = CSS.supports("transition-timing-function", "linear(0, 1)") ? SPRING : "cubic-bezier(.34,1.56,.64,1)";
+    const rows = [...list.querySelectorAll("li[data-proof]")];
+    rows.forEach((li) => {
+      const d = P[li.dataset.proof]; const t = li.querySelector(".rd-thumb");
+      if (!d || !t) return;
+      if (d.img) { t.classList.add("has-img"); t.innerHTML = `<img src="${d.img[0]}" alt="" loading="lazy" decoding="async">`; }
+      else t.textContent = d.mono;
+      if (d.img && !li.classList.contains("has-link")) t.addEventListener("click", () => openPlayer(t, { image: d.img[0], title: li.querySelector(".a").firstChild.textContent.trim(), meta: d.cap, ratio: imgRatio(t.querySelector("img")) }));
+    });
+    function imgRatio(img) { return img && img.naturalWidth ? img.naturalWidth / img.naturalHeight : 3 / 4; }
+    if (!stage) return;
+    let cur = null, layer = null;
+    function show(key) {
+      if (key === cur || !P[key]) return; cur = key;
+      rows.forEach((li) => li.classList.toggle("is-proof", li.dataset.proof === key));
+      const d = P[key];
+      const next = document.createElement("div");
+      next.className = "rd-proof-layer" + (d.img && d.img.length === 1 ? " solo" : "");
+      if (d.img) next.innerHTML = d.img.map((u, i) => `<figure class="rd-proof-card p${i}" style="margin:0"><img src="${u}" alt="" decoding="async"></figure>`).join("") + `<span class="rd-proof-cap">${d.cap}</span>`;
+      else next.innerHTML = `<div class="rd-proof-card rd-proof-type"><span>${d.type[0]}</span><b>${d.type[1]}</b><i>${d.type[2]}</i></div>`;
+      stage.classList.toggle("is-zoomable", !!d.img);
+      const old = layer; layer = next; stage.appendChild(next);
+      if (!reduce) {
+        [...next.children].forEach((c, i) => c.animate([{ opacity: 0, translate: "0 34px", scale: "0.82" }, { opacity: 1, translate: "0 0", scale: "1" }], { duration: 820, delay: i * 70, easing: ease, fill: "backwards" }));
+        if (old) old.animate([{ opacity: 1, translate: "0 0" }, { opacity: 0, translate: "0 -18px" }], { duration: 220, easing: "ease-in", fill: "forwards" }).finished.then(() => old.remove(), () => old.remove());
+        setTimeout(() => old?.remove(), 400);
+      } else old?.remove();
+    }
+    rows.forEach((li) => {
+      li.addEventListener("pointerenter", () => show(li.dataset.proof));
+      li.addEventListener("focusin", () => show(li.dataset.proof));
+    });
+    stage.addEventListener("click", () => {
+      const d = P[cur]; if (!d?.img) return;
+      const img = layer.querySelector(".p0 img");
+      const li = rows.find((r) => r.dataset.proof === cur);
+      openPlayer(layer.querySelector(".p0"), { image: d.img[0], title: li.querySelector(".a").firstChild.textContent.trim(), meta: d.cap, ratio: imgRatio(img) });
+    });
+    show(rows[0].dataset.proof);
+  }
+
   window.rdOpenImage = (el, opts) => openPlayer(el, opts);
 
-  const init = () => { setupReveal(); setupCounter(); setupFilms(); setupShowreel(); setupParallax(); setupAutoplay(); setupMethodFilm(); setupScrollFx(); setupTilt(); setupParade(); };
+  const init = () => { setupReveal(); setupCounter(); setupFilms(); setupShowreel(); setupParallax(); setupAutoplay(); setupMethodFilm(); setupScrollFx(); setupTilt(); setupParade(); setupProof(); };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
 })();

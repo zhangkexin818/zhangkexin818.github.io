@@ -309,3 +309,39 @@ h1, h2, h3 { text-wrap: balance; line-break: strict; }
 .rd-case-link:hover span { transform: translateX(5px); }
 .rd-case-link:active { transform: scale(0.94); transition-duration: 0.1s; }
 @media (max-width: 640px) { .rd-case-link { padding: 8px 12px; font-size: 12px; } }
+
+/* ---------- honors: proof stage (hover a row → its evidence lands here) ---------- */
+.rd-proof { position: relative; width: min(100%, 360px); aspect-ratio: 1 / 1.02; margin-top: clamp(22px, 3vw, 40px); }
+.rd-proof-layer { position: absolute; inset: 0; }
+.rd-proof-card { position: absolute; overflow: hidden; border-radius: 6px; background: #fff; box-shadow: 0 18px 44px -14px rgba(48, 0, 72, 0.45), 0 2px 6px rgba(20, 18, 23, 0.12); border: 5px solid #fff; will-change: transform; }
+.rd-proof-card img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.rd-proof-card.p0 { left: 6%; top: 4%; width: 82%; height: 78%; transform: rotate(-2.5deg); z-index: 2; }
+.rd-proof-card.p1 { right: 0; bottom: 0; width: 52%; height: 50%; transform: rotate(5deg); z-index: 3; }
+.rd-proof-layer.solo .rd-proof-card.p0 { left: 8%; top: 2%; width: 84%; height: 92%; }
+.rd-proof.is-zoomable { cursor: zoom-in; }
+.rd-proof-type { left: 6%; top: 8%; width: 86%; height: 80%; transform: rotate(-2deg); display: grid; align-content: space-between; padding: clamp(16px, 2vw, 24px); border: 0; color: #fff; background: radial-gradient(120% 90% at 85% 10%, rgba(201, 166, 234, 0.9), transparent 55%), linear-gradient(150deg, #64159a, #300048 70%); }
+.rd-proof-type b { font: 600 clamp(26px, 3vw, 40px)/1 Inter, "Noto Sans SC", sans-serif; letter-spacing: -0.02em; word-break: break-word; }
+.rd-proof-type span { font: 500 10.5px/1.5 var(--rd-mono); letter-spacing: 0.16em; opacity: 0.8; }
+.rd-proof-type i { font-style: normal; font: 400 14px/1.6 "Noto Serif SC", serif; opacity: 0.92; }
+.rd-proof-cap { position: absolute; left: 0; bottom: -28px; font: 500 10.5px/1 var(--rd-mono); letter-spacing: 0.14em; color: #6b4d86; white-space: nowrap; }
+.rd-ledger li.is-proof::before { transform: none; }
+.rd-ledger li { cursor: default; }
+.rd-ledger li.has-link { cursor: pointer; }
+.rd-row-link { position: absolute; inset: 0; z-index: 3; border-radius: 2px; }
+.rd-row-link:focus-visible { outline: 2px solid #8b2cc2; outline-offset: -2px; }
+.rd-ledger li.has-link::after { content: "↗"; position: absolute; z-index: 1; right: 6px; top: 50%; font: 500 18px/1 Inter, sans-serif; color: #64159a; opacity: 0; transform: translate(-10px, -40%) scale(0.5); transition: opacity 0.25s, transform 0.7s cubic-bezier(.34, 1.7, .5, 1); pointer-events: none; }
+.rd-ledger li.has-link:hover::after, .rd-ledger li.has-link:focus-within::after { opacity: 1; transform: translate(0, -50%) scale(1); }
+.rd-ledger li.has-link:hover .y, .rd-ledger li.has-link:focus-within .y { opacity: 0; transform: translateY(-8px); transition: opacity 0.2s, transform 0.4s var(--rd-ease); transition-delay: 0s; }
+.rd-ledger li.has-link:hover .a { transform: translateX(4px); transition: transform 0.6s cubic-bezier(.3, 1.35, .5, 1); transition-delay: 0s; }
+.rd-thumb { display: none; }
+@media (max-width: 860px) {
+  .rd-proof { display: none; }
+  .rd-ledger li { grid-template-columns: 30px minmax(0, 1fr) 52px; row-gap: 6px; }
+  .rd-ledger .y { grid-column: 2; grid-row: 2; }
+  .rd-thumb { position: relative; z-index: 2; grid-column: 3; grid-row: 1 / span 2; align-self: center; display: grid; place-items: center; width: 52px; height: 52px; overflow: hidden; border-radius: 8px; background: linear-gradient(150deg, #64159a, #300048); color: #fff; font: 600 10px/1 var(--rd-mono); letter-spacing: 0.06em; box-shadow: 0 6px 16px -8px rgba(48, 0, 72, 0.6); }
+  .rd-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .rd-ledger li:not(.has-link) .rd-thumb.has-img { cursor: zoom-in; }
+  .rd-ledger li.has-link::after { display: none; }
+  .rd-ledger li.is-proof::before { transform: translateX(-101%); }
+  .rd-thumb:not(.has-img) { font-size: 11px; letter-spacing: 0.04em; }
+}
