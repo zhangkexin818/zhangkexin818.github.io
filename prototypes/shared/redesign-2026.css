@@ -345,3 +345,11 @@ h1, h2, h3 { text-wrap: balance; line-break: strict; }
   .rd-ledger li.is-proof::before { transform: translateX(-101%); }
   .rd-thumb:not(.has-img) { font-size: 11px; letter-spacing: 0.04em; }
 }
+.rd-proof-logo { left: 6%; top: 22%; width: 88%; height: 46%; transform: rotate(-2deg); display: grid; place-items: center; padding: 0 12%; background: #fff; }
+.rd-proof-logo.is-dark { background: #0b0a0e; border-color: #0b0a0e; }
+.rd-proof-logo img { width: 100%; height: auto; max-height: 60%; object-fit: contain; }
+@media (max-width: 860px) {
+  .rd-thumb.is-logo { background: #fff; padding: 9px; }
+  .rd-thumb.is-logo.is-dark { background: #0b0a0e; }
+  .rd-thumb.is-logo img { object-fit: contain; }
+}
