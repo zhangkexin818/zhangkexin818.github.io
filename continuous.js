@@ -216,6 +216,13 @@
 
   applyLightMode(lightMode, { persist: false, animate: false });
 
+  const railFill = document.querySelector("[data-rail-fill]");
+  let railLocal = 0;
+  function activeIndexFor(marker) {
+    let found = 0;
+    shells.forEach((shell, i) => { if (marker >= chapterTop(shell)) found = i; });
+    return found;
+  }
   function chapterTop(shell) {
     return shell.getBoundingClientRect().top + window.scrollY;
   }
@@ -505,6 +512,12 @@
       const local = clamp(y - top, 0, maxLocal);
       const record = frameRecords[index];
       const isNearViewport = y + viewport * 1.5 >= top && y - viewport * 0.5 <= top + shell.offsetHeight;
+      const awake = y + viewport * 1.15 >= top && y - viewport * 0.15 <= top + shell.offsetHeight;
+      if (record?.activated && record.awake !== awake) {
+        record.awake = awake;
+        record.frame.contentWindow?.postMessage({ type: "zk:visible", on: awake }, "*");
+      }
+      if (index === activeIndexFor(marker)) railLocal = shell.offsetHeight > viewport ? clamp((y - top) / Math.max(1, shell.offsetHeight - viewport), 0, 1) : 1;
       if (record?.activated && isNearViewport) {
         record.frame.contentWindow?.postMessage({
           type: "zk:set-scroll",
@@ -539,6 +552,7 @@
     boundaryDirection = seamDirection;
     particleCanvas?.classList.toggle("is-visible", (lightMode === "starlight" || boundaryEnergy > 0.02) && !reducedMotion.matches);
     setActive(clamp(nextActive, 0, shells.length - 1));
+    if (railFill) railFill.style.transform = `scaleY(${clamp((activeIndex + railLocal) / Math.max(1, shells.length - 1), 0, 1)})`;
 
     const maxScroll = Math.max(1, document.documentElement.scrollHeight - viewport);
     if (progress) progress.style.transform = `scaleX(${clamp(y / maxScroll, 0, 1)})`;

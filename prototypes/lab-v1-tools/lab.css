@@ -2,7 +2,7 @@
    --sp (snappy, ~600ms) for state changes, --bo (bouncy, ~800ms) for things that land. */
 :root {
   --carbon: #08070b; --panel: #0f0c15; --panel2: #16121e; --ink: #f3f1f7;
-  --dim: rgba(243,241,247,.64); --faint: rgba(243,241,247,.4); --line: rgba(243,241,247,.12);
+  --dim: rgba(243,241,247,.64); --faint: rgba(243,241,247,.52); --line: rgba(243,241,247,.12);
   --violet: #8b2cc2; --violet-soft: #c9a6ea; --new: #ff7a3d; --ok: #7af7c4; --warn: #ffb067;
   --serif: "Noto Serif SC", "Songti SC", "Noto Serif CJK SC", serif;
   --sans: "Inter", "PingFang SC", "Noto Sans CJK SC", "Microsoft YaHei", system-ui, sans-serif;

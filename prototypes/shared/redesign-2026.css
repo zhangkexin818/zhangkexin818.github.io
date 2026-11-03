@@ -107,7 +107,7 @@ h1, h2, h3 { text-wrap: balance; line-break: strict; }
 .rd-ledger .n { position: relative; font: 600 11px/1 var(--rd-mono); color: #64159a; }
 .rd-ledger .a { position: relative; font: 500 clamp(15px, 1.3vw, 18px)/1.45 "Noto Sans SC", sans-serif; min-width: 0; }
 .rd-ledger .a small { display: block; margin-top: 3px; font-size: 12.5px; color: #6f6679; font-weight: 400; }
-.rd-ledger .y { position: relative; font: 500 10px/1 var(--rd-mono); letter-spacing: 0.14em; color: #857a90; text-transform: uppercase; white-space: nowrap; }
+.rd-ledger .y { position: relative; font: 500 10px/1 var(--rd-mono); letter-spacing: 0.14em; color: #675c74; text-transform: uppercase; white-space: nowrap; }
 .rd-armed .rd-ledger li .a, .rd-armed .rd-ledger li .n, .rd-armed .rd-ledger li .y { transition: transform 0.8s var(--rd-ease), opacity 0.8s var(--rd-ease); transition-delay: calc(var(--i, 0) * 70ms); }
 .rd-armed .rd-ledger:not(.rd-in) li .a, .rd-armed .rd-ledger:not(.rd-in) li .n, .rd-armed .rd-ledger:not(.rd-in) li .y { transform: translateX(-24px); opacity: 0.001; }
 @media (max-width: 860px) {
@@ -362,3 +362,37 @@ h1, h2, h3 { text-wrap: balance; line-break: strict; }
 .profile-footnote[lang="en"]::before { content: ""; flex: 0 1 clamp(60px, 18vw, 260px); height: 1px; background: linear-gradient(90deg, transparent, rgba(100, 21, 154, 0.45)); }
 @media (max-width: 640px) { .profile-footnote[lang="en"] { justify-content: flex-start; font-size: 20px; } .profile-footnote[lang="en"]::before { display: none; } }
 @media (min-width: 900px) { .profile-footnote[lang="en"] { white-space: nowrap; } }
+
+/* ---------- contact: WeChat QR pops in place, ID copies ---------- */
+.rd-end-files button { position: relative; display: inline-flex; align-items: baseline; gap: 10px; padding: 14px 22px; border-radius: 999px; border: 1px solid #fff; background: #fff; color: #050607; font: inherit; cursor: pointer; transition: transform 0.6s cubic-bezier(.3, 1.35, .5, 1), background 0.3s, color 0.3s; }
+.rd-end-files button b { font-size: 16px; font-weight: 600; }
+.rd-end-files button small { font: 500 10px/1 var(--rd-mono); letter-spacing: 0.14em; opacity: 0.6; }
+.rd-end-files button i { font-style: normal; transition: transform 0.6s cubic-bezier(.34, 1.7, .5, 1); }
+.rd-end-files button:hover { background: #c9a6ea; border-color: #c9a6ea; transform: translateY(-2px); }
+.rd-end-files button:hover i { transform: rotate(90deg); }
+.rd-end-files button:active { transform: scale(0.94); transition-duration: 0.1s; }
+.rd-contact { border: 0; padding: 0; background: transparent; max-width: none; max-height: none; width: 100%; height: 100%; overflow: hidden; }
+.rd-contact::backdrop { background: rgba(6, 5, 10, 0); backdrop-filter: blur(0); transition: background 0.35s, backdrop-filter 0.35s; }
+.rd-contact.is-in::backdrop { background: rgba(6, 5, 10, 0.72); backdrop-filter: blur(6px); }
+.rd-contact[open] { display: grid; place-items: center; }
+.rd-contact-card { position: relative; width: min(340px, calc(100vw - 32px)); max-height: calc(100% - 32px); overflow: auto; display: grid; gap: 12px; justify-items: center; padding: 26px 24px 22px; border-radius: 22px; background: #fff; color: #141217; box-shadow: 0 40px 120px rgba(0, 0, 0, 0.5); transform: translateY(40px) scale(0.85); opacity: 0; transition: transform 0.75s cubic-bezier(.34, 1.56, .64, 1), opacity 0.25s; }
+.rd-contact.is-in .rd-contact-card { transform: none; opacity: 1; }
+.rd-contact-k { margin: 0; font: 600 10.5px/1 var(--rd-mono); letter-spacing: 0.2em; color: #6b4d86; }
+.rd-contact h2 { margin: 0; font: 600 20px/1.3 "Noto Sans SC", "PingFang SC", sans-serif; }
+.rd-contact img { width: 100%; height: auto; border-radius: 12px; }
+.rd-contact-id { display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 10px 10px 16px; border-radius: 999px; background: #f2edf7; }
+.rd-contact-id span { font-size: 12px; color: #6f6679; }
+.rd-contact-id b { flex: 1; font: 600 16px/1 var(--rd-mono); letter-spacing: 0.04em; }
+.rd-contact-id button { display: inline-grid; padding: 9px 16px; border: 0; border-radius: 999px; background: #141217; color: #fff; font: 500 13px/1 "Noto Sans SC", sans-serif; cursor: pointer; overflow: hidden; transition: background 0.3s, transform 0.6s cubic-bezier(.3, 1.35, .5, 1); }
+.rd-contact-id button > span { grid-area: 1 / 1; color: inherit; font-size: 13px; transition: transform 0.6s cubic-bezier(.3, 1.35, .5, 1), opacity 0.2s; }
+.rd-contact-id button > span + span { transform: translateY(140%); opacity: 0; }
+.rd-contact-id button.done { background: #2bb673; }
+.rd-contact-id button.done > span:first-child { transform: translateY(-140%); opacity: 0; }
+.rd-contact-id button.done > span + span { transform: none; opacity: 1; }
+.rd-contact-id button:active { transform: scale(0.92); transition-duration: 0.1s; }
+.rd-contact-x { position: absolute; top: 10px; right: 10px; width: 34px; height: 34px; border: 0; border-radius: 50%; background: #f2edf7; color: #141217; font-size: 20px; line-height: 1; cursor: pointer; transition: transform 0.6s cubic-bezier(.34, 1.7, .5, 1); }
+.rd-contact-x:hover { transform: rotate(90deg); }
+
+/* ---------- about: footer continues the dark end card instead of a lavender band ---------- */
+body:has(.rd-end) .site-footer { background: #050607; border-top-color: rgba(255, 255, 255, 0.08); color: rgba(255, 255, 255, 0.42); min-height: 72px; padding-bottom: 1.4rem; }
+body:has(.rd-end) .site-footer a { color: #c9a6ea; }

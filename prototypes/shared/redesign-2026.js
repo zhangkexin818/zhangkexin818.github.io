@@ -416,9 +416,33 @@
     show(rows[0].dataset.proof);
   }
 
+
+  /* ---------- contact dialog ---------- */
+  function setupContact() {
+    const dlg = document.querySelector("[data-contact]");
+    const open = document.querySelector("[data-contact-open]");
+    if (!dlg || !open) return;
+    const close = () => { dlg.classList.remove("is-in"); setTimeout(() => dlg.close(), reduce ? 0 : 260); };
+    open.addEventListener("click", () => { dlg.showModal(); requestAnimationFrame(() => requestAnimationFrame(() => dlg.classList.add("is-in"))); });
+    dlg.querySelector("[data-contact-close]").addEventListener("click", close);
+    dlg.addEventListener("click", (e) => { if (e.target === dlg) close(); });
+    dlg.addEventListener("cancel", (e) => { e.preventDefault(); close(); });
+    const btn = dlg.querySelector("[data-contact-copy]");
+    btn.addEventListener("click", async () => {
+      const id = "aza818-";
+      let ok = false;
+      try { await navigator.clipboard.writeText(id); ok = true; } catch (_) {
+        const ta = document.createElement("textarea"); ta.value = id; ta.style.cssText = "position:fixed;opacity:0"; dlg.appendChild(ta); ta.select();
+        try { ok = document.execCommand("copy"); } catch (_) { ok = false; } ta.remove();
+      }
+      if (!ok) { const r = document.createRange(); r.selectNodeContents(dlg.querySelector(".rd-contact-id b")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); return; }
+      btn.classList.add("done"); clearTimeout(btn._t); btn._t = setTimeout(() => btn.classList.remove("done"), 1600);
+    });
+  }
+
   window.rdOpenImage = (el, opts) => openPlayer(el, opts);
 
-  const init = () => { setupReveal(); setupCounter(); setupFilms(); setupShowreel(); setupParallax(); setupAutoplay(); setupMethodFilm(); setupScrollFx(); setupTilt(); setupParade(); setupProof(); };
+  const init = () => { setupReveal(); setupCounter(); setupFilms(); setupShowreel(); setupParallax(); setupAutoplay(); setupMethodFilm(); setupScrollFx(); setupTilt(); setupParade(); setupProof(); setupContact(); };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
 })();

@@ -23,3 +23,9 @@ html.zk-continuous-child .route-transition {
 html.zk-continuous-child .skip-link {
   display: none !important;
 }
+
+html.zk-asleep *,
+html.zk-asleep *::before,
+html.zk-asleep *::after {
+  animation-play-state: paused !important;
+}

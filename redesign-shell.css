@@ -51,3 +51,18 @@ body[data-active-surface="light"] .orbit-nav {
 @media (prefers-reduced-motion: reduce) {
   .chapter-seam::after { transition: none; }
 }
+
+/* ---------- chapter rail (desktop): where am I in the long scroll ---------- */
+.zk-rail { position: fixed; z-index: 120; right: 18px; top: 50%; transform: translateY(-50%); display: grid; gap: 16px; padding: 14px 10px; border-radius: 999px; background: rgba(12, 10, 16, 0.42); backdrop-filter: blur(10px) saturate(1.2); -webkit-backdrop-filter: blur(10px) saturate(1.2); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), inset 0 0 0 1px rgba(243, 241, 247, 0.12); transition: opacity 0.5s ease, transform 0.7s cubic-bezier(.34, 1.56, .64, 1); }
+body.is-composing .zk-rail { opacity: 0; transform: translate(20px, -50%); pointer-events: none; }
+.zk-rail-track { position: absolute; left: 50%; top: 22px; bottom: 22px; width: 1px; margin-left: -0.5px; background: rgba(243, 241, 247, 0.18); pointer-events: none; }
+.zk-rail-track i { position: absolute; inset: 0; background: linear-gradient(#c9a6ea, #8b2cc2); transform-origin: top; transform: scaleY(0); }
+.zk-rail button { position: relative; z-index: 1; display: grid; place-items: center; width: 16px; height: 16px; padding: 0; border: 0; background: none; cursor: pointer; }
+.zk-rail button b { display: block; width: 7px; height: 7px; overflow: hidden; border-radius: 50%; background: rgba(243, 241, 247, 0.5); color: transparent; font-size: 0; box-shadow: 0 0 0 3px rgba(12, 10, 16, 0.6); transition: transform 0.6s cubic-bezier(.34, 1.56, .64, 1), background 0.3s; }
+.zk-rail button.is-active b { background: #f3f1f7; transform: scale(1.6); }
+.zk-rail button:hover b { transform: scale(1.8); background: #c9a6ea; }
+.zk-rail button span { position: absolute; right: 26px; top: 50%; padding: 6px 10px; border-radius: 999px; background: rgba(12, 10, 16, 0.78); color: #f3f1f7; font: 500 11px/1 "Noto Sans SC", "PingFang SC", sans-serif; letter-spacing: 0.06em; white-space: nowrap; opacity: 0; transform: translate(8px, -50%) scale(0.9); transform-origin: right center; pointer-events: none; transition: opacity 0.2s, transform 0.5s cubic-bezier(.34, 1.56, .64, 1); }
+.zk-rail button:hover span, .zk-rail button:focus-visible span { opacity: 1; transform: translate(0, -50%) scale(1); }
+.zk-rail button:focus-visible { outline: 2px solid #c9a6ea; outline-offset: 3px; border-radius: 50%; }
+@media (max-width: 999px), (hover: none) { .zk-rail { display: none; } }
+@media (prefers-reduced-motion: reduce) { .zk-rail, .zk-rail * { transition: none !important; } }

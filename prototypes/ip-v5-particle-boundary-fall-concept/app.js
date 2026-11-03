@@ -509,7 +509,7 @@
     },
     outfits: {
       label: "服装",
-      images: [1, 2, 3, 4, 5].map((number) => `assets/ayao-outfit-0${number}-v2.png`),
+      images: [1, 2, 3, 4, 5].map((number) => `assets/ayao-outfit-0${number}-v2.webp`),
     },
     scenes: {
       label: "场景",

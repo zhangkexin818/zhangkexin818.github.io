@@ -21,6 +21,38 @@
   let gestureAudioContext = null;
 
   document.documentElement.classList.add("zk-continuous-child");
+
+  // Offscreen chapters stop drawing: rAF callbacks are parked until the shell
+  // says this chapter is near the viewport again.
+  const nativeRAF = window.requestAnimationFrame.bind(window);
+  const nativeCAF = window.cancelAnimationFrame.bind(window);
+  let awake = true;
+  let parkedId = 0;
+  const parked = new Map();
+  window.requestAnimationFrame = (cb) => {
+    if (awake) return nativeRAF(cb);
+    parkedId -= 1;
+    parked.set(parkedId, cb);
+    return parkedId;
+  };
+  window.cancelAnimationFrame = (id) => {
+    if (id < 0) parked.delete(id);
+    else nativeCAF(id);
+  };
+  function setAwake(on) {
+    if (on === awake) return;
+    awake = on;
+    document.documentElement.classList.toggle("zk-asleep", !on);
+    document.querySelectorAll("video").forEach((v) => {
+      if (!on && !v.paused && v.muted) { v.dataset.zkResume = "1"; v.pause(); }
+      else if (on && v.dataset.zkResume) { delete v.dataset.zkResume; v.play().catch(() => {}); }
+    });
+    if (on && parked.size) {
+      const cbs = [...parked.values()];
+      parked.clear();
+      cbs.forEach((cb) => nativeRAF(cb));
+    }
+  }
   document.documentElement.dataset.zkPage = pageName;
 
   function resumeRememberedSound() {
@@ -164,6 +196,10 @@
 
   window.addEventListener("message", (event) => {
     if (!event.data || typeof event.data !== "object") return;
+    if (event.data.type === "zk:visible") {
+      setAwake(event.data.on !== false);
+      return;
+    }
     if (event.data.type === "zk:set-scroll") {
       const y = Math.max(0, Number(event.data.y) || 0);
       window.scrollTo(0, y);

@@ -422,7 +422,7 @@ function renderVideo() {
             <span>成片 ${formatTime(totalDuration)} · 镜头 ${state.shot + 1} / ${state.shots.length}</span>
           </header>
           <div class="video-frame" style="--shot: ${state.shot}">
-            <img class="video-strip" src="assets/images/poem-storyboard.png" alt="《咏柳》东方绘本风格视频分镜" />
+            <img class="video-strip" src="assets/images/poem-storyboard.webp" alt="《咏柳》东方绘本风格视频分镜" />
             <span class="video-origin" data-video-source>${escapeHtml(shot.source)}</span>
             <button class="icon-button play-control" type="button" data-action="toggle-play" aria-label="播放完整视频预览">${icon(playbackTimer ? 'pause' : 'play')}</button>
             <p class="narration-caption ${state.captions ? '' : 'is-hidden'}" data-video-caption>${escapeHtml(shot.narration)}</p>
@@ -503,7 +503,7 @@ function renderVersions() {
             </nav>
             <div class="variant-preview">
               <div class="video-frame" style="--shot: ${selected.shot}; --variant-accent:${selected.accent}">
-                <img class="video-strip" src="assets/images/poem-storyboard.png" alt="${escapeHtml(selected.name)}预览画面" />
+                <img class="video-strip" src="assets/images/poem-storyboard.webp" alt="${escapeHtml(selected.name)}预览画面" />
                 <span class="version-opening">${escapeHtml(selected.opening)}</span>
                 <div class="video-caption"><strong>${escapeHtml(selected.name)}</strong><span>${escapeHtml(selected.duration)}</span></div>
               </div>
