@@ -66,3 +66,14 @@ body.is-composing .zk-rail { opacity: 0; transform: translate(20px, -50%); point
 .zk-rail button:focus-visible { outline: 2px solid #c9a6ea; outline-offset: 3px; border-radius: 50%; }
 @media (max-width: 999px), (hover: none) { .zk-rail { display: none; } }
 @media (prefers-reduced-motion: reduce) { .zk-rail, .zk-rail * { transition: none !important; } }
+
+/* ---------- a chapter still being built shows a quiet orbit, never a blank screen ---------- */
+.chapter-shell:not(:first-child) .chapter-stage::before,
+.chapter-shell:not(:first-child) .chapter-stage::after { content: ""; position: absolute; z-index: 2; left: 50%; top: 50%; pointer-events: none; transition: opacity .4s ease; }
+.chapter-shell:not(:first-child) .chapter-stage::before { width: 56px; height: 56px; margin: -28px 0 0 -28px; border-radius: 50%; border: 1px solid rgba(201, 166, 234, 0.18); border-top-color: rgba(201, 166, 234, 0.85); animation: zk-load-spin 1.1s linear infinite; }
+.chapter-shell:not(:first-child) .chapter-stage::after { width: 6px; height: 6px; margin: -3px 0 0 -3px; border-radius: 50%; background: #8b2cc2; box-shadow: 0 0 18px #8b2cc2; }
+.chapter-shell.is-frame-ready .chapter-stage::before,
+.chapter-shell.is-frame-ready .chapter-stage::after { opacity: 0; animation: none; }
+
+@keyframes zk-load-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .chapter-shell .chapter-stage::before { animation: none; } }

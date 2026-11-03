@@ -84,8 +84,7 @@
     frameMap.set(frame.contentWindow, record);
     frame.addEventListener("load", () => {
       if (!record.activated) return;
-      record.ready = true;
-      record.shell.classList.add("is-frame-ready");
+      markFrameReady(record);
       frame.contentWindow?.postMessage({ type: "zk:light-mode", mode: lightMode }, "*");
       frame.contentWindow?.postMessage({ type: "zk:measure" }, "*");
     });
@@ -93,6 +92,44 @@
   });
 
   const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+
+  function markFrameReady(record) {
+    if (record.ready) return;
+    record.ready = true;
+    record.shell.classList.add("is-frame-ready");
+    (record.readyWaiters || []).forEach((fn) => fn());
+    record.readyWaiters = [];
+    warmRemaining();
+  }
+  function whenReady(record, fn) {
+    if (record.ready) { fn(); return; }
+    (record.readyWaiters = record.readyWaiters || []).push(fn);
+  }
+  // Once the first chapter is up, stage every other chapter in the background,
+  // one at a time and at low priority, so a jump from the nav lands on a page
+  // that has already been built.
+  let warming = false;
+  function warmRemaining() {
+    if (warming) return;
+    const next = frameRecords.find((r) => !r.activated);
+    if (!next) return;
+    const anyReady = frameRecords.some((r) => r.ready);
+    if (!anyReady) return;
+    warming = true;
+    const go = () => {
+      warming = false;
+      const rec = frameRecords.find((r) => !r.activated);
+      if (!rec) return;
+      activateFrame(rec.index, { eager: false });
+      // move on when this one is built, or after a few seconds on a slow line
+      let moved = false;
+      const advance = () => { if (moved) return; moved = true; warmRemaining(); };
+      whenReady(rec, advance);
+      window.setTimeout(advance, 4000);
+    };
+    if ("requestIdleCallback" in window) window.requestIdleCallback(go, { timeout: 1200 });
+    else window.setTimeout(go, 300);
+  }
 
   function activateFrame(index, { eager = false } = {}) {
     const record = frameRecords[index];
@@ -232,6 +269,7 @@
     // Keep exactly one chapter prepared ahead of the reader. This removes the
     // blank-on-arrival state without downloading every iframe at startup.
     queueFrameAhead(index);
+    if (index > 0) { clearTimeout(readyTimer); document.body.classList.remove("is-composing"); }
     if (index === activeIndex && !document.body.classList.contains("is-composing")) return;
     activeIndex = index;
     document.body.dataset.activeChapter = shells[index]?.dataset.chapter || "home";
@@ -457,7 +495,7 @@
       // Jump instead of a 20k-px smooth scroll: a short dip-to-dark hides the cut,
       // and the chapter stays pinned while late frames report their heights.
       const land = () => {
-        navLock = { target, until: performance.now() + 2600 };
+        navLock = { target, until: performance.now() + 8000 };
         window.scrollTo({ top: chapterTop(target), behavior: "auto" });
         requestSync();
       };
@@ -473,22 +511,18 @@
       } else if (far || behavior === "auto" || reducedMotion.matches) {
         land();
       } else {
-        navLock = { target, until: performance.now() + 2600 };
+        navLock = { target, until: performance.now() + 8000 };
         window.scrollTo({ top: chapterTop(target), behavior });
       }
     };
 
-    const waiting = requiredRecords.filter((record) => !record.ready);
-    let pending = waiting.length;
-    const markReady = () => {
-      pending -= 1;
-      if (pending <= 0) window.setTimeout(commit, 120);
-    };
-    waiting.forEach((record) => record.frame.addEventListener("load", markReady, { once: true }));
-    requiredRecords.forEach((record) => activateFrame(record.index, { eager: record.index === targetIndex }));
-    if (!pending) window.setTimeout(commit, 0);
-    // Never trap navigation if a third-party asset stalls the load event.
-    window.setTimeout(commit, 3200);
+    const targetRecord = frameRecords[targetIndex];
+    activateFrame(targetIndex, { eager: true });
+    requiredRecords.forEach((record) => activateFrame(record.index, { eager: false }));
+    if (targetRecord?.ready) window.setTimeout(commit, 0);
+    else if (targetRecord) whenReady(targetRecord, () => window.setTimeout(commit, 60));
+    // Never trap navigation on a slow connection.
+    window.setTimeout(commit, 1400);
     history.replaceState(null, "", `#${name}`);
   }
 
@@ -649,6 +683,7 @@
     if (!record || !event.data || typeof event.data !== "object") return;
 
     if (event.data.type === "zk:height") {
+      if (record.activated) markFrameReady(record);
       const height = Math.max(window.innerHeight, Math.ceil(Number(event.data.height) || 0));
       const previous = record.shell.offsetHeight;
       if (height && Math.abs(previous - height) > 2) {
@@ -717,7 +752,7 @@
   requestAnimationFrame(drawParticles);
   requestSync();
 
-  readyTimer = window.setTimeout(() => document.body.classList.remove("is-composing"), 12000);
+  readyTimer = window.setTimeout(() => document.body.classList.remove("is-composing"), initialHashIndex > 0 ? 600 : 5000);
   window.setTimeout(() => {
     frameRecords.forEach(({ frame, activated }) => {
       if (activated) frame.contentWindow?.postMessage({ type: "zk:measure" }, "*");
